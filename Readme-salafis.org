@@ -1,8 +1,104 @@
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 # #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
-#+TITLE: Readme Salafis
+#+TITLE: Herramientas computacionales locales y remotas
 
-* Descripción general
+En este documento se presentan algunas herramientas que pueden ser útiles para
+estudiantes que requieren algunos recursos computacionales remotos o locales.
+
+* Local: Virtual box
+En este caso pueden usar una máquina virtual que he diseñado para este fin, o
+ustedes mismos por su cuentas instalar y configurar todo lo necesario en su
+distribución Linux favorita. Para que funcione la máquina virtual es necesario
+que su procesador soporte virtualización. Esto pasa con la mayoría, sean AMD o
+Intel, pero lastimosmente casi nunca está activado. Para activar esa opción,
+deben entrar a la bios (normalmente cuando arranca el computador deben ver la
+opción de setup o similar y a qué tecla corresponde, como F2, F10 o F12, y
+presionarla) y una vez en la bios buscar y activar la opción de virtualizacicón.
+Se pueden seguir las instrucciones en (aunque deben ver si aplica o no a su
+bios; si no aplica, deben buscar su modelo exacto en google)
+https://www.softzone.es/2016/07/23/como-activar-la-virtualizacion-en-los-procesadores-intel-amd-desde-biosuefi/
+
+
+Las instrucciones a seguir son las siguientes:
+
+** Instalación de virtualbox y el extension pack (una sola vez)
+- Instalar virtualbox en su computador. Lo pueden descargar de (como ejemplo se
+  usa la versión 6.1.12) https://www.virtualbox.org/wiki/Downloads . Existen
+  instaladores para Windows, linux, mac.
+- Instalar virtualbox extension pack tambien descargando del siguiente enlace
+  (como ven la versión debe coincidir con la de virtual box)
+  https://download.virtualbox.org/virtualbox/6.1.12/Oracle_VM_VirtualBox_Extension_Pack-6.1.12.vbox-extpack
+   .le dan doble click y lo abren con virtualbox. Esta utilidad les permite
+  soportar USB3, compartir directorios entre el host (su computador) y el guest
+  (la máquina virtual), etc.
+
+** Instalación de la máquina virtual (una sola vez)
+- Descargar la siguiente imagen de maquina virtual que se ha creado (aprox 5.0
+  GB): https://tinyurl.com/Slack64-VirtualBox :
+
+  #+ATTR_HTML: :width 80%
+  [[file:figs/VirtualBox-MachineBox.png]]
+
+  Debe descargar todos los 5 archivos que estan ahí, mejor uno por uno para que
+  no vengan dentro de un zip. Todos deben quedar en la misma carpeta de
+  descarga.
+- Abrir virtualbox e importar la maquina virtual recién descargada : =File ->
+  Import Appliance= (importan el archivo *=box.ovf=*, y este a su vez buscará
+  los demás archivos):
+
+  #+ATTR_HTML: :width 80%
+  [[file:figs/VirtualBox-boxovf.png]]
+
+- Si lo desean puede cambiar alguna configuración, como añadir más memoria RAM y
+  aumentar el número de procesadores asociados. No cambie la configuración de
+  red a menos que sepa lo que está haciendo:
+
+  #+ATTR_HTML: :width 80%
+  [[file:figs/VirtualBox-boxovf-settings.png]]
+
+  Este proceso puede tardar varios minutos
+
+** Usar la máquina virtual
+- Iniciar la máquina virtual (dándole start) y esto debería iniciar un linux sin
+  problema. El nombre de usuario es =live=, dan enter, y el password es =live= .
+  Pueden configurar la resolución en el menú =View= de virtualbox, escogiendo la
+  resolución o el escalamiento que deseen. También, habiendo iniciado a linux,
+  en settings pueden cambiar la resolución de la pantalla para que se vea mejor
+  en sus computadores.  
+  #+ATTR_HTML: :width 80%
+  [[file:figs/VirtualBox-initscreen.png]]
+
+- La máquina virtual tiene configurada la consola y el emacs tradicional.
+  También se ha configurado el teclado para que sea latinoamericano, como la
+  mayoría de sus teclados. El entorno gráfico es Xfce 4.16 (muy liviano), y
+  tiene el navegador básico (firfox 78), libreoffice, editores, compiladores,
+  etc.
+
+  #+ATTR_HTML: :width 80%
+  [[file:figs/VirtualBox-xfce.png]]
+
+* Local: Live usb
+La máquina virtual le permite ejecutar todo un sistema operativo muy eficiente,
+pero no necesariamente usa todos los recursos de su computador. Una forma de
+resolver esto es usar una live usb que tenga persistencia y en donde usted mismo
+instale las herramientas necesarias. Normalmente en la sala del departamento
+usamos slackware live , por su bajo consumo de recursos  y gran estabilidad,
+https://alien.slackbook.org/blog/slackware-live-edition/ . Sin embargo, para
+usar persistencia, la usb live debe ser creada desde linux, no se puede desde
+windows. Entonces se recomienda usar otras versiones pero allí será necesario
+que usted mismo se encargue de instalar lo necesario. La ventaja es que usted
+crea la usb con persistencia, reinicia su computador, presiona la tecla de boot
+correspondiente al arrancar, lo hace arranacar del puerto usb (donde se supone
+está conectada la memoria), y entonces tendrá disponible linux con todos los
+recursos de su computador. Para crear la memoria con persistencia puede usar
+rufus en windows, https://rufus.ie/ , o unebootin, https://unetbootin.github.io/
+. En cualquier caso , esos programas le permiten escoger la distribución en la
+cual basarse para crear la memoria usb live. Esto tambien implica que se van a
+demorar descargando el iso de alguna distribución, al menos unos 5Gb. En
+unebootin se recomienda usar ubuntu ya que es la única que permite persistencia.
+En rufus debe haber algo similar.
+
+* Remoto: Acceso ssh a la sala de física
 La sala de cómputo tiene un servidor básico de entrada que además comparte
 archivos y autenticación con los nodos. La sala es completamente heterogénea,
 siendo una reunión de diversos computadores con diversas características y
@@ -19,6 +115,9 @@ usar una distribución eficiente, y en este caso se Slackware 14.2+ (current),
 con el entorno gráfico xfce4.16. Se incluyen los compiladores más actualizados,
 editores, etc.
 
+Usted debe tener cuenta en la sala de física. Normalmente, su profesor debe
+gestionar esta creación de cuentas.
+
 Para realizar la conexión, el usuario tiene dos opciones:
 1. Conectarse por el protocolo ssh al servidor principal y de allí navegar a los
    computadores internos que desee, también usando ssh.
@@ -28,8 +127,8 @@ Para realizar la conexión, el usuario tiene dos opciones:
 Estas opciones serán descritas con más detalle a continuación. *Es importante
 notar que no se deben ejecutar tareas en el servidor de login*
 
-* Conexión por ssh
-** Conexión básica por terminal
+** Conexión por ssh
+*** Conexión básica por terminal
 El ip público del servidor es 168.176.35.111. La conexión básica por ssh se
 establece de la siguiente manera
 #+begin_src shell
@@ -57,7 +156,7 @@ el 22. Allí podrá ejecutar sus trabajos.
 *NOTA:* La primera vez que se conecte a cada nodo, ya sea el de login o uno
 interno, se le va a preguntar por la autenticidad de ese host. Debe aceptarla.
 
-** Conexión desde Windows
+*** Conexión desde Windows
 Windows 10 trae soporte para cliente ssh, especialmente en el WSL. En lo que
 sigue se mostrarán opciones para esta y otras versiones de Windows:
 1) Instale una extensión de google chrome llamada [[https://chrome.google.com/webstore/detail/secure-shell/iodihamcpbpeioajjeobimgagajmlibd][chrome secure shell]] .
@@ -93,7 +192,7 @@ instalación de chrome)
   #+ATTR_HTML: :width 80%
   [[file:figs/kitty-basic-2.png]]
 
-** Usando proxyjump para acceder directamente a un computador interno (terminal)
+*** Usando proxyjump para acceder directamente a un computador interno (terminal)
 Si un usuario desea conectarse directamente a un pc interno puede usar el
 servidor de login como bastión intermedio, a través el siguiente
 comando
@@ -102,12 +201,12 @@ ssh -J USERNAME@168.176.35.111:443 USERNAME@192.168.10.12
 #+end_src
 Y en este caso entrará directamente al nodo =192.168.10.12= y será transparente
 su conexión.
-*** Windows
+**** Windows
 No todos los clientes ssh de windows soportan las versiones recientes de ssh y
 la opción proxyjump. Sin embargo puede seguir las siguientes [[https://superuser.com/questions/1448180/how-to-setup-proxy-jump-with-putty][instrucciones para
 kitty]] , o usar plink, o crear un tunnel como se muestra más adelante.
 
-** Conexión por medio de llaves y sin password
+*** Conexión por medio de llaves y sin password
 Si prefiere no escribir la clave cada vez que se conecta, además de aumentar la
 seguridad, puede crear una llave pública privada y copiarla al servidor de login
 (ver, por ejemplo,
@@ -125,7 +224,7 @@ ssh-copy-id -p 443 USERNAME@168.176.35.111
   siguiente vez que use ssh al servidor de login no tendrá que introducir la
   clave.
 
-* Configuración de un tunel para acceso directo a un nodo interno
+** Configuración de un tunel para acceso directo a un nodo interno
 El objetivo de este punto es establecer una conexión directa a un nodo interno y
 dejar esta conexión expuesta localmente en un puerto específico. Esto se llama
 "abrir un túnel". La utilidad de un tunel es que no será necesario hacer dos
@@ -147,7 +246,7 @@ y deberá aparecer inmediatamente logueado en 192.168.10.12 .
 
 El túnel debe ser funcional para que pueda usar x2goclient.
 
-** Windows
+*** Windows
 - chrome secure shell: configure la conexión como se muestra a continuación,
   conéctse y manténgala abierta
   #+ATTR_HTML: :width 80%
@@ -163,7 +262,7 @@ El túnel debe ser funcional para que pueda usar x2goclient.
 
   Luego le da click en start y NO cierra la sesión.
 
-* Conexión gráfica usando x2goclient
+** Conexión gráfica usando x2goclient
 El cliente x2go permite conectarse a un servidor x2go y tener un escritorio
 remoto. En este caso, todos los nodos internos ofrecen un servidor x2go. El
 servidor principal de login no tiene un servidor x2go, para evitar que se
@@ -176,7 +275,7 @@ https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.
 
 *NOTA:* Debe tener un tunnel funcional. Se asumirá que está en el puerto 2222.
 
-** Configuración de x2go (una sola vez)
+*** Configuración de x2go (una sola vez)
 - Instale el cliente descargándolo de client desde
     https://wiki.x2go.org/doku.php/download:start .
 - Ejecute x2go y en el menú seleccione =Session -> New Session=. Allí llene la
@@ -186,7 +285,7 @@ https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.
   muestra la siguiente figura:
   #+ATTR_HTML: :width 80%
   [[file:figs/x2goclient-session.png]]
-** Conexión con x2go
+*** Conexión con x2go
 Una vez tenga configurada la sesión y ya haya creado el tunel simplemente de
 doble click a la sesión, llene el password si es necesario, y tendrá a su
 disposición un entorno gráfico ejecutado en el computador interno que haya
