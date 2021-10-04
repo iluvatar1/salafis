@@ -58,6 +58,18 @@ Las instrucciones a seguir son las siguientes:
 
   Este proceso puede tardar varios minutos
 
+- Nota: Si después de importar exitosamente la máquina virtual usted la inicia y
+  ésta lo lleva a una shell interactiva de uefi como la siguiente:
+  #+ATTR_HTML: :width 80%
+  [[file:figs/Virtualbox-uefi-shell.png]]
+
+  se le sugiere que apague la máquina virtual, entre a settings y en sistema
+  desactive la opción de UEFI como muestra la siguiente figura:
+  #+ATTR_HTML: :width 80%
+  [[file:figs/Virtualbox-uefi.png]]
+
+  Después de esto podrá iniciar la máquina virtual sin problema.
+
 ** Usar la máquina virtual
 - Iniciar la máquina virtual (dándole start) y esto debería iniciar un linux sin
   problema. El nombre de usuario es =live=, dan enter, y el password es =live= .
@@ -97,7 +109,8 @@ cual basarse para crear la memoria usb live. Esto tambien implica que se van a
 demorar descargando el iso de alguna distribución, al menos unos 5Gb. En
 unebootin se recomienda usar ubuntu ya que es la única que permite persistencia.
 En rufus debe haber algo similar.
-
+** TODO Check Ventoy
+https://www.ventoy.net/en/index.html
 * Remoto: Acceso ssh a la sala de física
 La sala de cómputo tiene un servidor básico de entrada que además comparte
 archivos y autenticación con los nodos. La sala es completamente heterogénea,
