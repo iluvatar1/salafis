@@ -144,8 +144,8 @@ establece de la siguiente manera
 #+begin_src shell
 ssh -p 443 USERNAME@168.176.35.111
 #+end_src
-donde =443= es el puerto de conexión y debe reemplazarse =USERNAME= por el
-nombre de usuario (debe tener una cuenta previamente creada). Este comando le
+donde =443= es el puerto de conexión y *debe reemplazarse =USERNAME= por el
+nombre de usuario* (debe tener una cuenta previamente creada). Este comando le
 pedirá la clave (si no está usando llaves de autenticación, o si es la primera
 vez) y si la autenticación es exitosa el usuario observará el siguiente prompt:
 #+ATTR_HTML: :width 80%
