@@ -34,31 +34,28 @@ Las instrucciones a seguir son las siguientes:
 
 ** Instalación de la máquina virtual (una sola vez)
 - Descargar la siguiente imagen de maquina virtual que se ha creado (aprox 5.0
-  GB): https://tinyurl.com/Slack64-VirtualBox :
+  GB): https://tinyurl.com/Slack64-VirtualBox (Debe descargar el archivo único d
+  extensión =.ova=):
 
   #+ATTR_HTML: :width 80%
-  [[file:figs/VirtualBox-MachineBox.png]]
+  [[file:figs/VirtualBox-boxova-drive.png]]
 
-  Debe descargar todos los 5 archivos que estan ahí, mejor uno por uno para que
-  no vengan dentro de un zip. Todos deben quedar en la misma carpeta de
-  descarga.
 - Abrir virtualbox e importar la maquina virtual recién descargada : =File ->
-  Import Appliance= (importan el archivo *=box.ovf=*, y este a su vez buscará
-  los demás archivos):
+  Import Appliance= (importan el archivo *=box.ova=*):
 
   #+ATTR_HTML: :width 80%
-  [[file:figs/VirtualBox-boxovf.png]]
+  [[file:figs/VirtualBox-boxova.png]]
 
 - Si lo desean puede cambiar alguna configuración, como añadir más memoria RAM y
   aumentar el número de procesadores asociados. No cambie la configuración de
   red a menos que sepa lo que está haciendo:
 
   #+ATTR_HTML: :width 80%
-  [[file:figs/VirtualBox-boxovf-settings.png]]
+  [[file:figs/VirtualBox-boxova-settings.png]]
 
   Este proceso puede tardar varios minutos
 
-- Nota: Si después de importar exitosamente la máquina virtual usted la inicia y
+- *NOTA*: Si después de importar exitosamente la máquina virtual usted la inicia y
   ésta lo lleva a una shell interactiva de uefi como la siguiente:
   #+ATTR_HTML: :width 80%
   [[file:figs/Virtualbox-uefi-shell.png]]
