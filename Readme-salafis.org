@@ -128,9 +128,17 @@ la usb, como muestra la figura
 #+ATTR_HTML: :width 80%
 [[file:figs/unetbootin-copying.png]]
 
-Despues de terminar, tendrá una usb , con persistencia, que puede usar
-para que su computador inicie desde ella y así tener disponible un linux sin
-instalarlo realmente y usando todo el hardware de su máquina.
+Mas adelante unetbootin configurará la persistencia y finalmente terminará
+mostrando una ventana como la siguiente
+#+ATTR_HTML: :width 80%
+[[file:figs/unetbootin-final.png]]
+
+Ahora tiene lista su usb con persistencia. Lo que queda es simplemente que
+mantenga la usb en el puerto usb, apague y encienda su máquina y la haga bootear
+desde la usb (depende del modelo del comoutador, a veces es presionando F2,
+otras F12, debe buscar en google), y su computador cargará este linux de la usb
+y usted podrá usar linux , sin haberlo instalado, y con todas las capacidades de
+su máquina.
 
 ** TODO Check Ventoy
 https://www.ventoy.net/en/index.html
