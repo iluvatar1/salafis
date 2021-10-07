@@ -109,10 +109,11 @@ En rufus debe haber algo similar.
 ** Ejemplo con Unebootin
 Se supone que ya ha instalado unebootin. Ejecute el programa y configurelo como
 muestra la figura. En este caso se han asignado 5Gb (depende del tamaño de la
-memoria) para la persistencia (solamente funciona con Ubuntu), y CERCIÓRESE MUY
-BIEN DE SELECCIONAR EL NOMBRE EXACTO DE LA UNIDAD DE USB DRIVE, porque de otra
-manera puede arriesgarse a formatear su computador. El nombre que aparece en la
-figura es típico de Mac Os X. En Windows debe ser de la form =D:= o similar.
+memoria, puede ser aproximadamente igual tamaño total menos 4GB) para la
+persistencia (solamente funciona con Ubuntu), y CERCIÓRESE MUY BIEN DE
+SELECCIONAR EL NOMBRE EXACTO DE LA UNIDAD DE USB DRIVE, porque de otra manera
+puede arriesgarse a formatear su computador. El nombre que aparece en la figura
+es típico de Mac Os X. En Windows debe ser de la form =D:= o similar.
 #+ATTR_HTML: :width 80%
 [[file:figs/unetbootin-1.png]]
 
