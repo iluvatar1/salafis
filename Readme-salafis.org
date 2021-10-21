@@ -67,6 +67,18 @@ Las instrucciones a seguir son las siguientes:
 
   Después de esto podrá iniciar la máquina virtual sin problema.
 
+** Opcional: Configurar un directorio compartido entre el host y la máquina virtual
+Si desea poder leer y escribir desde la máquina virtual en un directorio
+compartido entre su host y la máquina, debe crear un directorio compartido
+siguiendo configurando la máquina virtual (apagada) así: va a =Settings ->
+Shared Folders=, da click en el ícono que tiene una carpeta con un signo =+=, en
+=Folder Path= navega en su sistema host y escoge el directorio que desea
+compartir, en folder name le coloca el nombre =shared= (obligatorio), deja SIN
+marcar Read-only y Auto-mount, si le sale la opción lo marca como permanente, y
+listo. La máquina virtual está configurada para que cada vez que inicia intenta
+montar el directorio compartido llamado =shared= en la ruta =/media/hd=. Allí
+podrá encontrar sus archivos compartidos.
+
 ** Usar la máquina virtual
 - Iniciar la máquina virtual (dándole start) y esto debería iniciar un linux sin
   problema. El nombre de usuario es =live=, dan enter, y el password es =live= .
