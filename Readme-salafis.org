@@ -22,16 +22,14 @@ https://www.softzone.es/2016/07/23/como-activar-la-virtualizacion-en-los-procesa
 Las instrucciones a seguir son las siguientes:
 
 ** Instalación de virtualbox y el extension pack (una sola vez)
-- Instalar virtualbox en su computador. Lo pueden descargar de (como ejemplo se
-  usa la versión 6.1.12) https://www.virtualbox.org/wiki/Downloads . Existen
-  instaladores para Windows, linux, mac.
-- Instalar virtualbox extension pack tambien descargando del siguiente enlace
-  (como ven la versión debe coincidir con la de virtual box)
-  https://download.virtualbox.org/virtualbox/6.1.12/Oracle_VM_VirtualBox_Extension_Pack-6.1.12.vbox-extpack
-   .le dan doble click y lo abren con virtualbox. Esta utilidad les permite
-  soportar USB3, compartir directorios entre el host (su computador) y el guest
-  (la máquina virtual), etc.
-
+- Instalar virtualbox en su computador. Lo pueden descargar de
+  https://www.virtualbox.org/wiki/Downloads . Existen instaladores para Windows,
+  linux, mac.
+- Instalar virtualbox extension pack tambien descargando del mismo sitio (como
+  ven la versión debe coincidir con la de virtual box). Le dan doble click y lo
+  abren con virtualbox. Esta utilidad les permite soportar USB3, compartir
+  directorios entre el host (su computador) y el guest (la máquina virtual),
+  etc.
 ** Instalación de la máquina virtual (una sola vez)
 - Descargar la siguiente imagen de maquina virtual que se ha creado (aprox 5.0
   GB): https://tinyurl.com/Slack64-VirtualBox (Debe descargar el archivo único d
@@ -78,6 +76,7 @@ marcar Read-only y Auto-mount, si le sale la opción lo marca como permanente, y
 listo. La máquina virtual está configurada para que cada vez que inicia intenta
 montar el directorio compartido llamado =shared= en la ruta =/media/hd=. Allí
 podrá encontrar sus archivos compartidos.
+[[file:figs/sharedfolder.png]]
 
 ** Usar la máquina virtual
 - Iniciar la máquina virtual (dándole start) y esto debería iniciar un linux sin
