@@ -216,7 +216,7 @@ interno, se le va a preguntar por la autenticidad de ese host. Debe aceptarla.
 Windows 10 trae soporte para cliente ssh, especialmente en el WSL. En lo que
 sigue se mostrarán opciones para esta y otras versiones de Windows:
 1) Instale una extensión de google chrome llamada [[https://chrome.google.com/webstore/detail/secure-shell/iodihamcpbpeioajjeobimgagajmlibd][chrome secure shell]] .
-2) Instale una aplicación: como [[http://www.9bis.net/kitty/#!pages/download.md][kitty]], [[https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html][putty]], [[https://winsshterm.blogspot.com/][winsshterm]]
+2) Instale una aplicación: como [[http://www.9bis.net/kitty/#!pages/download.md][kitty]], [[https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html][putty]], [[https://winsshterm.blogspot.com/][winsshterm]] , [[https://mobaxterm.mobatek.net/][MobaXterm(basic)]]
 Las imágenes que siguen muestran la conexión desde kitty (en una máquina virtual
 de windows 7) o desde la extensión de chrome (que funciona en cualquier
 instalación de chrome)
@@ -362,3 +362,10 @@ ssh-copy-id -p 443 USERNAME@168.176.35.111
   Debe introducir el password. Si lo anterior funciona exitosamente, la
   siguiente vez que use ssh al servidor de login no tendrá que introducir la
   clave.
+** To check :noexport:
+- x2go configs / cluster
+  + https://hcc.unl.edu/docs/connecting/
+  + https://wynton.ucsf.edu/hpc/howto/gui-x11fwd.html
+  + https://wynton.ucsf.edu/hpc/howto/gui-x11fwd.html
+  + https://www1.psfc.mit.edu/computers/cluster/certificates.html
+  + https://wiki.x2go.org/doku.php/wiki:advanced:x2gobroker:loadbalancing
