@@ -154,6 +154,9 @@ su máquina.
 
 ** TODO Check Ventoy
 https://www.ventoy.net/en/index.html
+** TODO Show how to use balenaetcher
+https://www.balena.io/etcher/
+This allows to easily burn any iso and any platform.
 * Remoto: Acceso ssh a la sala de física
 La sala de cómputo tiene un servidor básico de entrada que además comparte
 archivos y autenticación con los nodos. La sala es completamente heterogénea,
@@ -288,6 +291,21 @@ ejecute xfce le preguntará por la configuración: escoja por defecto, NO escoja
 empty panel)
 #+ATTR_HTML: :width 80%
 [[file:figs/x2goclient-connected.png]]
+**** Recomendación con x2go: deshabilitar screensaver
+Para evitar que la sesión se bloquee sin recuperación luego de unos minutos de
+inactividad se les recomienda que deshabiliten los programas xscreensaver,
+xfce4-screensaver y el bloqueo de pantalla, todos accesibles desde el menú y
+configuración. Las siguientes figuras muestran cómo deben quedar deshabilitados
+estos servicios:
+- xscreensaver
+#+ATTR_HTML: :width 80%
+[[file:figs/xscreensaver.png]]
+- xfce4-screensaver
+#+ATTR_HTML: :width 80%
+[[file:figs/xfce4-screensaver.png]]
+- screen lock (second tab from xfce4 screensaver prefs):
+#+ATTR_HTML: :width 80%
+[[file:figs/xfce4-screenlock.png]]
 
 *** Usando un servidor vnc
 Esto es posible pero debe crear un tunel que redireccione un puerto del servidor
