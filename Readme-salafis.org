@@ -324,7 +324,7 @@ una vpn. Si desea ver un video del procedimiento puede encontrarlo a
 continuación: https://youtu.be/aMkhJ7Ocq30
 Los pasos a seguir son:
 - Instalar tailscale (el video de antes muestra esto en Windows, pero puede ser
-  usado en linux, mac, android)
+  usado en linux, mac, android): https://tailscale.com/
 - Unirse *usando una cuenta personal de gmail, no la de la unal*.
 - Solicitar un link único para compartir el servidor (se solicita por email al
   administrador de la sala)
