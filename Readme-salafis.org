@@ -257,6 +257,9 @@ instalación de chrome)
 
 ** Conexión gráfica
 *** Usando x2goclient
+REF:
+https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.html
+
 El cliente x2go permite conectarse a un servidor x2go y tener un escritorio
 remoto encriptado a través de ssh. Actualmente, la mayoría de los nodos internos
 ofrecen un servidor x2go. El servidor principal de login no tiene un servidor
@@ -311,10 +314,71 @@ estos servicios:
 #+ATTR_HTML: :width 80%
 [[file:figs/xfce4-screenlock.png]]
 
-*** Usando un servidor vnc
-Esto es posible pero debe crear un tunel que redireccione un puerto del servidor
-vnc interno de un cliente a su computador, así que se recomienda que por ahora
-use x2go.
+** Conexión con servidor vnc (turbovnc) para OpenGL
+Existen algunas aplicaciones que requieren OpenGL para su funcionamiento. OpenGL
+no está soportado en x2go. Para resolver esto se puede usar un servidor vnc con
+soporte OpenGL (como turbovnc), pero esto requiere a su vez requiere varias
+cosas (ver https://docs.hpc.cam.ac.uk/hpc/user-guide/turbovnc.html ,
+https://www.osc.edu/resources/available_software/software_list/turbovnc) :
+- Activar el servidor vnc dentro de un cliente de la sala de cómputo (con su
+  configuración respectiva)
+- Crear un túnel local que direccione el puerto del cliente a un puerto
+  local.
+- Conectar turbovnc al túnel local.
+Para realizar lo anterior, se indican a continuación las instrucciones
+específicas que ya han sido probadas y funcionan, pero debe seguirlas
+correctamente:
+a. Activación del servidor vnc en un cliente interno:
+   1. Entre (por ssh o x2go) al cliente interno en donde va a ejecutar el
+      servidor vnc. Allí ejecute el siguiente comando para cargar el paquete de
+      turbovnc
+      #+begin_src shell
+ source /packages/spack/share/spack/setup-env.sh
+ spack load turbovnc
+      #+end_src
+   2. *NOTA: este paso se realiza una sola vez*: configurar al password de
+      acceso al servidor, ejecutando el comando
+        #+begin_src shell
+   vncpasswd
+        #+end_src
+        y escribir el password dos veces.
+   3. Ejecutar el servidor vnc y tomar nota del puerto asignado: Ejecutar
+      #+begin_src shell
+vncserver
+      #+end_src
+      Al crear el servidor se asigna un puerto de la forma =590R=. Es importante
+      anotar ese valor de =R=. Este número es el que aparece cuando se ejecuta
+      el comando =vncserver= como un mensaje en la consola que dice algo como
+      =/home/$USER/.vnc/sala2.salafis.net:R.log)= o cuando se ejecuta el comando
+      #+begin_src shell
+vncserver -list
+      #+end_src
+      en donde el número =R= aparece debajo de =X DISPLAY=.
+b. Creación del tunel:
+   1. Ejecutar el siguiente comando, reemplazondo =R= por su valor correcto (se
+      asume que se desea conectar al cliente interno que termina en .2):
+      #+begin_src shell
+ssh -f -N -p 22 USUARIO@192.168.10.2 -J USUARIO@168.176.35.111:443 -L 590R:localhost:590R
+      #+end_src
+      evidentemente debe reemplazar =USUARIO= por su nombre de usuario. Puede ser
+      que el comando se quede ejecutando sin hacer nada más. Déjelo así y no
+      cierre la ventana en donde lo ejecutó. Este comando debe ejecutarse en una
+      terminal. Más abajo se muestra también como configurarlo en putty o kitty.
+c. Conectarse usando el cliente turbovnc:
+   1. En su computador debe tener instalado el turbovnc viewer (descargarlo de
+      https://sourceforge.net/projects/turbovnc/files/ , para windows es el
+      archivo que termina =.exe= o =.msi=) .
+   2. Ejecutar turbovnc, y cuando pida los datos de conexión se coloca
+      #+begin_src shell
+localhost:590R
+      #+end_src
+      reemplazando =R= por el valor correspondiente. Se escribe el password
+      correspondiente que se creó con  =vncpasswd= y con esto se abre un
+      escritorio que tiene soporte para opengl. Se puede verificar abriendo una
+      consola y escribiendo
+      #+begin_src shell
+glxgears
+      #+end_src
 ** Conexión dentro del campus desde la red UNAL
 La red wireless UNAL restringe el protocolo ssh y esto hace que no pueda
 establecerse conexión con el servidor cuando se está dentro del campus conectado
