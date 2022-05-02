@@ -339,7 +339,7 @@ a. Activación del servidor vnc en un cliente interno:
    2. *NOTA: este paso se realiza una sola vez*: configurar al password de
       acceso al servidor, ejecutando el comando
         #+begin_src shell
-   vncpasswd
+vncpasswd
         #+end_src
         y escribir el password dos veces.
    3. Ejecutar el servidor vnc y tomar nota del puerto asignado: Ejecutar
@@ -397,6 +397,48 @@ Los pasos a seguir son:
 
 La conexión dentro del campus será rápida. Fuera del campus será más lenta
 porque debe enrutarse a servidor externos.
+
+** File transfer
+Es posible copiar archivos desde o hacia la sala de cómputo. La forma exacta de
+hacerlo va a depender del putno de origen y destino. A continuación se muestran
+algunos ejemplos específicos.
+*** Desde computador personal hacia servidor de login
+Como el acceso al servidor de login es directo, se puede usar cualquier
+herramienta que permita usar ssh compo protocolo. Por ejemplo, se puede usar
+scp,
+#+begin_src shell
+scp -P 443 mudir/myfile.cpp USERNAME@168.176.35.111:/home/USERNAME/target
+#+end_src
+donde USERNAME es el nombre de usuario. Todo lo que se copie en el home estandar
+de un usuario (en este caso =/home/USERNAME=) es visible en todos los clientes
+de la sala.
+*** Desde computador personal hacia un cliente interno
+Este caso ocurre cuando a un usuario en particular se le ha activado un
+directorio local en un cliente interno para, por ejemplo, manejar cantidades
+grandes de datos. Para efectos de ejemplo, asumamos que en el cliente interno
+=sala100=, con ip =192.168.10.100=, se ha creado un directorio local llamado
+=/mnt/tmp/localshare=. Para realizar la copia ahora se debe pasar a través del
+servidor login para poder acceder al cliente interno, y se puede usar la opción
+ProxyJump de ssh como
+#+begin_src shell
+scp -o "ProxyJump 168.176.35.111:443" mudir/myfile.cpp USERNAME@192.168.10.100:/home/USERNAME/target
+#+end_src
+*** Desde un computador interno o servidor hacia afuera
+En este caso se debe tener en cuenta que el proxy de la Universidad filtra las
+conexiones salientes y es necesario configurar alguna herramienta que permita
+pasar estas opciones al protocolo ssh. Existen varias. En la sala se encuentra
+disponible una llamada =corkscrew=, https://github.com/bryanpkc/corkscrew . Lo
+único que se debe hacer es configurar ssh en la sala para que tenga la
+información del proxy escribiendo la siguiente información en el archivo
+=~/.ssh/config=
+#+begin_src conf
+ProxyCommand /usr/local/bin/corkscrew 192.168.10.1 3128 %h %p
+#+end_src
+Con esto se está usando el proxy local de la sala que no tiene autenticación y
+pasa a través del proxy de la Universidad.
+Después de esto funcionarán los comandos ssh y scp para establecer conexiones
+hacia afuera de la Universidad.
+
 
 ** Otros tips
 *** Usando proxyjump para acceder directamente a un computador interno (terminal)
