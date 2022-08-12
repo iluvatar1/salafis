@@ -5,6 +5,394 @@
 En este documento se presentan algunas herramientas que pueden ser útiles para
 estudiantes que requieren algunos recursos computacionales remotos o locales.
 
+* Remoto: Acceso a la sala de cómputo del departamento de física
+La sala de cómputo tiene un servidor básico de entrada que además comparte
+archivos y autenticación con los nodos. La sala es completamente heterogénea,
+siendo una reunión de diversos computadores con diversas características y
+edades. Actualmente ([2022-04-08 Fri]) se tiene la siguiente configuracón
+[[file:figs/salafis.png]] . *Los ips disponibles actualmente están en el rango
+~192.168.10.[3-26]~.*
+
+La memoría ram varía de apenas 1Gb para los más viejos, a 12 Gb en los más
+nuevos. La capacidad del disco duro también varía, aunque el home de los
+usuarios es un directorio compartido en todos los nodos desde el servidor,
+usando NFS, con un máximo uso sugerido de 7Gb por usuario. La mezcla de
+diversas, viejas y pequeñas características obliga a usar una distribución
+eficiente, y en este caso se Slackware 15.0+ (current), con el entorno gráfico
+xfce 4.16. Se incluyen los compiladores más actualizados, editores, etc.
+
+Usted debe tener cuenta en la sala de física. Normalmente, su profesor debe
+gestionar esta creación de cuentas. Pero usted también puede hacerlo de forma
+individual llenando el siguiente formulario: https://forms.gle/mZpHrTQ5i1eP2ef28 .
+
+Para realizar la conexión, el usuario tiene dos opciones:
+1. (*Recomendada*) Conectarse con un cliente x2go a cualquier computador
+   interno. Para esto es necesario configurar un tunnel usando el servidor como
+   bastión intermedio. *Importante: Lea y siga las instrucciones de
+   desactivación de screensaver y demás*.
+2. Conectarse por el protocolo ssh al servidor principal y de allí navegar a los
+   computadores internos que desee, también usando ssh.
+
+Estas opciones serán descritas con más detalle a continuación. *Es importante
+notar que no se deben ejecutar tareas en el servidor de login*
+
+También puede ver el siguiente video que muestra en vivo cómo realizar la
+conexión por terminal y gráfica: https://youtu.be/MJErFmsFfmI .
+
+** Conexión gráfica usando x2goclient
+REF:
+https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.html
+
+El cliente x2go permite conectarse a un servidor x2go y tener un escritorio
+remoto encriptado a través de ssh, y es muy rápido. Actualmente, la mayoría de
+los nodos internos ofrecen un servidor x2go. El servidor principal de login no
+tiene un servidor x2go, para evitar que se realicen trabajos allí. Usted se
+conectará a los clientes internos (ips en el rango ~192.168.10.[3-26]~) usando
+el servidor externo como puerta de entrada (ip ~168.176.35.111~).
+
+# Podría usarse
+# un tunel para conectarse a los clientes internos, pero x2go ofrece la
+# posibilidad de configurar un proxy lo que facilita la conexión a un cliente
+# interno. la referencia básica de lo que se muestra a continuación se encuentra
+# en
+# https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.html
+
+
+# Como es necesario entonces
+# conectarse directamente a un cliente interno, se debe usar un túnel (ya que x2go
+# no soporta la opción proxyjump mostrada anteriormente). Con un tunnel puede usar
+# cualquier cliente, como x2go, tighervnc, etc. En estos ejemplos se usará x2go
+# *NOTA:* Debe tener un tunnel funcional. Se asumirá que está en el puerto 2222.
+
+*** Configuración de una sesión de x2go
+- Instale el cliente descargándolo de client desde
+  https://wiki.x2go.org/doku.php/download:start . *NOTA: Los usuarios de Mac Os
+  X deben descargar e instalar previamente xquartz desde
+  https://www.xquartz.org/* Enlaces directos:
+  + Windows: http://code.x2go.org/releases/X2GoClient_latest_mswin32-setup.exe
+  + Mac Os X: http://code.x2go.org/releases/X2GoClient_latest_macosx_10_13.dmg
+- Ejecute x2go y en el menú seleccione =Session -> New Session=. Allí llene la
+  información que básicamente sería darle un nombre a la sessión, en Host
+  colocar el ip del cliente interno al que se quiera conectar (en el ejemplo se
+  muestra 192.168.10.37 pero debe cambiarla a alguna en el rango actual
+  ~19.168.10.[3-26]~, como, por ejemplo, ~192.168.10.4~), en login su nombre de
+  usuario, en el puerto colocar 22 (este es el puerto del cliente interno),
+  activar conectar a través de un proxy y allí colocar los datos del servidor de
+  entrada, como muestra la siguiente figura. Además en el tipo de sesión
+  selccionar XFCE:
+  #+ATTR_HTML: :width 80%
+  [[file:figs/x2go-clientdirect.png]]
+
+**** Conexión con x2go
+Una vez tenga configurada alguna sesión, simplemente de
+click a la sesión, llene el password si es necesario, y tendrá a su
+disposición un entorno gráfico ejecutado en el computador interno que haya
+escogido en la configuración, como lo muestra la siguiente figura
+#+ATTR_HTML: :width 80%
+[[file:figs/x2goclient-connected.png]]
+
+La primera vez que se conecta se le preguntará si desea aceptar el hostkey del
+servidor, debe decir que sí
+#+ATTR_HTML: :width 40%
+[[file:figs/hostkey.png]]
+
+Tambien, la primera vez deberá cambiar la contraseña primero escribiendo la
+actual (normalmente su número de documento)
+#+ATTR_HTML: :width 40%
+[[file:figs/passwd1.png]]
+Y luego colocando (se le solicita dos veces para confirmar) la nueva contraseña
+#+ATTR_HTML: :width 40%
+[[file:figs/passwd2.png]]
+
+
+**** *IMPORTANTE Recomendación con x2go*: deshabilitar screensaver
+Para evitar que la sesión se bloquee sin recuperación luego de unos minutos de
+inactividad se les recomienda que deshabiliten los programas xscreensaver,
+xfce4-screensaver y el bloqueo de pantalla, todos accesibles desde el menú y
+configuración (~Applications, Settings, ir al final del menu~). Las siguientes
+figuras muestran cómo deben quedar deshabilitados estos servicios:
+- xscreensaver
+#+ATTR_HTML: :width 80%
+[[file:figs/xscreensaver.png]]
+- xfce4-screensaver
+#+ATTR_HTML: :width 80%
+[[file:figs/xfce4-screensaver.png]]
+- screen lock (second tab from xfce4 screensaver prefs):
+#+ATTR_HTML: :width 80%
+[[file:figs/xfce4-screenlock.png]]
+
+** (Opcional) Conexión por ssh
+*** Conexión básica por terminal
+El ip público del servidor es 168.176.35.111. La conexión básica por ssh se
+establece de la siguiente manera
+#+begin_src shell
+ssh -p 443 USERNAME@168.176.35.111
+#+end_src
+donde =443= es el puerto de conexión y *debe reemplazarse =USERNAME= por el
+nombre de usuario* (debe tener una cuenta previamente creada). Este comando le
+pedirá la clave (si no está usando llaves de autenticación, o si es la primera
+vez) y si la autenticación es exitosa el usuario observará el siguiente prompt:
+#+ATTR_HTML: :width 80%
+[[file:figs/init_prompt.png]]
+
+Allí se describen los diversos ips internos a los que se puede conectar el
+usuario. Por ejemplo, si desea conectarse a un nodo de 4 threads, podría usar
+#+begin_src shell
+ssh 192.168.10.12
+#+end_src
+o también
+#+begin_src shell
+ssh sala12
+#+end_src
+No es necesario especificar el puerto ya que se usa el que es por defecto,
+el 22. Allí podrá ejecutar sus trabajos.
+
+*NOTA:* La primera vez que se conecte a cada nodo, ya sea el de login o uno
+interno, se le va a preguntar por la autenticidad de ese host. Debe aceptarla.
+
+*** Conexión desde Windows
+Windows 10 trae soporte para cliente ssh, especialmente en el WSL. En lo que
+sigue se mostrarán opciones para esta y otras versiones de Windows:
+1) Instale una extensión de google chrome llamada [[https://chrome.google.com/webstore/detail/secure-shell/iodihamcpbpeioajjeobimgagajmlibd][chrome secure shell]] .
+2) Instale una aplicación: como [[http://www.9bis.net/kitty/#!pages/download.md][kitty]], [[https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html][putty]], [[https://winsshterm.blogspot.com/][winsshterm]] , [[https://mobaxterm.mobatek.net/][MobaXterm(basic)]]
+Las imágenes que siguen muestran la conexión desde kitty (en una máquina virtual
+de windows 7) o desde la extensión de chrome (que funciona en cualquier
+instalación de chrome)
+- Chrome secure shell ::
+  Ejecute la extensión e introduzca la información necesaria
+  #+ATTR_HTML: :width 80%
+  [[file:figs/secshell-basic-1.png]]
+
+  Debe autorizar los permisos necesarios, como darle permiso a la extensión
+  para conectarse o aceptar la identidad de la máquina remota escribiendo yes
+  en el cuadro que sale
+  #+ATTR_HTML: :width 80%
+  [[file:figs/secshell-basic-2.png]]
+
+  Y luego podrá entrar sin problema
+  #+ATTR_HTML: :width 80%
+  [[file:figs/secshell-basic-3.png]]
+
+  Es importante resaltar que esta extensión soporta mosh, que le permite
+  reconectarse automáticamente después de una caída de conexíon.
+- kitty ::
+  Configuración de la conexión: simplemente escriba el ip, el puerto, y da
+  click en start (a la izquierda)
+  #+ATTR_HTML: :width 80%
+  [[file:figs/kitty-basic-1.png]]
+
+  Luego escriba su nombre de usuario y contraseña y deberá entrar al prompt del
+  login server:
+  #+ATTR_HTML: :width 80%
+  [[file:figs/kitty-basic-2.png]]
+
+** (Opcional) Conexión con servidor vnc (turbovnc) para OpenGL
+Existen algunas aplicaciones que requieren OpenGL para su funcionamiento. OpenGL
+no está soportado en x2go. Para resolver esto se puede usar un servidor vnc con
+soporte OpenGL (como turbovnc), pero esto requiere a su vez requiere varias
+cosas (ver https://docs.hpc.cam.ac.uk/hpc/user-guide/turbovnc.html ,
+https://www.osc.edu/resources/available_software/software_list/turbovnc) :
+- Activar el servidor vnc dentro de un cliente de la sala de cómputo (con su
+  configuración respectiva)
+- Crear un túnel local que direccione el puerto del cliente a un puerto
+  local.
+- Conectar turbovnc al túnel local.
+Para realizar lo anterior, se indican a continuación las instrucciones
+específicas que ya han sido probadas y funcionan, pero debe seguirlas
+correctamente:
+a. Activación del servidor vnc en un cliente interno:
+   1. Entre (por ssh o x2go) al cliente interno en donde va a ejecutar el
+      servidor vnc. Allí ejecute el siguiente comando para cargar el paquete de
+      turbovnc
+      #+begin_src shell
+ source /packages/spack/share/spack/setup-env.sh
+ spack load turbovnc
+      #+end_src
+   2. *NOTA: este paso se realiza una sola vez*: configurar al password de
+      acceso al servidor, ejecutando el comando
+        #+begin_src shell
+vncpasswd
+        #+end_src
+        y escribir el password dos veces.
+   3. Ejecutar el servidor vnc y tomar nota del puerto asignado: Ejecutar
+      #+begin_src shell
+vncserver
+      #+end_src
+      Al crear el servidor se asigna un puerto de la forma =590R=. Es importante
+      anotar ese valor de =R=. Este número es el que aparece cuando se ejecuta
+      el comando =vncserver= como un mensaje en la consola que dice algo como
+      =/home/$USER/.vnc/sala2.salafis.net:R.log)= o cuando se ejecuta el comando
+      #+begin_src shell
+vncserver -list
+      #+end_src
+      en donde el número =R= aparece debajo de =X DISPLAY=.
+b. Creación del tunel:
+   1. Ejecutar el siguiente comando, reemplazondo =R= por su valor correcto (se
+      asume que se desea conectar al cliente interno que termina en .2):
+      #+begin_src shell
+ssh -f -N -p 22 USUARIO@192.168.10.2 -J USUARIO@168.176.35.111:443 -L 590R:localhost:590R
+      #+end_src
+      evidentemente debe reemplazar =USUARIO= por su nombre de usuario. Puede ser
+      que el comando se quede ejecutando sin hacer nada más. Déjelo así y no
+      cierre la ventana en donde lo ejecutó. Este comando debe ejecutarse en una
+      terminal. Más abajo se muestra también como configurarlo en putty o kitty.
+c. Conectarse usando el cliente turbovnc:
+   1. En su computador debe tener instalado el turbovnc viewer (descargarlo de
+      https://sourceforge.net/projects/turbovnc/files/ , para windows es el
+      archivo que termina =.exe= o =.msi=) .
+   2. Ejecutar turbovnc, y cuando pida los datos de conexión se coloca
+      #+begin_src shell
+localhost:590R
+      #+end_src
+      reemplazando =R= por el valor correspondiente. Se escribe el password
+      correspondiente que se creó con  =vncpasswd= y con esto se abre un
+      escritorio que tiene soporte para opengl. Se puede verificar abriendo una
+      consola y escribiendo
+      #+begin_src shell
+glxgears
+      #+end_src
+** Conexión dentro del campus desde la red UNAL
+Actualmente, la red wireless UNAL restringe el protocolo ssh y esto hace que no pueda
+establecerse conexión con el servidor cuando se está dentro del campus conectado
+a la red UNAL. A pesar de solicitar la solución varias veces no ha sido posible
+resolver este problema y por tanto se plantea acá una solución alternativa: usar
+una vpn.
+# Si desea ver un video del procedimiento puede encontrarlo a
+# continuación: https://youtu.be/aMkhJ7Ocq30
+Los pasos a seguir son:
+- Instalar tailscale (el video de antes muestra esto en Windows, pero puede ser
+  usado en linux, mac, android): https://tailscale.com/
+- Enviar un email el encargado de la sala informando su usuario de github.
+- Esperar la confirmación de haber sido añadido a la organización
+  correspondiente.
+- Abrir tailscale usando la cuenta de github, luego seleccionando una multinet
+  asociada a la organización que se le informó.
+- Conectarse siguiendo los mismos pasos pero cambiando el ip tradicional del
+  servidor (168.176.x.x) por el que muestra tail scale para serversalafis.
+
+La conexión dentro del campus será rápida. Fuera del campus será más lenta
+porque debe enrutarse a servidor externos y entonces es preferible usar el
+método tradicional. Se le recomienda tener dos sesiones de x2go, una con el ip
+tradicional y otra con tailscale.
+
+** (Opcional) File transfer
+Es posible copiar archivos desde o hacia la sala de cómputo. La forma exacta de
+hacerlo va a depender del putno de origen y destino. A continuación se muestran
+algunos ejemplos específicos.
+*** Desde computador personal hacia servidor de login
+Como el acceso al servidor de login es directo, se puede usar cualquier
+herramienta que permita usar ssh compo protocolo. Por ejemplo, se puede usar
+scp,
+#+begin_src shell
+scp -P 443 mudir/myfile.cpp USERNAME@168.176.35.111:/home/USERNAME/target
+#+end_src
+donde USERNAME es el nombre de usuario. Todo lo que se copie en el home estandar
+de un usuario (en este caso =/home/USERNAME=) es visible en todos los clientes
+de la sala.
+*** Desde computador personal hacia un cliente interno
+Este caso ocurre cuando a un usuario en particular se le ha activado un
+directorio local en un cliente interno para, por ejemplo, manejar cantidades
+grandes de datos. Para efectos de ejemplo, asumamos que en el cliente interno
+=sala100=, con ip =192.168.10.100=, se ha creado un directorio local llamado
+=/mnt/tmp/localshare=. Para realizar la copia ahora se debe pasar a través del
+servidor login para poder acceder al cliente interno, y se puede usar la opción
+ProxyJump de ssh como
+#+begin_src shell
+scp -o "ProxyJump 168.176.35.111:443" mudir/myfile.cpp USERNAME@192.168.10.100:/home/USERNAME/target
+#+end_src
+*** Desde un computador interno o servidor hacia afuera
+En este caso se debe tener en cuenta que el proxy de la Universidad filtra las
+conexiones salientes y es necesario configurar alguna herramienta que permita
+pasar estas opciones al protocolo ssh. Existen varias. En la sala se encuentra
+disponible una llamada =corkscrew=, https://github.com/bryanpkc/corkscrew . Lo
+único que se debe hacer es configurar ssh en la sala para que tenga la
+información del proxy escribiendo la siguiente información en el archivo
+=~/.ssh/config=
+#+begin_src conf
+ProxyCommand /usr/local/bin/corkscrew 192.168.10.1 3128 %h %p
+#+end_src
+Con esto se está usando el proxy local de la sala que no tiene autenticación y
+pasa a través del proxy de la Universidad.
+Después de esto funcionarán los comandos ssh y scp para establecer conexiones
+hacia afuera de la Universidad.
+
+
+** Otros tips
+*** Usando proxyjump para acceder directamente a un computador interno (terminal)
+Si un usuario desea conectarse directamente a un pc interno puede usar el
+servidor de login como bastión intermedio, a través el siguiente
+comando
+#+begin_src shell
+ssh -J USERNAME@168.176.35.111:443 USERNAME@192.168.10.12
+#+end_src
+Y en este caso entrará directamente al nodo =192.168.10.12= y será transparente
+su conexión.
+**** Windows
+No todos los clientes ssh de windows soportan las versiones recientes de ssh y
+la opción proxyjump. Sin embargo puede seguir las siguientes [[https://superuser.com/questions/1448180/how-to-setup-proxy-jump-with-putty][instrucciones para
+kitty]] , o usar plink, o crear un tunnel como se muestra más adelante.
+*** Configuración de un tunel para acceso directo a un nodo interno
+El objetivo de este punto es establecer una conexión directa a un nodo interno y
+dejar esta conexión expuesta localmente en un puerto específico. Esto se llama
+"abrir un túnel". La utilidad de un tunel es que no será necesario hacer dos
+logins y además permitirá conectarse graficamente a un escritorio compartido en
+una sesión gráfica.
+
+Asumiendo que queremos un túnel al computador interno de ip 192.168.10.12, el
+comando a ejecutar es
+#+begin_src shell
+ssh -f -N -o 'Compression=no' -L 2222:192.168.10.12:22 -p 443 USERNAME@168.176.35.111
+#+end_src
+En este caso, el puerto local del tunel es el 2222.
+
+Para probar que el tunel funciona, ejecute:
+#+begin_src shell
+ssh -p 2222 USERNAME@localhost
+#+end_src
+y deberá aparecer inmediatamente logueado en 192.168.10.12 .
+
+El túnel debe ser funcional para que pueda usar x2goclient.
+
+**** Windows
+- chrome secure shell: configure la conexión como se muestra a continuación,
+  conéctse y manténgala abierta
+  #+ATTR_HTML: :width 80%
+  [[file:figs/tunnel-secshell-1.png]]
+- kitty: Además de colocar el ip y el puerto, en las opciones a la izquierda
+  debe ir a ssh, dar click en el símbolo +, seleccionar tunnel, en source port
+  color =2222=, en destination =192.168.10.12:22=, le da add, y debe quedar como
+  se muestra a continuación
+  #+ATTR_HTML: :width 80%
+  [[file:figs/kitty-basic-1.png]]
+  #+ATTR_HTML: :width 80%
+  [[file:figs/tunnel-kitty-1.png]]
+
+  Luego le da click en start y NO cierra la sesión.
+
+*** Conexión por medio de llaves y sin password
+Si prefiere no escribir la clave cada vez que se conecta, además de aumentar la
+seguridad, puede crear una llave pública privada y copiarla al servidor de login
+(ver, por ejemplo,
+https://www.tecmint.com/ssh-passwordless-login-using-ssh-keygen-in-5-easy-steps/).
+Basicamente debe ejecutar los siguientes comandos
+- Generar la llave (puede dejar vacía la passphrase de la llave):
+  #+begin_src shell
+ssh-keygen -t rsa
+  #+end_src
+- Copiar la llave
+  #+begin_src shell
+ssh-copy-id -p 443 USERNAME@168.176.35.111
+  #+end_src
+  Debe introducir el password. Si lo anterior funciona exitosamente, la
+  siguiente vez que use ssh al servidor de login no tendrá que introducir la
+  clave.
+** To check :noexport:
+- x2go configs / cluster
+  + https://hcc.unl.edu/docs/connecting/
+  + https://wynton.ucsf.edu/hpc/howto/gui-x11fwd.html
+  + https://wynton.ucsf.edu/hpc/howto/gui-x11fwd.html
+  + https://www1.psfc.mit.edu/computers/cluster/certificates.html
+  + https://wiki.x2go.org/doku.php/wiki:advanced:x2gobroker:loadbalancing
 * Local: Virtual box
 En este caso pueden usar una máquina virtual que he diseñado para este fin, o
 ustedes mismos por su cuentas instalar y configurar todo lo necesario en su
@@ -157,362 +545,3 @@ https://www.ventoy.net/en/index.html
 ** TODO Show how to use balenaetcher
 https://www.balena.io/etcher/
 This allows to easily burn any iso and any platform.
-* Remoto: Acceso ssh a la sala de física
-La sala de cómputo tiene un servidor básico de entrada que además comparte
-archivos y autenticación con los nodos. La sala es completamente heterogénea,
-siendo una reunión de diversos computadores con diversas características y
-edades. Actualmente ([2022-04-08 Fri]) se tiene la siguiente configuracón
-[[file:figs/salafis.png]]
-
-La memoría ram varía de apenas 1Gb para los más viejos, a 12 Gb en los más
-nuevos. La capacidad del disco duro también varía, aunque el home de los
-usuarios es un directorio compartido en todos los nodos desde el servidor,
-usando NFS, con un máximo uso sugerido de 7Gb por usuario. La mezcla de
-diversas, viejas y pequeñas características obliga a usar una distribución
-eficiente, y en este caso se Slackware 15.0+ (current), con el entorno gráfico
-xfce 4.16. Se incluyen los compiladores más actualizados, editores, etc.
-
-Usted debe tener cuenta en la sala de física. Normalmente, su profesor debe
-gestionar esta creación de cuentas. Si lo desea, para solicitar una cuenta puede
-llenar el siguiente formulario: https://forms.gle/mZpHrTQ5i1eP2ef28 .
-
-Para realizar la conexión, el usuario tiene dos opciones:
-1. Conectarse por el protocolo ssh al servidor principal y de allí navegar a los
-   computadores internos que desee, también usando ssh.
-2. Conectarse con un cliente x2go a cualquier computador interno. Para esto es
-   necesario configurar un tunnel usando el servidor como bastión intermedio.
-   *Importante:* Lea y siga las instrucciones de desactivación de screensaver y
-   demás.
-
-Estas opciones serán descritas con más detalle a continuación. *Es importante
-notar que no se deben ejecutar tareas en el servidor de login*
-
-También puede ver el siguiente video que muestra en vivo cómo realizar la
-conexión por terminal y gráfica: https://youtu.be/MJErFmsFfmI .
-
-** Conexión por ssh
-*** Conexión básica por terminal
-El ip público del servidor es 168.176.35.111. La conexión básica por ssh se
-establece de la siguiente manera
-#+begin_src shell
-ssh -p 443 USERNAME@168.176.35.111
-#+end_src
-donde =443= es el puerto de conexión y *debe reemplazarse =USERNAME= por el
-nombre de usuario* (debe tener una cuenta previamente creada). Este comando le
-pedirá la clave (si no está usando llaves de autenticación, o si es la primera
-vez) y si la autenticación es exitosa el usuario observará el siguiente prompt:
-#+ATTR_HTML: :width 80%
-[[file:figs/init_prompt.png]]
-
-Allí se describen los diversos ips internos a los que se puede conectar el
-usuario. Por ejemplo, si desea conectarse a un nodo de 4 threads, podría usar
-#+begin_src shell
-ssh 192.168.10.12
-#+end_src
-o también
-#+begin_src shell
-ssh sala12
-#+end_src
-No es necesario especificar el puerto ya que se usa el que es por defecto,
-el 22. Allí podrá ejecutar sus trabajos.
-
-*NOTA:* La primera vez que se conecte a cada nodo, ya sea el de login o uno
-interno, se le va a preguntar por la autenticidad de ese host. Debe aceptarla.
-
-*** Conexión desde Windows
-Windows 10 trae soporte para cliente ssh, especialmente en el WSL. En lo que
-sigue se mostrarán opciones para esta y otras versiones de Windows:
-1) Instale una extensión de google chrome llamada [[https://chrome.google.com/webstore/detail/secure-shell/iodihamcpbpeioajjeobimgagajmlibd][chrome secure shell]] .
-2) Instale una aplicación: como [[http://www.9bis.net/kitty/#!pages/download.md][kitty]], [[https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html][putty]], [[https://winsshterm.blogspot.com/][winsshterm]] , [[https://mobaxterm.mobatek.net/][MobaXterm(basic)]]
-Las imágenes que siguen muestran la conexión desde kitty (en una máquina virtual
-de windows 7) o desde la extensión de chrome (que funciona en cualquier
-instalación de chrome)
-- Chrome secure shell ::
-  Ejecute la extensión e introduzca la información necesaria
-  #+ATTR_HTML: :width 80%
-  [[file:figs/secshell-basic-1.png]]
-
-  Debe autorizar los permisos necesarios, como darle permiso a la extensión
-  para conectarse o aceptar la identidad de la máquina remota escribiendo yes
-  en el cuadro que sale
-  #+ATTR_HTML: :width 80%
-  [[file:figs/secshell-basic-2.png]]
-
-  Y luego podrá entrar sin problema
-  #+ATTR_HTML: :width 80%
-  [[file:figs/secshell-basic-3.png]]
-
-  Es importante resaltar que esta extensión soporta mosh, que le permite
-  reconectarse automáticamente después de una caída de conexíon.
-- kitty ::
-  Configuración de la conexión: simplemente escriba el ip, el puerto, y da
-  click en start (a la izquierda)
-  #+ATTR_HTML: :width 80%
-  [[file:figs/kitty-basic-1.png]]
-
-  Luego escriba su nombre de usuario y contraseña y deberá entrar al prompt del
-  login server:
-  #+ATTR_HTML: :width 80%
-  [[file:figs/kitty-basic-2.png]]
-
-** Conexión gráfica
-*** Usando x2goclient
-REF:
-https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.html
-
-El cliente x2go permite conectarse a un servidor x2go y tener un escritorio
-remoto encriptado a través de ssh. Actualmente, la mayoría de los nodos internos
-ofrecen un servidor x2go. El servidor principal de login no tiene un servidor
-x2go, para evitar que se realicen trabajos allí. Podría usarse un tunel para
-conectarse a los clientes internos, pero x2go ofrece la posibilidad de
-configurar un proxy lo que facilita la conexión a un cliente interno. la
-referencia básica de lo que se muestra a continuación se encuentra en
-https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.html
-
-
-# Como es necesario entonces
-# conectarse directamente a un cliente interno, se debe usar un túnel (ya que x2go
-# no soporta la opción proxyjump mostrada anteriormente). Con un tunnel puede usar
-# cualquier cliente, como x2go, tighervnc, etc. En estos ejemplos se usará x2go
-# *NOTA:* Debe tener un tunnel funcional. Se asumirá que está en el puerto 2222.
-
-**** Configuración de una sesión de x2go
-- Instale el cliente descargándolo de client desde
-    https://wiki.x2go.org/doku.php/download:start .
-- Ejecute x2go y en el menú seleccione =Session -> New Session=. Allí llene la
-  información que básicamente sería darle un nombre a la sessión, en Host
-  colocar el ip del cliente interno al que se quiera conectar (en el ejemplo se
-  muestra 192.168.10.37), en login su nombre de usuario, en el puerto colocar 22
-  (este es el puerto del cliente interno), activar conectar a través de un proxy
-  y allí colocar los datos del servidor de entrada, como muestra la siguiente
-  figura. Además  en el tipo de sesión selccionar XFCE:
-  #+ATTR_HTML: :width 80%
-  [[file:figs/x2go-clientdirect.png]]
-
-**** Conexión con x2go
-Una vez tenga configurada alguna sesión, simplemente de
-doble click a la sesión, llene el password si es necesario, y tendrá a su
-disposición un entorno gráfico ejecutado en el computador interno que haya
-escogido en la configuración, como lo muestra la siguiente figura (la primera vez que lo
-ejecute xfce le preguntará por la configuración: escoja por defecto, NO escoja
-empty panel)
-#+ATTR_HTML: :width 80%
-[[file:figs/x2goclient-connected.png]]
-**** IMPORTANTE: Recomendación con x2go: deshabilitar screensaver
-Para evitar que la sesión se bloquee sin recuperación luego de unos minutos de
-inactividad se les recomienda que deshabiliten los programas xscreensaver,
-xfce4-screensaver y el bloqueo de pantalla, todos accesibles desde el menú y
-configuración. Las siguientes figuras muestran cómo deben quedar deshabilitados
-estos servicios:
-- xscreensaver
-#+ATTR_HTML: :width 80%
-[[file:figs/xscreensaver.png]]
-- xfce4-screensaver
-#+ATTR_HTML: :width 80%
-[[file:figs/xfce4-screensaver.png]]
-- screen lock (second tab from xfce4 screensaver prefs):
-#+ATTR_HTML: :width 80%
-[[file:figs/xfce4-screenlock.png]]
-
-** Conexión con servidor vnc (turbovnc) para OpenGL
-Existen algunas aplicaciones que requieren OpenGL para su funcionamiento. OpenGL
-no está soportado en x2go. Para resolver esto se puede usar un servidor vnc con
-soporte OpenGL (como turbovnc), pero esto requiere a su vez requiere varias
-cosas (ver https://docs.hpc.cam.ac.uk/hpc/user-guide/turbovnc.html ,
-https://www.osc.edu/resources/available_software/software_list/turbovnc) :
-- Activar el servidor vnc dentro de un cliente de la sala de cómputo (con su
-  configuración respectiva)
-- Crear un túnel local que direccione el puerto del cliente a un puerto
-  local.
-- Conectar turbovnc al túnel local.
-Para realizar lo anterior, se indican a continuación las instrucciones
-específicas que ya han sido probadas y funcionan, pero debe seguirlas
-correctamente:
-a. Activación del servidor vnc en un cliente interno:
-   1. Entre (por ssh o x2go) al cliente interno en donde va a ejecutar el
-      servidor vnc. Allí ejecute el siguiente comando para cargar el paquete de
-      turbovnc
-      #+begin_src shell
- source /packages/spack/share/spack/setup-env.sh
- spack load turbovnc
-      #+end_src
-   2. *NOTA: este paso se realiza una sola vez*: configurar al password de
-      acceso al servidor, ejecutando el comando
-        #+begin_src shell
-vncpasswd
-        #+end_src
-        y escribir el password dos veces.
-   3. Ejecutar el servidor vnc y tomar nota del puerto asignado: Ejecutar
-      #+begin_src shell
-vncserver
-      #+end_src
-      Al crear el servidor se asigna un puerto de la forma =590R=. Es importante
-      anotar ese valor de =R=. Este número es el que aparece cuando se ejecuta
-      el comando =vncserver= como un mensaje en la consola que dice algo como
-      =/home/$USER/.vnc/sala2.salafis.net:R.log)= o cuando se ejecuta el comando
-      #+begin_src shell
-vncserver -list
-      #+end_src
-      en donde el número =R= aparece debajo de =X DISPLAY=.
-b. Creación del tunel:
-   1. Ejecutar el siguiente comando, reemplazondo =R= por su valor correcto (se
-      asume que se desea conectar al cliente interno que termina en .2):
-      #+begin_src shell
-ssh -f -N -p 22 USUARIO@192.168.10.2 -J USUARIO@168.176.35.111:443 -L 590R:localhost:590R
-      #+end_src
-      evidentemente debe reemplazar =USUARIO= por su nombre de usuario. Puede ser
-      que el comando se quede ejecutando sin hacer nada más. Déjelo así y no
-      cierre la ventana en donde lo ejecutó. Este comando debe ejecutarse en una
-      terminal. Más abajo se muestra también como configurarlo en putty o kitty.
-c. Conectarse usando el cliente turbovnc:
-   1. En su computador debe tener instalado el turbovnc viewer (descargarlo de
-      https://sourceforge.net/projects/turbovnc/files/ , para windows es el
-      archivo que termina =.exe= o =.msi=) .
-   2. Ejecutar turbovnc, y cuando pida los datos de conexión se coloca
-      #+begin_src shell
-localhost:590R
-      #+end_src
-      reemplazando =R= por el valor correspondiente. Se escribe el password
-      correspondiente que se creó con  =vncpasswd= y con esto se abre un
-      escritorio que tiene soporte para opengl. Se puede verificar abriendo una
-      consola y escribiendo
-      #+begin_src shell
-glxgears
-      #+end_src
-** Conexión dentro del campus desde la red UNAL
-La red wireless UNAL restringe el protocolo ssh y esto hace que no pueda
-establecerse conexión con el servidor cuando se está dentro del campus conectado
-a la red UNAL. A pesar de solicitar la solución varias veces no ha sido posible
-resolver este problema y por tanto se plantea acá una solución alternativa: usar
-una vpn. Si desea ver un video del procedimiento puede encontrarlo a
-continuación: https://youtu.be/aMkhJ7Ocq30
-Los pasos a seguir son:
-- Instalar tailscale (el video de antes muestra esto en Windows, pero puede ser
-  usado en linux, mac, android): https://tailscale.com/
-- Unirse *usando una cuenta personal de gmail, no la de la unal*.
-- Solicitar un link único para compartir el servidor (se solicita por email al
-  administrador de la sala)
-- Conectarse siguiendo los mismos pasos pero cambiando el ip tradicional del
-  servidor (168.176.x.x) por el que muestra tail scale.
-
-La conexión dentro del campus será rápida. Fuera del campus será más lenta
-porque debe enrutarse a servidor externos.
-
-** File transfer
-Es posible copiar archivos desde o hacia la sala de cómputo. La forma exacta de
-hacerlo va a depender del putno de origen y destino. A continuación se muestran
-algunos ejemplos específicos.
-*** Desde computador personal hacia servidor de login
-Como el acceso al servidor de login es directo, se puede usar cualquier
-herramienta que permita usar ssh compo protocolo. Por ejemplo, se puede usar
-scp,
-#+begin_src shell
-scp -P 443 mudir/myfile.cpp USERNAME@168.176.35.111:/home/USERNAME/target
-#+end_src
-donde USERNAME es el nombre de usuario. Todo lo que se copie en el home estandar
-de un usuario (en este caso =/home/USERNAME=) es visible en todos los clientes
-de la sala.
-*** Desde computador personal hacia un cliente interno
-Este caso ocurre cuando a un usuario en particular se le ha activado un
-directorio local en un cliente interno para, por ejemplo, manejar cantidades
-grandes de datos. Para efectos de ejemplo, asumamos que en el cliente interno
-=sala100=, con ip =192.168.10.100=, se ha creado un directorio local llamado
-=/mnt/tmp/localshare=. Para realizar la copia ahora se debe pasar a través del
-servidor login para poder acceder al cliente interno, y se puede usar la opción
-ProxyJump de ssh como
-#+begin_src shell
-scp -o "ProxyJump 168.176.35.111:443" mudir/myfile.cpp USERNAME@192.168.10.100:/home/USERNAME/target
-#+end_src
-*** Desde un computador interno o servidor hacia afuera
-En este caso se debe tener en cuenta que el proxy de la Universidad filtra las
-conexiones salientes y es necesario configurar alguna herramienta que permita
-pasar estas opciones al protocolo ssh. Existen varias. En la sala se encuentra
-disponible una llamada =corkscrew=, https://github.com/bryanpkc/corkscrew . Lo
-único que se debe hacer es configurar ssh en la sala para que tenga la
-información del proxy escribiendo la siguiente información en el archivo
-=~/.ssh/config=
-#+begin_src conf
-ProxyCommand /usr/local/bin/corkscrew 192.168.10.1 3128 %h %p
-#+end_src
-Con esto se está usando el proxy local de la sala que no tiene autenticación y
-pasa a través del proxy de la Universidad.
-Después de esto funcionarán los comandos ssh y scp para establecer conexiones
-hacia afuera de la Universidad.
-
-
-** Otros tips
-*** Usando proxyjump para acceder directamente a un computador interno (terminal)
-Si un usuario desea conectarse directamente a un pc interno puede usar el
-servidor de login como bastión intermedio, a través el siguiente
-comando
-#+begin_src shell
-ssh -J USERNAME@168.176.35.111:443 USERNAME@192.168.10.12
-#+end_src
-Y en este caso entrará directamente al nodo =192.168.10.12= y será transparente
-su conexión.
-**** Windows
-No todos los clientes ssh de windows soportan las versiones recientes de ssh y
-la opción proxyjump. Sin embargo puede seguir las siguientes [[https://superuser.com/questions/1448180/how-to-setup-proxy-jump-with-putty][instrucciones para
-kitty]] , o usar plink, o crear un tunnel como se muestra más adelante.
-*** Configuración de un tunel para acceso directo a un nodo interno
-El objetivo de este punto es establecer una conexión directa a un nodo interno y
-dejar esta conexión expuesta localmente en un puerto específico. Esto se llama
-"abrir un túnel". La utilidad de un tunel es que no será necesario hacer dos
-logins y además permitirá conectarse graficamente a un escritorio compartido en
-una sesión gráfica.
-
-Asumiendo que queremos un túnel al computador interno de ip 192.168.10.12, el
-comando a ejecutar es
-#+begin_src shell
-ssh -f -N -o 'Compression=no' -L 2222:192.168.10.12:22 -p 443 USERNAME@168.176.35.111
-#+end_src
-En este caso, el puerto local del tunel es el 2222.
-
-Para probar que el tunel funciona, ejecute:
-#+begin_src shell
-ssh -p 2222 USERNAME@localhost
-#+end_src
-y deberá aparecer inmediatamente logueado en 192.168.10.12 .
-
-El túnel debe ser funcional para que pueda usar x2goclient.
-
-**** Windows
-- chrome secure shell: configure la conexión como se muestra a continuación,
-  conéctse y manténgala abierta
-  #+ATTR_HTML: :width 80%
-  [[file:figs/tunnel-secshell-1.png]]
-- kitty: Además de colocar el ip y el puerto, en las opciones a la izquierda
-  debe ir a ssh, dar click en el símbolo +, seleccionar tunnel, en source port
-  color =2222=, en destination =192.168.10.12:22=, le da add, y debe quedar como
-  se muestra a continuación
-  #+ATTR_HTML: :width 80%
-  [[file:figs/kitty-basic-1.png]]
-  #+ATTR_HTML: :width 80%
-  [[file:figs/tunnel-kitty-1.png]]
-
-  Luego le da click en start y NO cierra la sesión.
-
-*** Conexión por medio de llaves y sin password
-Si prefiere no escribir la clave cada vez que se conecta, además de aumentar la
-seguridad, puede crear una llave pública privada y copiarla al servidor de login
-(ver, por ejemplo,
-https://www.tecmint.com/ssh-passwordless-login-using-ssh-keygen-in-5-easy-steps/).
-Basicamente debe ejecutar los siguientes comandos
-- Generar la llave (puede dejar vacía la passphrase de la llave):
-  #+begin_src shell
-ssh-keygen -t rsa
-  #+end_src
-- Copiar la llave
-  #+begin_src shell
-ssh-copy-id -p 443 USERNAME@168.176.35.111
-  #+end_src
-  Debe introducir el password. Si lo anterior funciona exitosamente, la
-  siguiente vez que use ssh al servidor de login no tendrá que introducir la
-  clave.
-** To check :noexport:
-- x2go configs / cluster
-  + https://hcc.unl.edu/docs/connecting/
-  + https://wynton.ucsf.edu/hpc/howto/gui-x11fwd.html
-  + https://wynton.ucsf.edu/hpc/howto/gui-x11fwd.html
-  + https://www1.psfc.mit.edu/computers/cluster/certificates.html
-  + https://wiki.x2go.org/doku.php/wiki:advanced:x2gobroker:loadbalancing
