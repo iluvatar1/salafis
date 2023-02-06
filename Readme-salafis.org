@@ -9,17 +9,26 @@ estudiantes que requieren algunos recursos computacionales remotos o locales.
 La sala de cómputo tiene un servidor básico de entrada que además comparte
 archivos y autenticación con los nodos. La sala es completamente heterogénea,
 siendo una reunión de diversos computadores con diversas características y
-edades. Actualmente ([2022-04-08 Fri]) se tiene la siguiente configuracón
-[[file:figs/salafis.png]] . *Los ips disponibles actualmente están en el rango
-~192.168.10.[3-26]~.*
+edades. Actualmente ([2023-02-06 Mon]) se tiene la siguiente configuración:
 
-La memoría ram varía de apenas 1Gb para los más viejos, a 12 Gb en los más
-nuevos. La capacidad del disco duro también varía, aunque el home de los
-usuarios es un directorio compartido en todos los nodos desde el servidor,
-usando NFS, con un máximo uso sugerido de 7Gb por usuario. La mezcla de
-diversas, viejas y pequeñas características obliga a usar una distribución
-eficiente, y en este caso se Slackware 15.0+ (current), con el entorno gráfico
-xfce 4.16. Se incluyen los compiladores más actualizados, editores, etc.
+|----------+-------------+----------+---------------|
+| Cantidad | Num Threads | Ram (Gb) | Notes         |
+|----------+-------------+----------+---------------|
+|        1 |          16 |       16 | 1 Nvidia Card |
+|        4 |          16 |       16 |               |
+|        4 |          12 |        8 |               |
+|        2 |           8 |       12 |               |
+|        3 |           6 |        8 |               |
+|        5 |           4 |        8 |               |
+|----------+-------------+----------+---------------|
+
+ *Los ips disponibles actualmente están en el rango ~192.168.10.[2-20]~.*
+
+Las cuentas de usuario tienen un límite de almacenamiento de 6Gb, pero se puede
+solicitar más espacio en otras particiones. La mezcla de diversas, viejas y
+pequeñas características obliga a usar una distribución eficiente, y en este
+caso se Slackware 15.0+ (current), con el entorno gráfico xfce 4.16. Se incluyen
+los compiladores más actualizados, editores, etc.
 
 Usted debe tener cuenta en la sala de física. Normalmente, su profesor debe
 gestionar esta creación de cuentas. Pero usted también puede hacerlo de forma
@@ -68,14 +77,16 @@ el servidor externo como puerta de entrada (ip ~168.176.35.111~).
 - Instale el cliente descargándolo de client desde
   https://wiki.x2go.org/doku.php/download:start . *NOTA: Los usuarios de Mac Os
   X deben descargar e instalar previamente xquartz desde
-  https://www.xquartz.org/* Enlaces directos:
+  https://www.xquartz.org/*
+
+  *Enlaces directos*:
   + Windows: http://code.x2go.org/releases/X2GoClient_latest_mswin32-setup.exe
   + Mac Os X: http://code.x2go.org/releases/X2GoClient_latest_macosx_10_13.dmg
 - Ejecute x2go y en el menú seleccione =Session -> New Session=. Allí llene la
   información que básicamente sería darle un nombre a la sessión, en Host
   colocar el ip del cliente interno al que se quiera conectar (en el ejemplo se
   muestra 192.168.10.37 pero debe cambiarla a alguna en el rango actual
-  ~19.168.10.[3-26]~, como, por ejemplo, ~192.168.10.4~), en login su nombre de
+  ~192.168.10.[3-26]~, como, por ejemplo, ~192.168.10.4~), en login su nombre de
   usuario, en el puerto colocar 22 (este es el puerto del cliente interno),
   activar conectar a través de un proxy y allí colocar los datos del servidor de
   entrada, como muestra la siguiente figura. Además en el tipo de sesión
