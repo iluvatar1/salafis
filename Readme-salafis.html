@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-02-06 Mon 18:47 -->
+<!-- 2023-02-06 Mon 18:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Herramientas computacionales locales y remotas</title>
@@ -23,50 +23,49 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1dedc32">1. Remoto: Acceso a la sala de cómputo del departamento de física</a>
+<li><a href="#orgdaed965">1. Remoto: Acceso a la sala de cómputo del departamento de física</a>
 <ul>
-<li><a href="#org6875799">1.1. Conexión gráfica usando x2goclient</a>
+<li><a href="#org0396583">1.1. Conexión gráfica usando x2goclient</a>
 <ul>
-<li><a href="#org726e3d9">1.1.1. Configuración de una sesión de x2go</a></li>
+<li><a href="#org1e16ebd">1.1.1. Configuración de una sesión de x2go</a></li>
 </ul>
 </li>
-<li><a href="#org9b46ab0">1.2. (Opcional) Conexión por ssh</a>
+<li><a href="#org099ae4a">1.2. (Opcional) Conexión por ssh</a>
 <ul>
-<li><a href="#orgb7def94">1.2.1. Conexión básica por terminal</a></li>
-<li><a href="#org17b13fc">1.2.2. Conexión desde Windows</a></li>
+<li><a href="#orgf26abca">1.2.1. Conexión básica por terminal</a></li>
+<li><a href="#org8c107c2">1.2.2. Conexión desde Windows</a></li>
 </ul>
 </li>
-<li><a href="#orgf5fb6d7">1.3. (Opcional) Conexión con servidor vnc (turbovnc) para OpenGL</a></li>
-<li><a href="#org14e2c0a">1.4. Conexión dentro del campus desde la red UNAL</a></li>
-<li><a href="#org121b257">1.5. (Opcional) File transfer</a>
+<li><a href="#org5c072d4">1.3. (Opcional) Conexión con servidor vnc (turbovnc) para OpenGL</a></li>
+<li><a href="#org6ec683e">1.4. (Opcional) File transfer</a>
 <ul>
-<li><a href="#org431c7e8">1.5.1. Desde computador personal hacia servidor de login</a></li>
-<li><a href="#org010e836">1.5.2. Desde computador personal hacia un cliente interno</a></li>
-<li><a href="#orged55da7">1.5.3. Desde un computador interno o servidor hacia afuera</a></li>
+<li><a href="#org57b9e8a">1.4.1. Desde computador personal hacia servidor de login</a></li>
+<li><a href="#org8471476">1.4.2. Desde computador personal hacia un cliente interno</a></li>
+<li><a href="#orgdf0e67c">1.4.3. Desde un computador interno o servidor hacia afuera</a></li>
 </ul>
 </li>
-<li><a href="#org638eae7">1.6. Otros tips</a>
+<li><a href="#org25de0da">1.5. Otros tips</a>
 <ul>
-<li><a href="#org0819edc">1.6.1. Usando proxyjump para acceder directamente a un computador interno (terminal)</a></li>
-<li><a href="#org8af5cda">1.6.2. Configuración de un tunel para acceso directo a un nodo interno</a></li>
-<li><a href="#org0a9d6f6">1.6.3. Conexión por medio de llaves y sin password</a></li>
+<li><a href="#orgbbde378">1.5.1. Usando proxyjump para acceder directamente a un computador interno (terminal)</a></li>
+<li><a href="#org346b251">1.5.2. Configuración de un tunel para acceso directo a un nodo interno</a></li>
+<li><a href="#org25425f9">1.5.3. Conexión por medio de llaves y sin password</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org55bd96b">2. Local: Virtual box</a>
+<li><a href="#orgf7e2316">2. Local: Virtual box</a>
 <ul>
-<li><a href="#orgad8ae97">2.1. Instalación de virtualbox y el extension pack (una sola vez)</a></li>
-<li><a href="#org464605f">2.2. Instalación de la máquina virtual (una sola vez)</a></li>
-<li><a href="#orgd3803b4">2.3. Opcional: Configurar un directorio compartido entre el host y la máquina virtual</a></li>
-<li><a href="#org011fae3">2.4. Usar la máquina virtual</a></li>
+<li><a href="#org45eaf4a">2.1. Instalación de virtualbox y el extension pack (una sola vez)</a></li>
+<li><a href="#org8c801c4">2.2. Instalación de la máquina virtual (una sola vez)</a></li>
+<li><a href="#orgefc2e24">2.3. Opcional: Configurar un directorio compartido entre el host y la máquina virtual</a></li>
+<li><a href="#orgeba0ed8">2.4. Usar la máquina virtual</a></li>
 </ul>
 </li>
-<li><a href="#org460a138">3. Local: Live usb</a>
+<li><a href="#org8b7cd19">3. Local: Live usb</a>
 <ul>
-<li><a href="#orga887701">3.1. Ejemplo con Unebootin</a></li>
-<li><a href="#org54e77d0">3.2. <span class="todo TODO">TODO</span> Check Ventoy</a></li>
-<li><a href="#org8b0f8ce">3.3. <span class="todo TODO">TODO</span> Show how to use balenaetcher</a></li>
+<li><a href="#orgfa0298c">3.1. Ejemplo con Unebootin</a></li>
+<li><a href="#orgf7b0270">3.2. <span class="todo TODO">TODO</span> Check Ventoy</a></li>
+<li><a href="#org6aeb4ed">3.3. <span class="todo TODO">TODO</span> Show how to use balenaetcher</a></li>
 </ul>
 </li>
 </ul>
@@ -77,8 +76,8 @@ En este documento se presentan algunas herramientas que pueden ser útiles para
 estudiantes que requieren algunos recursos computacionales remotos o locales.
 </p>
 
-<div id="outline-container-org1dedc32" class="outline-2">
-<h2 id="org1dedc32"><span class="section-number-2">1.</span> Remoto: Acceso a la sala de cómputo del departamento de física</h2>
+<div id="outline-container-orgdaed965" class="outline-2">
+<h2 id="orgdaed965"><span class="section-number-2">1.</span> Remoto: Acceso a la sala de cómputo del departamento de física</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 La sala de cómputo tiene un servidor básico de entrada que además comparte
@@ -193,8 +192,8 @@ conexión por terminal y gráfica: <a href="https://youtu.be/MJErFmsFfmI">https:
 </p>
 </div>
 
-<div id="outline-container-org6875799" class="outline-3">
-<h3 id="org6875799"><span class="section-number-3">1.1.</span> Conexión gráfica usando x2goclient</h3>
+<div id="outline-container-org0396583" class="outline-3">
+<h3 id="org0396583"><span class="section-number-3">1.1.</span> Conexión gráfica usando x2goclient</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 REF:
@@ -211,8 +210,8 @@ el servidor externo como puerta de entrada (ip <code>168.176.35.111</code>).
 </p>
 </div>
 
-<div id="outline-container-org726e3d9" class="outline-4">
-<h4 id="org726e3d9"><span class="section-number-4">1.1.1.</span> Configuración de una sesión de x2go</h4>
+<div id="outline-container-org1e16ebd" class="outline-4">
+<h4 id="org1e16ebd"><span class="section-number-4">1.1.1.</span> Configuración de una sesión de x2go</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <ul class="org-ul">
 <li><p>
@@ -241,7 +240,7 @@ entrada, como muestra la siguiente figura. Además en el tipo de sesión
 selccionar XFCE:
 </p>
 
-<div id="org9e37afe" class="figure">
+<div id="orgcde1e9d" class="figure">
 <p><img src="figs/x2go-clientdirect.png" alt="x2go-clientdirect.png" width="80%" />
 </p>
 </div></li>
@@ -249,7 +248,7 @@ selccionar XFCE:
 </div>
 
 <ol class="org-ol">
-<li><a id="orge8e37bd"></a>Conexión con x2go<br />
+<li><a id="org03a1432"></a>Conexión con x2go<br />
 <div class="outline-text-5" id="text-1-1-1-1">
 <p>
 Una vez tenga configurada alguna sesión, simplemente de
@@ -258,7 +257,7 @@ disposición un entorno gráfico ejecutado en el computador interno que haya
 escogido en la configuración, como lo muestra la siguiente figura
 </p>
 
-<div id="org9e0d017" class="figure">
+<div id="orgfb9b4a2" class="figure">
 <p><img src="figs/x2goclient-connected.png" alt="x2goclient-connected.png" width="80%" />
 </p>
 </div>
@@ -268,7 +267,7 @@ La primera vez que se conecta se le preguntará si desea aceptar el hostkey del
 servidor, debe decir que sí
 </p>
 
-<div id="org89a2991" class="figure">
+<div id="org81b8078" class="figure">
 <p><img src="figs/hostkey.png" alt="hostkey.png" width="40%" />
 </p>
 </div>
@@ -282,7 +281,7 @@ actual (normalmente su número de documento)
 Y luego colocando (se le solicita dos veces para confirmar) la nueva contraseña
 </p>
 
-<div id="org811bc9a" class="figure">
+<div id="orgb396078" class="figure">
 <p><img src="figs/passwd2.png" alt="passwd2.png" width="40%" />
 </p>
 </div>
@@ -290,7 +289,7 @@ Y luego colocando (se le solicita dos veces para confirmar) la nueva contraseña
 </li>
 
 
-<li><a id="org68cb78c"></a><b>IMPORTANTE Recomendación con x2go</b>: deshabilitar screensaver<br />
+<li><a id="orgffa9610"></a><b>IMPORTANTE Recomendación con x2go</b>: deshabilitar screensaver<br />
 <div class="outline-text-5" id="text-1-1-1-2">
 <p>
 Para evitar que la sesión se bloquee sin recuperación luego de unos minutos de
@@ -303,7 +302,7 @@ figuras muestran cómo deben quedar deshabilitados estos servicios:
 <li>xscreensaver</li>
 </ul>
 
-<div id="org1e333d8" class="figure">
+<div id="orge74f6ef" class="figure">
 <p><img src="figs/xscreensaver.png" alt="xscreensaver.png" width="80%" />
 </p>
 </div>
@@ -311,7 +310,7 @@ figuras muestran cómo deben quedar deshabilitados estos servicios:
 <li>xfce4-screensaver</li>
 </ul>
 
-<div id="org9d6a42e" class="figure">
+<div id="org7b3f3cf" class="figure">
 <p><img src="figs/xfce4-screensaver.png" alt="xfce4-screensaver.png" width="80%" />
 </p>
 </div>
@@ -319,7 +318,7 @@ figuras muestran cómo deben quedar deshabilitados estos servicios:
 <li>screen lock (second tab from xfce4 screensaver prefs):</li>
 </ul>
 
-<div id="org0f04847" class="figure">
+<div id="org1350e54" class="figure">
 <p><img src="figs/xfce4-screenlock.png" alt="xfce4-screenlock.png" width="80%" />
 </p>
 </div>
@@ -329,12 +328,12 @@ figuras muestran cómo deben quedar deshabilitados estos servicios:
 </div>
 </div>
 
-<div id="outline-container-org9b46ab0" class="outline-3">
-<h3 id="org9b46ab0"><span class="section-number-3">1.2.</span> (Opcional) Conexión por ssh</h3>
+<div id="outline-container-org099ae4a" class="outline-3">
+<h3 id="org099ae4a"><span class="section-number-3">1.2.</span> (Opcional) Conexión por ssh</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
-<div id="outline-container-orgb7def94" class="outline-4">
-<h4 id="orgb7def94"><span class="section-number-4">1.2.1.</span> Conexión básica por terminal</h4>
+<div id="outline-container-orgf26abca" class="outline-4">
+<h4 id="orgf26abca"><span class="section-number-4">1.2.1.</span> Conexión básica por terminal</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 El ip público del servidor es 168.176.35.111. La conexión básica por ssh se
@@ -351,7 +350,7 @@ pedirá la clave (si no está usando llaves de autenticación, o si es la primer
 vez) y si la autenticación es exitosa el usuario observará el siguiente prompt:
 </p>
 
-<div id="org37d9c48" class="figure">
+<div id="org67a0633" class="figure">
 <p><img src="figs/init_prompt.png" alt="init_prompt.png" width="80%" />
 </p>
 </div>
@@ -383,8 +382,8 @@ interno, se le va a preguntar por la autenticidad de ese host. Debe aceptarla.
 </div>
 </div>
 
-<div id="outline-container-org17b13fc" class="outline-4">
-<h4 id="org17b13fc"><span class="section-number-4">1.2.2.</span> Conexión desde Windows</h4>
+<div id="outline-container-org8c107c2" class="outline-4">
+<h4 id="org8c107c2"><span class="section-number-4">1.2.2.</span> Conexión desde Windows</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <p>
 Windows 10 trae soporte para cliente ssh, especialmente en el WSL. En lo que
@@ -404,7 +403,7 @@ instalación de chrome)
 Ejecute la extensión e introduzca la información necesaria
 </p>
 
-<div id="org86e0247" class="figure">
+<div id="org8a4edff" class="figure">
 <p><img src="figs/secshell-basic-1.png" alt="secshell-basic-1.png" width="80%" />
 </p>
 </div>
@@ -415,7 +414,7 @@ para conectarse o aceptar la identidad de la máquina remota escribiendo yes
 en el cuadro que sale
 </p>
 
-<div id="org43f5932" class="figure">
+<div id="orgee610b9" class="figure">
 <p><img src="figs/secshell-basic-2.png" alt="secshell-basic-2.png" width="80%" />
 </p>
 </div>
@@ -424,7 +423,7 @@ en el cuadro que sale
 Y luego podrá entrar sin problema
 </p>
 
-<div id="orgf20dd0b" class="figure">
+<div id="org90361b1" class="figure">
 <p><img src="figs/secshell-basic-3.png" alt="secshell-basic-3.png" width="80%" />
 </p>
 </div>
@@ -438,7 +437,7 @@ Configuración de la conexión: simplemente escriba el ip, el puerto, y da
 click en start (a la izquierda)
 </p>
 
-<div id="orgd5efd1b" class="figure">
+<div id="orgc50e7f7" class="figure">
 <p><img src="figs/kitty-basic-1.png" alt="kitty-basic-1.png" width="80%" />
 </p>
 </div>
@@ -448,7 +447,7 @@ Luego escriba su nombre de usuario y contraseña y deberá entrar al prompt del
 login server:
 </p>
 
-<div id="org3dea963" class="figure">
+<div id="orgb78c131" class="figure">
 <p><img src="figs/kitty-basic-2.png" alt="kitty-basic-2.png" width="80%" />
 </p>
 </div></dd>
@@ -457,8 +456,8 @@ login server:
 </div>
 </div>
 
-<div id="outline-container-orgf5fb6d7" class="outline-3">
-<h3 id="orgf5fb6d7"><span class="section-number-3">1.3.</span> (Opcional) Conexión con servidor vnc (turbovnc) para OpenGL</h3>
+<div id="outline-container-org5c072d4" class="outline-3">
+<h3 id="org5c072d4"><span class="section-number-3">1.3.</span> (Opcional) Conexión con servidor vnc (turbovnc) para OpenGL</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 Existen algunas aplicaciones que requieren OpenGL para su funcionamiento. OpenGL
@@ -567,53 +566,18 @@ consola y escribiendo
 </ol>
 </div>
 </div>
-<div id="outline-container-org14e2c0a" class="outline-3">
-<h3 id="org14e2c0a"><span class="section-number-3">1.4.</span> Conexión dentro del campus desde la red UNAL</h3>
+<div id="outline-container-org6ec683e" class="outline-3">
+<h3 id="org6ec683e"><span class="section-number-3">1.4.</span> (Opcional) File transfer</h3>
 <div class="outline-text-3" id="text-1-4">
-<p>
-Actualmente, la red wireless UNAL restringe el protocolo ssh y esto hace que no pueda
-establecerse conexión con el servidor cuando se está dentro del campus conectado
-a la red UNAL. A pesar de solicitar la solución varias veces no ha sido posible
-resolver este problema y por tanto se plantea acá una solución alternativa: usar
-una vpn.
-</p>
-
-<p>
-Los pasos a seguir son:
-</p>
-<ul class="org-ul">
-<li>Instalar tailscale (el video de antes muestra esto en Windows, pero puede ser
-usado en linux, mac, android): <a href="https://tailscale.com/">https://tailscale.com/</a></li>
-<li>Enviar un email el encargado de la sala informando su usuario de github.</li>
-<li>Esperar la confirmación de haber sido añadido a la organización
-correspondiente.</li>
-<li>Abrir tailscale usando la cuenta de github, luego seleccionando una multinet
-asociada a la organización que se le informó.</li>
-<li>Conectarse siguiendo los mismos pasos pero cambiando el ip tradicional del
-servidor (168.176.x.x) por el que muestra tail scale para serversalafis.</li>
-</ul>
-
-<p>
-La conexión dentro del campus será rápida. Fuera del campus será más lenta
-porque debe enrutarse a servidor externos y entonces es preferible usar el
-método tradicional. Se le recomienda tener dos sesiones de x2go, una con el ip
-tradicional y otra con tailscale.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org121b257" class="outline-3">
-<h3 id="org121b257"><span class="section-number-3">1.5.</span> (Opcional) File transfer</h3>
-<div class="outline-text-3" id="text-1-5">
 <p>
 Es posible copiar archivos desde o hacia la sala de cómputo. La forma exacta de
 hacerlo va a depender del putno de origen y destino. A continuación se muestran
 algunos ejemplos específicos.
 </p>
 </div>
-<div id="outline-container-org431c7e8" class="outline-4">
-<h4 id="org431c7e8"><span class="section-number-4">1.5.1.</span> Desde computador personal hacia servidor de login</h4>
-<div class="outline-text-4" id="text-1-5-1">
+<div id="outline-container-org57b9e8a" class="outline-4">
+<h4 id="org57b9e8a"><span class="section-number-4">1.4.1.</span> Desde computador personal hacia servidor de login</h4>
+<div class="outline-text-4" id="text-1-4-1">
 <p>
 Como el acceso al servidor de login es directo, se puede usar cualquier
 herramienta que permita usar ssh compo protocolo. Por ejemplo, se puede usar
@@ -630,9 +594,9 @@ de la sala.
 </p>
 </div>
 </div>
-<div id="outline-container-org010e836" class="outline-4">
-<h4 id="org010e836"><span class="section-number-4">1.5.2.</span> Desde computador personal hacia un cliente interno</h4>
-<div class="outline-text-4" id="text-1-5-2">
+<div id="outline-container-org8471476" class="outline-4">
+<h4 id="org8471476"><span class="section-number-4">1.4.2.</span> Desde computador personal hacia un cliente interno</h4>
+<div class="outline-text-4" id="text-1-4-2">
 <p>
 Este caso ocurre cuando a un usuario en particular se le ha activado un
 directorio local en un cliente interno para, por ejemplo, manejar cantidades
@@ -648,9 +612,9 @@ ProxyJump de ssh como
 </div>
 </div>
 </div>
-<div id="outline-container-orged55da7" class="outline-4">
-<h4 id="orged55da7"><span class="section-number-4">1.5.3.</span> Desde un computador interno o servidor hacia afuera</h4>
-<div class="outline-text-4" id="text-1-5-3">
+<div id="outline-container-orgdf0e67c" class="outline-4">
+<h4 id="orgdf0e67c"><span class="section-number-4">1.4.3.</span> Desde un computador interno o servidor hacia afuera</h4>
+<div class="outline-text-4" id="text-1-4-3">
 <p>
 En este caso se debe tener en cuenta que el proxy de la Universidad filtra las
 conexiones salientes y es necesario configurar alguna herramienta que permita
@@ -675,13 +639,13 @@ hacia afuera de la Universidad.
 </div>
 
 
-<div id="outline-container-org638eae7" class="outline-3">
-<h3 id="org638eae7"><span class="section-number-3">1.6.</span> Otros tips</h3>
-<div class="outline-text-3" id="text-1-6">
+<div id="outline-container-org25de0da" class="outline-3">
+<h3 id="org25de0da"><span class="section-number-3">1.5.</span> Otros tips</h3>
+<div class="outline-text-3" id="text-1-5">
 </div>
-<div id="outline-container-org0819edc" class="outline-4">
-<h4 id="org0819edc"><span class="section-number-4">1.6.1.</span> Usando proxyjump para acceder directamente a un computador interno (terminal)</h4>
-<div class="outline-text-4" id="text-1-6-1">
+<div id="outline-container-orgbbde378" class="outline-4">
+<h4 id="orgbbde378"><span class="section-number-4">1.5.1.</span> Usando proxyjump para acceder directamente a un computador interno (terminal)</h4>
+<div class="outline-text-4" id="text-1-5-1">
 <p>
 Si un usuario desea conectarse directamente a un pc interno puede usar el
 servidor de login como bastión intermedio, a través el siguiente
@@ -697,8 +661,8 @@ su conexión.
 </p>
 </div>
 <ol class="org-ol">
-<li><a id="org9f74a2b"></a>Windows<br />
-<div class="outline-text-5" id="text-1-6-1-1">
+<li><a id="org2be3ba6"></a>Windows<br />
+<div class="outline-text-5" id="text-1-5-1-1">
 <p>
 No todos los clientes ssh de windows soportan las versiones recientes de ssh y
 la opción proxyjump. Sin embargo puede seguir las siguientes <a href="https://superuser.com/questions/1448180/how-to-setup-proxy-jump-with-putty">instrucciones para
@@ -708,9 +672,9 @@ kitty</a> , o usar plink, o crear un tunnel como se muestra más adelante.
 </li>
 </ol>
 </div>
-<div id="outline-container-org8af5cda" class="outline-4">
-<h4 id="org8af5cda"><span class="section-number-4">1.6.2.</span> Configuración de un tunel para acceso directo a un nodo interno</h4>
-<div class="outline-text-4" id="text-1-6-2">
+<div id="outline-container-org346b251" class="outline-4">
+<h4 id="org346b251"><span class="section-number-4">1.5.2.</span> Configuración de un tunel para acceso directo a un nodo interno</h4>
+<div class="outline-text-4" id="text-1-5-2">
 <p>
 El objetivo de este punto es establecer una conexión directa a un nodo interno y
 dejar esta conexión expuesta localmente en un puerto específico. Esto se llama
@@ -748,15 +712,15 @@ El túnel debe ser funcional para que pueda usar x2goclient.
 </div>
 
 <ol class="org-ol">
-<li><a id="orge5d18fe"></a>Windows<br />
-<div class="outline-text-5" id="text-1-6-2-1">
+<li><a id="orgf1c1cd7"></a>Windows<br />
+<div class="outline-text-5" id="text-1-5-2-1">
 <ul class="org-ul">
 <li><p>
 chrome secure shell: configure la conexión como se muestra a continuación,
 conéctse y manténgala abierta
 </p>
 
-<div id="org95d956b" class="figure">
+<div id="orgf99f979" class="figure">
 <p><img src="figs/tunnel-secshell-1.png" alt="tunnel-secshell-1.png" width="80%" />
 </p>
 </div></li>
@@ -767,12 +731,12 @@ color <code>2222</code>, en destination <code>192.168.10.12:22</code>, le da add
 se muestra a continuación
 </p>
 
-<div id="org5370004" class="figure">
+<div id="org0990272" class="figure">
 <p><img src="figs/kitty-basic-1.png" alt="kitty-basic-1.png" width="80%" />
 </p>
 </div>
 
-<div id="org5a991fa" class="figure">
+<div id="orgcc1a7f5" class="figure">
 <p><img src="figs/tunnel-kitty-1.png" alt="tunnel-kitty-1.png" width="80%" />
 </p>
 </div>
@@ -786,9 +750,9 @@ Luego le da click en start y NO cierra la sesión.
 </ol>
 </div>
 
-<div id="outline-container-org0a9d6f6" class="outline-4">
-<h4 id="org0a9d6f6"><span class="section-number-4">1.6.3.</span> Conexión por medio de llaves y sin password</h4>
-<div class="outline-text-4" id="text-1-6-3">
+<div id="outline-container-org25425f9" class="outline-4">
+<h4 id="org25425f9"><span class="section-number-4">1.5.3.</span> Conexión por medio de llaves y sin password</h4>
+<div class="outline-text-4" id="text-1-5-3">
 <p>
 Si prefiere no escribir la clave cada vez que se conecta, además de aumentar la
 seguridad, puede crear una llave pública privada y copiarla al servidor de login
@@ -821,8 +785,8 @@ clave.
 </div>
 </div>
 </div>
-<div id="outline-container-org55bd96b" class="outline-2">
-<h2 id="org55bd96b"><span class="section-number-2">2.</span> Local: Virtual box</h2>
+<div id="outline-container-orgf7e2316" class="outline-2">
+<h2 id="orgf7e2316"><span class="section-number-2">2.</span> Local: Virtual box</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 En este caso pueden usar una máquina virtual que he diseñado para este fin, o
@@ -844,8 +808,8 @@ Las instrucciones a seguir son las siguientes:
 </p>
 </div>
 
-<div id="outline-container-orgad8ae97" class="outline-3">
-<h3 id="orgad8ae97"><span class="section-number-3">2.1.</span> Instalación de virtualbox y el extension pack (una sola vez)</h3>
+<div id="outline-container-org45eaf4a" class="outline-3">
+<h3 id="org45eaf4a"><span class="section-number-3">2.1.</span> Instalación de virtualbox y el extension pack (una sola vez)</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li>Instalar virtualbox en su computador. Lo pueden descargar de
@@ -859,8 +823,8 @@ etc.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org464605f" class="outline-3">
-<h3 id="org464605f"><span class="section-number-3">2.2.</span> Instalación de la máquina virtual (una sola vez)</h3>
+<div id="outline-container-org8c801c4" class="outline-3">
+<h3 id="org8c801c4"><span class="section-number-3">2.2.</span> Instalación de la máquina virtual (una sola vez)</h3>
 <div class="outline-text-3" id="text-2-2">
 <ul class="org-ul">
 <li><p>
@@ -870,7 +834,7 @@ extensión <code>.ova</code>):
 </p>
 
 
-<div id="org78b9636" class="figure">
+<div id="orgb23d4fd" class="figure">
 <p><img src="figs/VirtualBox-boxova-drive.png" alt="VirtualBox-boxova-drive.png" width="80%" />
 </p>
 </div></li>
@@ -881,7 +845,7 @@ Abrir virtualbox e importar la maquina virtual recién descargada : <code>File -
 </p>
 
 
-<div id="org560f399" class="figure">
+<div id="org5ea1b60" class="figure">
 <p><img src="figs/VirtualBox-boxova.png" alt="VirtualBox-boxova.png" width="80%" />
 </p>
 </div></li>
@@ -893,7 +857,7 @@ red a menos que sepa lo que está haciendo:
 </p>
 
 
-<div id="orgeaabf7e" class="figure">
+<div id="org120c5b3" class="figure">
 <p><img src="figs/VirtualBox-boxova-settings.png" alt="VirtualBox-boxova-settings.png" width="80%" />
 </p>
 </div>
@@ -907,7 +871,7 @@ Este proceso puede tardar varios minutos
 ésta lo lleva a una shell interactiva de uefi como la siguiente:
 </p>
 
-<div id="org25861c6" class="figure">
+<div id="org0622645" class="figure">
 <p><img src="figs/Virtualbox-uefi-shell.png" alt="Virtualbox-uefi-shell.png" width="80%" />
 </p>
 </div>
@@ -917,7 +881,7 @@ se le sugiere que apague la máquina virtual, entre a settings y en sistema
 desactive la opción de UEFI como muestra la siguiente figura:
 </p>
 
-<div id="org790e5e0" class="figure">
+<div id="org081abb7" class="figure">
 <p><img src="figs/Virtualbox-uefi.png" alt="Virtualbox-uefi.png" width="80%" />
 </p>
 </div>
@@ -929,8 +893,8 @@ Después de esto podrá iniciar la máquina virtual sin problema.
 </div>
 </div>
 
-<div id="outline-container-orgd3803b4" class="outline-3">
-<h3 id="orgd3803b4"><span class="section-number-3">2.3.</span> Opcional: Configurar un directorio compartido entre el host y la máquina virtual</h3>
+<div id="outline-container-orgefc2e24" class="outline-3">
+<h3 id="orgefc2e24"><span class="section-number-3">2.3.</span> Opcional: Configurar un directorio compartido entre el host y la máquina virtual</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Si desea poder leer y escribir desde la máquina virtual en un directorio
@@ -948,8 +912,8 @@ podrá encontrar sus archivos compartidos.
 </div>
 </div>
 
-<div id="outline-container-org011fae3" class="outline-3">
-<h3 id="org011fae3"><span class="section-number-3">2.4.</span> Usar la máquina virtual</h3>
+<div id="outline-container-orgeba0ed8" class="outline-3">
+<h3 id="orgeba0ed8"><span class="section-number-3">2.4.</span> Usar la máquina virtual</h3>
 <div class="outline-text-3" id="text-2-4">
 <ul class="org-ul">
 <li><p>
@@ -961,7 +925,7 @@ en settings pueden cambiar la resolución de la pantalla para que se vea mejor
 en sus computadores.  
 </p>
 
-<div id="org3e94aa6" class="figure">
+<div id="org65062ab" class="figure">
 <p><img src="figs/VirtualBox-initscreen.png" alt="VirtualBox-initscreen.png" width="80%" />
 </p>
 </div></li>
@@ -975,7 +939,7 @@ etc.
 </p>
 
 
-<div id="org0a47bbc" class="figure">
+<div id="orgd96f960" class="figure">
 <p><img src="figs/VirtualBox-xfce.png" alt="VirtualBox-xfce.png" width="80%" />
 </p>
 </div></li>
@@ -984,8 +948,8 @@ etc.
 </div>
 </div>
 
-<div id="outline-container-org460a138" class="outline-2">
-<h2 id="org460a138"><span class="section-number-2">3.</span> Local: Live usb</h2>
+<div id="outline-container-org8b7cd19" class="outline-2">
+<h2 id="org8b7cd19"><span class="section-number-2">3.</span> Local: Live usb</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 La máquina virtual le permite ejecutar todo un sistema operativo muy eficiente,
@@ -1009,8 +973,8 @@ unebootin se recomienda usar ubuntu ya que es la única que permite persistencia
 En rufus debe haber algo similar.
 </p>
 </div>
-<div id="outline-container-orga887701" class="outline-3">
-<h3 id="orga887701"><span class="section-number-3">3.1.</span> Ejemplo con Unebootin</h3>
+<div id="outline-container-orgfa0298c" class="outline-3">
+<h3 id="orgfa0298c"><span class="section-number-3">3.1.</span> Ejemplo con Unebootin</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Se supone que ya ha instalado unebootin. Ejecute el programa y configurelo como
@@ -1022,7 +986,7 @@ puede arriesgarse a formatear su computador. El nombre que aparece en la figura
 es típico de Mac Os X. En Windows debe ser de la form <code>D:</code> o similar.
 </p>
 
-<div id="org8731afb" class="figure">
+<div id="org9bba900" class="figure">
 <p><img src="figs/unetbootin-1.png" alt="unetbootin-1.png" width="80%" />
 </p>
 </div>
@@ -1034,7 +998,7 @@ apróximadamente 3 GB. En la figura se
 muestra esta etapa
 </p>
 
-<div id="org143826b" class="figure">
+<div id="org68672ad" class="figure">
 <p><img src="figs/unetbootin-downloadimg.png" alt="unetbootin-downloadimg.png" width="80%" />
 </p>
 </div>
@@ -1044,7 +1008,7 @@ Luego se comenzarán a copiar los archivos de la imagen iso recién descargada a
 la usb, como muestra la figura
 </p>
 
-<div id="org9ab8e77" class="figure">
+<div id="org21b080d" class="figure">
 <p><img src="figs/unetbootin-copying.png" alt="unetbootin-copying.png" width="80%" />
 </p>
 </div>
@@ -1054,7 +1018,7 @@ Mas adelante unetbootin configurará la persistencia y finalmente terminará
 mostrando una ventana como la siguiente
 </p>
 
-<div id="org89f741f" class="figure">
+<div id="orgbb75961" class="figure">
 <p><img src="figs/unetbootin-final.png" alt="unetbootin-final.png" width="80%" />
 </p>
 </div>
@@ -1070,16 +1034,16 @@ su máquina.
 </div>
 </div>
 
-<div id="outline-container-org54e77d0" class="outline-3">
-<h3 id="org54e77d0"><span class="section-number-3">3.2.</span> <span class="todo TODO">TODO</span> Check Ventoy</h3>
+<div id="outline-container-orgf7b0270" class="outline-3">
+<h3 id="orgf7b0270"><span class="section-number-3">3.2.</span> <span class="todo TODO">TODO</span> Check Ventoy</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <a href="https://www.ventoy.net/en/index.html">https://www.ventoy.net/en/index.html</a>
 </p>
 </div>
 </div>
-<div id="outline-container-org8b0f8ce" class="outline-3">
-<h3 id="org8b0f8ce"><span class="section-number-3">3.3.</span> <span class="todo TODO">TODO</span> Show how to use balenaetcher</h3>
+<div id="outline-container-org6aeb4ed" class="outline-3">
+<h3 id="org6aeb4ed"><span class="section-number-3">3.3.</span> <span class="todo TODO">TODO</span> Show how to use balenaetcher</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 <a href="https://www.balena.io/etcher/">https://www.balena.io/etcher/</a>
@@ -1091,7 +1055,7 @@ This allows to easily burn any iso and any platform.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: William Oquendo</p>
-<p class="date">Created: 2023-02-06 Mon 18:47</p>
+<p class="date">Created: 2023-02-06 Mon 18:51</p>
 </div>
 </body>
 </html>

@@ -262,7 +262,10 @@ localhost:590R
       #+begin_src shell
 glxgears
       #+end_src
-** Conexión dentro del campus desde la red UNAL
+** Conexión dentro del campus desde la red UNAL :noexport:
+
+*NOTA: Desde 2023-02-06 esta configuración NO es necesaria*
+
 Actualmente, la red wireless UNAL restringe el protocolo ssh y esto hace que no pueda
 establecerse conexión con el servidor cuando se está dentro del campus conectado
 a la red UNAL. A pesar de solicitar la solución varias veces no ha sido posible
