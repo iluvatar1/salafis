@@ -2,6 +2,8 @@
 # #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 #+TITLE: Herramientas computacionales locales y remotas
 
+#+MACRO: IPRANGE ~192.168.10.[2-20]~
+
 En este documento se presentan algunas herramientas que pueden ser útiles para
 estudiantes que requieren algunos recursos computacionales remotos o locales.
 
@@ -22,7 +24,7 @@ edades. Actualmente ([2023-02-06 Mon]) se tiene la siguiente configuración:
 |        5 |           4 |        8 |               |
 |----------+-------------+----------+---------------|
 
- *Los ips disponibles actualmente están en el rango ~192.168.10.[2-20]~.*
+ *Los ips disponibles actualmente están en el rango {{{IPRANGE}}}.*
 
 Las cuentas de usuario tienen un límite de almacenamiento de 6Gb, pero se puede
 solicitar más espacio en otras particiones. La mezcla de diversas, viejas y
@@ -56,7 +58,7 @@ El cliente x2go permite conectarse a un servidor x2go y tener un escritorio
 remoto encriptado a través de ssh, y es muy rápido. Actualmente, la mayoría de
 los nodos internos ofrecen un servidor x2go. El servidor principal de login no
 tiene un servidor x2go, para evitar que se realicen trabajos allí. Usted se
-conectará a los clientes internos (ips en el rango ~192.168.10.[3-26]~) usando
+conectará a los clientes internos (ips en el rango {{{IPRANGE}}}) usando
 el servidor externo como puerta de entrada (ip ~168.176.35.111~).
 
 # Podría usarse
@@ -85,8 +87,8 @@ el servidor externo como puerta de entrada (ip ~168.176.35.111~).
 - Ejecute x2go y en el menú seleccione =Session -> New Session=. Allí llene la
   información que básicamente sería darle un nombre a la sessión, en Host
   colocar el ip del cliente interno al que se quiera conectar (en el ejemplo se
-  muestra 192.168.10.37 pero debe cambiarla a alguna en el rango actual
-  ~192.168.10.[3-26]~, como, por ejemplo, ~192.168.10.4~), en login su nombre de
+  muestra ~192.168.10.37~ pero *debe cambiarla* a alguna en el rango actual
+  {{{IPRANGE}}}, como, por ejemplo, ~192.168.10.4~), en login su nombre de
   usuario, en el puerto colocar 22 (este es el puerto del cliente interno),
   activar conectar a través de un proxy y allí colocar los datos del servidor de
   entrada, como muestra la siguiente figura. Además en el tipo de sesión
@@ -315,20 +317,22 @@ ProxyJump de ssh como
 scp -o "ProxyJump 168.176.35.111:443" mudir/myfile.cpp USERNAME@192.168.10.100:/home/USERNAME/target
 #+end_src
 *** Desde un computador interno o servidor hacia afuera
-En este caso se debe tener en cuenta que el proxy de la Universidad filtra las
-conexiones salientes y es necesario configurar alguna herramienta que permita
-pasar estas opciones al protocolo ssh. Existen varias. En la sala se encuentra
-disponible una llamada =corkscrew=, https://github.com/bryanpkc/corkscrew . Lo
-único que se debe hacer es configurar ssh en la sala para que tenga la
-información del proxy escribiendo la siguiente información en el archivo
-=~/.ssh/config=
-#+begin_src conf
-ProxyCommand /usr/local/bin/corkscrew 192.168.10.1 3128 %h %p
-#+end_src
-Con esto se está usando el proxy local de la sala que no tiene autenticación y
-pasa a través del proxy de la Universidad.
-Después de esto funcionarán los comandos ssh y scp para establecer conexiones
-hacia afuera de la Universidad.
+Desde ~2023-02-06~, no se requiere proxy ni corkscrew, etc
+
+# En este caso se debe tener en cuenta que el proxy de la Universidad filtra las
+# conexiones salientes y es necesario configurar alguna herramienta que permita
+# pasar estas opciones al protocolo ssh. Existen varias. En la sala se encuentra
+# disponible una llamada =corkscrew=, https://github.com/bryanpkc/corkscrew . Lo
+# único que se debe hacer es configurar ssh en la sala para que tenga la
+# información del proxy escribiendo la siguiente información en el archivo
+# =~/.ssh/config=
+# #+begin_src conf
+# ProxyCommand /usr/local/bin/corkscrew 192.168.10.1 3128 %h %p
+# #+end_src
+# Con esto se está usando el proxy local de la sala que no tiene autenticación y
+# pasa a través del proxy de la Universidad.
+# Después de esto funcionarán los comandos ssh y scp para establecer conexiones
+# hacia afuera de la Universidad.
 
 
 ** Otros tips
