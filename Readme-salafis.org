@@ -36,6 +36,10 @@ Usted debe tener cuenta en la sala de física. Normalmente, su profesor debe
 gestionar esta creación de cuentas. Pero usted también puede hacerlo de forma
 individual llenando el siguiente formulario: https://forms.gle/mZpHrTQ5i1eP2ef28 .
 
+Para reportar cualquier error en el uso de la sala debe ir a
+https://github.com/iluvatar1/salafis/issues y crear un nuevo issue, siguiendo
+las instrucciones.
+
 Para realizar la conexión, el usuario tiene dos opciones:
 1. (*Recomendada*) Conectarse con un cliente x2go a cualquier computador
    interno. Para esto es necesario configurar un tunnel usando el servidor como
@@ -84,6 +88,7 @@ el servidor externo como puerta de entrada (ip ~168.176.35.111~).
   *Enlaces directos*:
   + Windows: http://code.x2go.org/releases/X2GoClient_latest_mswin32-setup.exe
   + Mac Os X: http://code.x2go.org/releases/X2GoClient_latest_macosx_10_13.dmg
+
 - Ejecute x2go y en el menú seleccione =Session -> New Session=. Allí llene la
   información que básicamente sería darle un nombre a la sessión, en Host
   colocar el ip del cliente interno al que se quiera conectar (en el ejemplo se
@@ -95,6 +100,9 @@ el servidor externo como puerta de entrada (ip ~168.176.35.111~).
   selccionar XFCE:
   #+ATTR_HTML: :width 80%
   [[file:figs/x2go-clientdirect.png]]
+
+  NO MODIFIQUE LA DIRECCIÓN DEL SERVIDOR EXTERNO ~168.176.35.111~ ni su puerto
+  ~443~.
 
 **** Conexión con x2go
 Una vez tenga configurada alguna sesión, simplemente de
