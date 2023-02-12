@@ -26,6 +26,11 @@ edades. Actualmente ([2023-02-06 Mon]) se tiene la siguiente configuración:
 
  *Los ips disponibles actualmente están en el rango {{{IPRANGE}}}.*
 
+Si desea ver el status actual de los clientes y del servidor, puede ir a
+https://salafis.loca.lt/ganglia , allí podra ver el número de clientes en línea,
+su carga y demás. Vaya a la parte de abajo, donde dice clustersalafis, y de
+click en Physical View para ver los clientes)
+
 Las cuentas de usuario tienen un límite de almacenamiento de 6Gb, pero se puede
 solicitar más espacio en otras particiones. La mezcla de diversas, viejas y
 pequeñas características obliga a usar una distribución eficiente, y en este
@@ -64,6 +69,11 @@ los nodos internos ofrecen un servidor x2go. El servidor principal de login no
 tiene un servidor x2go, para evitar que se realicen trabajos allí. Usted se
 conectará a los clientes internos (ips en el rango {{{IPRANGE}}}) usando
 el servidor externo como puerta de entrada (ip ~168.176.35.111~).
+
+Si desea ver el status actual de los clientes y del servidor, puede ir a
+https://salafis.loca.lt/ganglia , allí podra ver el número de clientes en línea,
+su carga y demás. Vaya a la parte de abajo, donde dice clustersalafis, y de
+click en Physical View para ver los clientes)
 
 # Podría usarse
 # un tunel para conectarse a los clientes internos, pero x2go ofrece la
