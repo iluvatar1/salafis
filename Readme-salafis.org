@@ -26,26 +26,31 @@ edades. Actualmente ([2023-02-06 Mon]) se tiene la siguiente configuración:
 
  *Los ips disponibles actualmente están en el rango {{{IPRANGE}}}.*
 
-Si desea ver el status actual de los clientes y del servidor, puede ir a
-https://salafis.loca.lt/ganglia , allí podra ver el número de clientes en línea,
-su carga y demás. Vaya a la parte de abajo, donde dice clustersalafis, y de
-click en Physical View para ver los clientes)
+Información relevante:
+- Solicitud de cuenta :: Usted debe tener cuenta en la sala de física.
+  Normalmente, su profesor debe gestionar esta creación de cuentas. Pero usted
+  también puede hacerlo de forma individual llenando el siguiente formulario: https://forms.gle/mZpHrTQ5i1eP2ef28 .
 
-Las cuentas de usuario tienen un límite de almacenamiento de 6Gb, pero se puede
-solicitar más espacio en otras particiones. La mezcla de diversas, viejas y
-pequeñas características obliga a usar una distribución eficiente, y en este
-caso se Slackware 15.0+ (current), con el entorno gráfico xfce 4.16. Se incluyen
-los compiladores más actualizados, editores, etc.
+- Reporte de errores y problemas :: Para reportar cualquier error en el uso de
+  la sala debe ir a https://github.com/iluvatar1/salafis/issues y crear un nuevo
+  issue, siguiendo las instrucciones allí mostradas.
 
-Usted debe tener cuenta en la sala de física. Normalmente, su profesor debe
-gestionar esta creación de cuentas. Pero usted también puede hacerlo de forma
-individual llenando el siguiente formulario: https://forms.gle/mZpHrTQ5i1eP2ef28 .
+- Estado actual de la sala :: Si desea ver el status actual de los clientes y
+  del servidor, puede ir a https://salafis.loca.lt/ganglia , allí podra ver el
+  número de clientes en línea, su carga y demás. Vaya a la parte de abajo, donde
+  dice clustersalafis, y de click en Physical View para ver los clientes)
 
-Para reportar cualquier error en el uso de la sala debe ir a
-https://github.com/iluvatar1/salafis/issues y crear un nuevo issue, siguiendo
-las instrucciones.
+- Software y configuración básica ::  Las cuentas de usuario tienen un límite de
+  almacenamiento de 6Gb, pero se puede solicitar más espacio en otras
+  particiones. La mezcla de diversas, viejas y pequeñas características obliga a
+  usar una distribución eficiente, y en este caso se Slackware 15.0+ (current),
+  con el entorno gráfico xfce 4.16. Se incluyen los compiladores más
+  actualizados, editores, etc. Para instalación de software extra, se puede
+  llenar el siguiente formulario y la solicitud será evaluada en términos de
+  compatibiliadThank you demás (solamente se unsa software libre) : https://forms.gle/GyaSL8d1rxFAry9U8
 
-Para realizar la conexión, el usuario tiene dos opciones:
+
+Para realizar la conexión a la sala de cómputo, el usuario tiene dos opciones:
 1. (*Recomendada*) Conectarse con un cliente x2go a cualquier computador
    interno. Para esto es necesario configurar un tunnel usando el servidor como
    bastión intermedio. *Importante: Lea y siga las instrucciones de
