@@ -287,21 +287,22 @@ localhost:590R
       #+begin_src shell
 glxgears
       #+end_src
-** Conexión dentro del campus desde la red UNAL :noexport:
+** Conexión dentro del campus desde la red UNAL
 
-*NOTA: Desde 2023-02-06 esta configuración NO es necesaria*
+# *NOTA: Desde 2023-02-06 esta configuración NO es necesaria*
 
-Actualmente, la red wireless UNAL restringe el protocolo ssh y esto hace que no pueda
-establecerse conexión con el servidor cuando se está dentro del campus conectado
-a la red UNAL. A pesar de solicitar la solución varias veces no ha sido posible
-resolver este problema y por tanto se plantea acá una solución alternativa: usar
-una vpn.
+Actualmente (2023-02-22), la red wireless UNAL restringe el protocolo ssh y esto
+hace que no pueda establecerse conexión con el servidor cuando se está dentro
+del campus conectado a la red UNAL. A pesar de solicitar la solución varias
+veces no ha sido posible resolver este problema y por tanto se plantea acá una
+solución alternativa: usar una vpn.
 # Si desea ver un video del procedimiento puede encontrarlo a
 # continuación: https://youtu.be/aMkhJ7Ocq30
 Los pasos a seguir son:
 - Instalar tailscale (el video de antes muestra esto en Windows, pero puede ser
   usado en linux, mac, android): https://tailscale.com/
-- Enviar un email el encargado de la sala informando su usuario de github.
+- Enviar un email el encargado de la sala informando su usuario de github (si no
+  lo tinee, debe crearlo, idealmente con e correo de la unal).
 - Esperar la confirmación de haber sido añadido a la organización
   correspondiente.
 - Abrir tailscale usando la cuenta de github, luego seleccionando una multinet
