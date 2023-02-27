@@ -295,7 +295,8 @@ Actualmente (2023-02-22), la red wireless UNAL restringe el protocolo ssh y esto
 hace que no pueda establecerse conexión con el servidor cuando se está dentro
 del campus conectado a la red UNAL. A pesar de solicitar la solución varias
 veces no ha sido posible resolver este problema y por tanto se plantea acá una
-solución alternativa: usar una vpn.
+solución alternativa: usar una vpn. En la lista de videos puede encontrar uno
+que muestra el procedimiento: https://www.youtube.com/playlist?list=PLxbXsIEaf05oGM0i-HrMVdClxPyrIsq4e
 # Si desea ver un video del procedimiento puede encontrarlo a
 # continuación: https://youtu.be/aMkhJ7Ocq30
 Los pasos a seguir son:
