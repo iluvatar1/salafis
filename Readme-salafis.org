@@ -299,8 +299,7 @@ solución alternativa: usar una vpn.
 # Si desea ver un video del procedimiento puede encontrarlo a
 # continuación: https://youtu.be/aMkhJ7Ocq30
 Los pasos a seguir son:
-- Instalar tailscale (el video de antes muestra esto en Windows, pero puede ser
-  usado en linux, mac, android): https://tailscale.com/
+- Instalar tailscale (el video de antes muestra esto en Windows, pero puede ser usado en linux, mac, android): https://tailscale.com/
 - Enviar un email el encargado de la sala informando su usuario de github (si no
   lo tinee, debe crearlo, idealmente con e correo de la unal).
 - Esperar la confirmación de haber sido añadido a la organización
