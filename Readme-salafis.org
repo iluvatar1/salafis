@@ -144,6 +144,7 @@ Y luego colocando (se le solicita dos veces para confirmar) la nueva contraseña
 
 
 **** *IMPORTANTE Recomendación con x2go*: deshabilitar screensaver
+
 *NOTA:* Desde 2023-03-01 es probable que NO requiera hacer esto ya que se han
 desinstalado todos los screensaers.
 
@@ -161,6 +162,31 @@ figuras muestran cómo deben quedar deshabilitados estos servicios:
 - screen lock (second tab from xfce4 screensaver prefs):
 #+ATTR_HTML: :width 80%
 [[file:figs/xfce4-screenlock.png]]
+
+*** Compartir una carpeta local con el escritorio remoto de x2go
+Para facilitar el intercambio de archivos, x2go permite compartir carpetas del
+computador local que ejecuta x2go (cliente) con el servidor de x2go(computador
+remoto). Para hacer esto, simplemente en x2go vaya a la sessión que ya tiene
+configurada y funcional y entre a las preferencias (menú de tres barras y luego
+preferencias)
+#+ATTR_HTML: :width 80%
+[[file:figs/x2go-session-prefs.jpg]]
+
+Luego, en la parte superior selecciona el tad de Shared folders,
+#+ATTR_HTML: :width 80%
+file:figs/x2go-session-sharedfolders.jpg
+
+Y allí navega para escoger el directorio que desea compartir, dando click en el
+ícono de carpeta, una vez seleccionado le da click a add, y luego se asegura de
+haber selccionado automount,
+selecciona
+#+ATTR_HTML: :width 80%
+[[file:figs/x2go-session-sharedfolder-automout.jpg]]
+
+Con esto guarda (ok), se conecta, y en el escritorio le aparecerá un ícono con
+el nombre asociado a la ruta que compartió. Le da click y podrá copiar y pegar
+allí archivos y demás, intercambiando datos entre el cmputador local y el
+remoto.
 
 ** (Opcional) Conexión por ssh
 *** Conexión básica por terminal
@@ -321,9 +347,13 @@ método tradicional. Se le recomienda tener dos sesiones de x2go, una con el ip
 tradicional y otra con tailscale.
 
 ** (Opcional) File transfer
-Es posible copiar archivos desde o hacia la sala de cómputo. La forma exacta de
-hacerlo va a depender del putno de origen y destino. A continuación se muestran
-algunos ejemplos específicos.
+Por favor revise de nuevo la sección de 2go ya que allí se describe una manera
+gráfica de compartir un directorio entre el computador local que usa y el
+escritorio remoto.
+
+También ss posible copiar archivos desde o hacia la sala de cómputo, usando la
+línea de comando. La forma exacta de hacerlo va a depender del putno de origen y
+destino. A continuación se muestran algunos ejemplos específicos.
 *** Desde computador personal hacia servidor de login
 Como el acceso al servidor de login es directo, se puede usar cualquier
 herramienta que permita usar ssh compo protocolo. Por ejemplo, se puede usar
