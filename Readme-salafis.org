@@ -29,7 +29,8 @@ edades. Actualmente ([2023-02-06 Mon]) se tiene la siguiente configuración:
 Información relevante:
 - Solicitud de cuenta :: Usted debe tener cuenta en la sala de física.
   Normalmente, su profesor debe gestionar esta creación de cuentas. Pero usted
-  también puede hacerlo de forma individual llenando el siguiente formulario: https://forms.gle/mZpHrTQ5i1eP2ef28 .
+  también puede hacerlo de forma individual llenando el siguiente formulario:
+  https://forms.gle/mZpHrTQ5i1eP2ef28 .
 
 - Reporte de errores y problemas :: Para reportar cualquier error en el uso de
   la sala debe ir a https://github.com/iluvatar1/salafis/issues y crear un nuevo
@@ -47,7 +48,8 @@ Información relevante:
   con el entorno gráfico xfce 4.16. Se incluyen los compiladores más
   actualizados, editores, etc. Para instalación de software extra, se puede
   llenar el siguiente formulario y la solicitud será evaluada en términos de
-  compatibiliadThank you demás (solamente se unsa software libre) : https://forms.gle/GyaSL8d1rxFAry9U8
+  compatibiliadThank you demás (solamente se unsa software libre) :
+  https://forms.gle/GyaSL8d1rxFAry9U8
 
 
 Para realizar la conexión a la sala de cómputo, el usuario tiene dos opciones:
@@ -142,6 +144,9 @@ Y luego colocando (se le solicita dos veces para confirmar) la nueva contraseña
 
 
 **** *IMPORTANTE Recomendación con x2go*: deshabilitar screensaver
+*NOTA:* Desde 2023-03-01 es probable que NO requiera hacer esto ya que se han
+desinstalado todos los screensaers.
+
 Para evitar que la sesión se bloquee sin recuperación luego de unos minutos de
 inactividad se les recomienda que deshabiliten los programas xscreensaver,
 xfce4-screensaver y el bloqueo de pantalla, todos accesibles desde el menú y
