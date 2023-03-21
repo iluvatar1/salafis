@@ -137,10 +137,10 @@ servidor, debe decir que sí
 Tambien, la primera vez deberá cambiar la contraseña primero escribiendo la
 actual (normalmente su número de documento)
 #+ATTR_HTML: :width 40%
+[[file:figs/passwd2.png]]
+#+ATTR_HTML: :width 40%
 [[file:figs/passwd1.png]]
 Y luego colocando (se le solicita dos veces para confirmar) la nueva contraseña
-#+ATTR_HTML: :width 40%
-[[file:figs/passwd2.png]]
 
 
 **** *IMPORTANTE Recomendación con x2go*: deshabilitar screensaver
@@ -163,7 +163,7 @@ figuras muestran cómo deben quedar deshabilitados estos servicios:
 #+ATTR_HTML: :width 80%
 [[file:figs/xfce4-screenlock.png]]
 
-*** Compartir una carpeta local con el escritorio remoto de x2go
+** Compartir una carpeta local con el escritorio remoto de x2go
 Para facilitar el intercambio de archivos, x2go permite compartir carpetas del
 computador local que ejecuta x2go (cliente) con el servidor de x2go(computador
 remoto). Para hacer esto, simplemente en x2go vaya a la sessión que ya tiene
