@@ -508,6 +508,19 @@ montar el directorio compartido llamado =shared= en la ruta =/media/hd=. Allí
 podrá encontrar sus archivos compartidos.
 [[file:figs/sharedfolder.png]]
 
+*NOTA*: En caso de tener problemas de acceso, como falta de permisos para poder
+acceder a la carpeta compartida, debe añadir al usuario live al grupo vboxsf.
+Esto se hace convirtiendose en root,
+#+begin_src bash
+su -
+#+end_src
+(debe escribir la contraseña de root, que es vagrant), y luego ejecutar el
+siguiente comando
+#+begin_src bash
+usermod -a -G vboxsf live
+#+end_src
+Reinicie.
+
 ** Usar la máquina virtual
 - Iniciar la máquina virtual (dándole start) y esto debería iniciar un linux sin
   problema. El nombre de usuario es =live=, dan enter, y el password es =live= .
