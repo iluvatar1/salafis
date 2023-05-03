@@ -48,7 +48,7 @@ Información relevante:
   con el entorno gráfico xfce 4.16. Se incluyen los compiladores más
   actualizados, editores, etc. Para instalación de software extra, se puede
   llenar el siguiente formulario y la solicitud será evaluada en términos de
-  compatibiliadThank you demás (solamente se unsa software libre) :
+  compatibiliadThank you demás (solamente se usa software libre) :
   https://forms.gle/GyaSL8d1rxFAry9U8
 
 
@@ -635,3 +635,68 @@ https://www.ventoy.net/en/index.html
 ** TODO Show how to use balenaetcher
 https://www.balena.io/etcher/
 This allows to easily burn any iso and any platform.
+* Software
+En la sala se utiliza =spack= (https://spack.readthedocs.io/en/latest/) y
+=environment modules= (https://modules.readthedocs.io/en/latest/) para
+centralizar la instalación de software.
+** spack
+Por ejemplo, si desea usar la librería openblas, debe escribir lo siguiente en
+la consola
+#+begin_src shell
+spack load openblas
+#+end_src
+Algunas veces aparecen varias versiones, como en este caso, que el comando
+anterior indicará lo siguiente:
+#+begin_src shell
+==> Error: openblas matches multiple packages.
+  Matching packages:
+    wrycfcg openblas@0.3.20%gcc@12.2.0 arch=linux-slackware15-x86_64
+    5tw4ktw openblas@0.3.20%gcc@12.2.0 arch=linux-slackware15-x86_64
+    62jarbg openblas@0.3.21%gcc@12.2.0 arch=linux-slackware15-x86_64
+  Use a more specific spec (e.g., prepend '/' to the hash).
+#+end_src
+En ese caso se puede escoger la veersión siguiendo la instrucción indicada. Por
+ejemplo,
+#+begin_src shell
+spack load openblas/62
+#+end_src
+cargará la version 0.3.21 . Para descargar/limpiar el entorno, puede usar
+#+begin_src shell
+module unload openblas
+#+end_src
+o
+#+begin_src shell
+module purge
+#+end_src
+
+Si desea ver todos los paquetes instalados, puede usar
+#+begin_src shell
+spack find
+#+end_src
+que mostrará una larga lista como
+#+begin_src shell
+-- linux-slackware15-x86_64 / gcc@12.2.0 ------------------------
+alsa-lib@1.2.3.2                    gl2ps@1.4.2                          libxft@2.3.2             py-meshio@4.4.6
+alsa-lib@1.2.3.2                    gl2ps@1.4.2                          libxkbcommon@1.4.0       py-mpi4py@3.1.2
+apr@1.7.0                           gl2ps@1.4.2                          libxkbfile@1.0.9         py-mpi4py@3.1.2
+apr-util@1.6.1                      gl2ps@1.4.2                          libxml2@2.10.1           py-numpy@1.23.2
+armadillo@10.5.0                    glew@2.2.0                           libxml2@2.10.1           py-numpy@1.23.2
+arpack-ng@3.8.0                     glew@2.2.0                           libxmu@1.1.2             py-petsc4py@3.17.4
+arpack-ng@3.8.0                     glew@2.2.0                           libxp@1.0.3              py-pillow@9.2.0
+...
+#+end_src
+
+Si requiere algún software particular que no esté instalado, debe  llenar el
+formulario  https://forms.gle/GyaSL8d1rxFAry9U8 .
+
+** Módulos
+Tambien puede usar módulos. En este caso, para saber cuáles están instalados,
+puede usar
+#+begin_src shell
+module avail
+#+end_src
+y cargar el módulo con el nombre correspondiente
+#+begin_src shell
+module load openblas-0.3.21-gcc-12.2.0-62jarbg
+#+end_src
+De la misma manera, con =unload= o =purge= puede limpiar el entorno.
