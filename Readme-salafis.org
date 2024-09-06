@@ -188,6 +188,10 @@ el nombre asociado a la ruta que compartió. Le da click y podrá copiar y pegar
 allí archivos y demás, intercambiando datos entre el cmputador local y el
 remoto.
 
+*NOTA IMPORTANTE*: Si obtiene algún error al abrir la carpeta en el escritorio
+remoto, no la abra con doble click sino que de click derecho, escoja abrir con,
+y busque el comando x2gofm .
+
 ** (Opcional) Conexión por ssh
 *** Conexión básica por terminal
 El ip público del servidor es 168.176.35.111. La conexión básica por ssh se
@@ -700,3 +704,10 @@ y cargar el módulo con el nombre correspondiente
 module load openblas-0.3.21-gcc-12.2.0-62jarbg
 #+end_src
 De la misma manera, con =unload= o =purge= puede limpiar el entorno.
+* TOCHECK :noexport:
+- https://open.xdmod.org/10.0/resource-manager-slurm.html
+- https://github.com/ubccr/hpc-toolset-tutorial
+** Ticketing Systems
+- https://www.spiceworks.com/free-help-desk-software/
+- https://osticket.com/
+- https://glpi-project.org/
