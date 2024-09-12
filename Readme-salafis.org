@@ -2,7 +2,7 @@
 # #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 #+TITLE: Herramientas computacionales locales y remotas
 
-#+MACRO: IPRANGE ~192.168.10.[2-20]~
+#+MACRO: IPRANGE ~192.168.10.[2-29]~
 
 En este documento se presentan algunas herramientas que pueden ser útiles para
 estudiantes que requieren algunos recursos computacionales remotos o locales.
@@ -11,14 +11,14 @@ estudiantes que requieren algunos recursos computacionales remotos o locales.
 La sala de cómputo tiene un servidor básico de entrada que además comparte
 archivos y autenticación con los nodos. La sala es completamente heterogénea,
 siendo una reunión de diversos computadores con diversas características y
-edades. Actualmente ([2023-02-06 Mon]) se tiene la siguiente configuración:
+edades. Actualmente ([2024-09-12 Thu]) se tiene la siguiente configuración:
 
 |----------+-------------+----------+---------------|
 | Cantidad | Num Threads | Ram (Gb) | Notes         |
 |----------+-------------+----------+---------------|
 |        1 |          16 |       16 | 1 Nvidia Card |
-|        4 |          16 |       16 |               |
-|        4 |          12 |        8 |               |
+|        8 |          16 |       16 |               |
+|        8 |          12 |        8 |               |
 |        2 |           8 |       12 |               |
 |        3 |           6 |        8 |               |
 |        5 |           4 |        8 |               |
@@ -36,10 +36,10 @@ Información relevante:
   la sala debe ir a https://github.com/iluvatar1/salafis/issues y crear un nuevo
   issue, siguiendo las instrucciones allí mostradas.
 
-- Estado actual de la sala :: Si desea ver el status actual de los clientes y
-  del servidor, puede ir a https://salafis.loca.lt/ganglia , allí podra ver el
-  número de clientes en línea, su carga y demás. Vaya a la parte de abajo, donde
-  dice clustersalafis, y de click en Physical View para ver los clientes)
+# - Estado actual de la sala :: Si desea ver el status actual de los clientes y
+#   del servidor, puede ir a https://salafis.loca.lt/ganglia , allí podra ver el
+#   número de clientes en línea, su carga y demás. Vaya a la parte de abajo, donde
+#   dice clustersalafis, y de click en Physical View para ver los clientes)
 
 - Software y configuración básica ::  Las cuentas de usuario tienen un límite de
   almacenamiento de 6Gb, pero se puede solicitar más espacio en otras
@@ -48,7 +48,7 @@ Información relevante:
   con el entorno gráfico xfce 4.16. Se incluyen los compiladores más
   actualizados, editores, etc. Para instalación de software extra, se puede
   llenar el siguiente formulario y la solicitud será evaluada en términos de
-  compatibiliadThank you demás (solamente se usa software libre) :
+  compatibiliad (solamente se usa software libre) :
   https://forms.gle/GyaSL8d1rxFAry9U8
 
 
@@ -57,7 +57,8 @@ Para realizar la conexión a la sala de cómputo, el usuario tiene dos opciones:
    interno. Para esto es necesario configurar un tunnel usando el servidor como
    bastión intermedio. *Importante: Lea y siga las instrucciones de
    desactivación de screensaver y demás*.
-2. Conectarse por el protocolo ssh al servidor principal y de allí navegar a los
+2. Conectarse usando xpra (en proceso de implementacion)
+3. Conectarse por el protocolo ssh al servidor principal y de allí navegar a los
    computadores internos que desee, también usando ssh.
 
 Estas opciones serán descritas con más detalle a continuación. *Es importante
@@ -77,10 +78,12 @@ tiene un servidor x2go, para evitar que se realicen trabajos allí. Usted se
 conectará a los clientes internos (ips en el rango {{{IPRANGE}}}) usando
 el servidor externo como puerta de entrada (ip ~168.176.35.111~).
 
-Si desea ver el status actual de los clientes y del servidor, puede ir a
-https://salafis.loca.lt/ganglia , allí podra ver el número de clientes en línea,
-su carga y demás. Vaya a la parte de abajo, donde dice clustersalafis, y de
-click en Physical View para ver los clientes)
+Note que x2go NO soporta OpenGL.
+
+# Si desea ver el status actual de los clientes y del servidor, puede ir a
+# https://salafis.loca.lt/ganglia , allí podra ver el número de clientes en línea,
+# su carga y demás. Vaya a la parte de abajo, donde dice clustersalafis, y de
+# click en Physical View para ver los clientes)
 
 # Podría usarse
 # un tunel para conectarse a los clientes internos, pero x2go ofrece la
@@ -126,20 +129,26 @@ Una vez tenga configurada alguna sesión, simplemente de
 click a la sesión, llene el password si es necesario, y tendrá a su
 disposición un entorno gráfico ejecutado en el computador interno que haya
 escogido en la configuración, como lo muestra la siguiente figura
+
 #+ATTR_HTML: :width 80%
 [[file:figs/x2goclient-connected.png]]
 
 La primera vez que se conecta se le preguntará si desea aceptar el hostkey del
 servidor, debe decir que sí
-#+ATTR_HTML: :width 40%
+
+#+ATTR_HTML: :width 70%
 [[file:figs/hostkey.png]]
 
-Tambien, la primera vez deberá cambiar la contraseña primero escribiendo la
-actual (normalmente su número de documento)
-#+ATTR_HTML: :width 40%
+Algunas veces, se implementa un cambio de contrasenha para la primera vez que se
+conecte, y deberá cambiar la contraseña primero escribiendo la actual
+(normalmente su número de documento)
+
+#+ATTR_HTML: :width 60%
 [[file:figs/passwd2.png]]
-#+ATTR_HTML: :width 40%
+
+#+ATTR_HTML: :width 60%
 [[file:figs/passwd1.png]]
+
 Y luego colocando (se le solicita dos veces para confirmar) la nueva contraseña
 
 
@@ -256,6 +265,18 @@ instalación de chrome)
   login server:
   #+ATTR_HTML: :width 80%
   [[file:figs/kitty-basic-2.png]]
+
+** TODO Conexión gráfica usando xpra
+La aplicación xpra, https://xpra.org/index.html, permite realizar una conexión
+gráfica que además soporta opengl, de manera que se peuden realizar
+visualizaciones con paraview y demás. Ustede debe descsrgar la aplicación para
+su sistema operativo, desde  https://github.com/Xpra-org/xpra/wiki/Download , e
+instalarla. Una vez haga esto, ejecútela. Obtendrá una ventana como la
+siguiente:
+#+ATTR_HTML: :width 80%
+[[file:figs/xpra-init.png]]
+
+
 
 ** (Opcional) Conexión con servidor vnc (turbovnc) para OpenGL
 Existen algunas aplicaciones que requieren OpenGL para su funcionamiento. OpenGL
