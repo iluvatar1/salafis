@@ -7,24 +7,31 @@
 En este documento se presentan algunas herramientas que pueden ser útiles para
 estudiantes que requieren algunos recursos computacionales remotos o locales.
 
-* Remoto: Acceso a la sala de cómputo del departamento de física
+* Información General de la sala de Computadores
 La sala de cómputo tiene un servidor básico de entrada que además comparte
 archivos y autenticación con los nodos. La sala es completamente heterogénea,
 siendo una reunión de diversos computadores con diversas características y
-edades. Actualmente ([2024-09-12 Thu]) se tiene la siguiente configuración:
+edades. Actualmente ([2024-11-25 Thu]) se tiene la siguiente configuración:
 
 |----------+-------------+----------+---------------|
 | Cantidad | Num Threads | Ram (Gb) | Notes         |
 |----------+-------------+----------+---------------|
 |        1 |          16 |       16 | 1 Nvidia Card |
-|        8 |          16 |       16 |               |
-|        8 |          12 |        8 |               |
-|        2 |           8 |       12 |               |
+|       10 |          16 |       16 |               |
+|        4 |          12 |       16 |               |
+|        4 |          12 |        8 |               |
+|        1 |           8 |       12 |               |
 |        3 |           6 |        8 |               |
 |        5 |           4 |        8 |               |
 |----------+-------------+----------+---------------|
 
  *Los ips disponibles actualmente están en el rango {{{IPRANGE}}}.*
+
+Es posible usar los computadores presencialmente como sala de cómputo, o
+conectarse al login node y desde allí lanzar trabajos usando slurm, como en un
+cluster (muy simplificado).
+
+Actualmente el login node tiene ip 168.176.35.111 y el puerto ssh es 443
 
 Información relevante:
 - Solicitud de cuenta :: Usted debe tener cuenta en la sala de física.
@@ -52,20 +59,58 @@ Información relevante:
   https://forms.gle/GyaSL8d1rxFAry9U8
 
 
+* Conexión remota a la sala de cómputo
 Para realizar la conexión a la sala de cómputo, el usuario tiene dos opciones:
-1. (*Recomendada*) Conectarse con un cliente x2go a cualquier computador
+1. Desde su computador, usar vscode y la extensión remote-ssh, que le permite
+   acceder al servidor login principal o clientes internos (recomendado, usando
+   proxyjump), para editar archivos y compilar como si estuviera sentado al
+   frente del computador de la sala.
+2. Conectarse usando xpra
+3. Conectarse con un cliente x2go a cualquier computador
    interno. Para esto es necesario configurar un tunnel usando el servidor como
    bastión intermedio. *Importante: Lea y siga las instrucciones de
    desactivación de screensaver y demás*.
-2. Conectarse usando xpra (en proceso de implementacion)
-3. Conectarse por el protocolo ssh al servidor principal y de allí navegar a los
+4. Conectarse por el protocolo ssh al servidor principal y de allí navegar a los
    computadores internos que desee, también usando ssh.
+5. Conectarse usando turbovnc.
 
 Estas opciones serán descritas con más detalle a continuación. *Es importante
 notar que no se deben ejecutar tareas en el servidor de login*
 
 También puede ver el siguiente video que muestra en vivo cómo realizar la
 conexión por terminal y gráfica: https://youtu.be/MJErFmsFfmI .
+
+** Usando vscode + remote-explorer ssh
+*** Configuración (Una sola vez)
+- Instale vscode, y luego instale la extensión remote-explorer (click en la barra
+  vertical a la izquierda en extensiones, busque la extensión, instalela)
+  #+ATTR_HTML: :width 80%
+  [[file:figs/vscode-remote-explorer.png]]
+- Ejecute la extensión en la parte de la izquierda y en donde dice ssh presiona
+  el símbolo `+` y escribe el comando
+  #+begin_src shell
+ssh -J 168.176.35.111:443 USERNAME@IPINTERNO:22
+  #+end_src
+  donde USERNAME es su nombre de usuario y IPINTERNO es cualquier ip en el rango
+  indicado el inicio de este documento. Al darle enter le va a pedir modificar
+  algun archivo de configuración de ssh, por ejemplo ~.ssh/config~, lo
+  selecciona y le da enter. Le debe salir un aviso que indica que el host fue
+  añadido. Y a la izquierda (teniendo seleccionada la extensión), le aparecen
+  los host configurados.
+  #+ATTR_HTML: :width 80%
+  [[file:figs/vscode-remote-explorer-host.png]]
+
+*** Uso
+- Dele click derecho  a cualquier host que tenga configurado, y pidale que lo
+  abra en la ventana actual o una nueva (si le pide continuar por conectarse por
+  primera vez, acepta). Con esto ya estará conectado al computador remoto y
+  podrá usar el explorador de archivos para explorar los archivos remotos y
+  editarlos. Tamboen, la terminal se ejecutará remotamente, pero todo lo hace
+  desde su computador.
+  #+ATTR_HTML: :width 80%
+  [[file:figs/vscode-remote-explorer-connection.jpg]]
+
+
 
 ** Conexión gráfica usando x2goclient
 REF:
@@ -124,7 +169,7 @@ Note que x2go NO soporta OpenGL.
   NO MODIFIQUE LA DIRECCIÓN DEL SERVIDOR EXTERNO ~168.176.35.111~ ni su puerto
   ~443~.
 
-**** Conexión con x2go
+*** Conexión con x2go
 Una vez tenga configurada alguna sesión, simplemente de
 click a la sesión, llene el password si es necesario, y tendrá a su
 disposición un entorno gráfico ejecutado en el computador interno que haya
@@ -172,7 +217,7 @@ figuras muestran cómo deben quedar deshabilitados estos servicios:
 #+ATTR_HTML: :width 80%
 [[file:figs/xfce4-screenlock.png]]
 
-** Compartir una carpeta local con el escritorio remoto de x2go
+*** Compartir una carpeta local con el escritorio remoto de x2go
 Para facilitar el intercambio de archivos, x2go permite compartir carpetas del
 computador local que ejecuta x2go (cliente) con el servidor de x2go(computador
 remoto). Para hacer esto, simplemente en x2go vaya a la sessión que ya tiene
@@ -201,7 +246,7 @@ remoto.
 remoto, no la abra con doble click sino que de click derecho, escoja abrir con,
 y busque el comando x2gofm .
 
-** (Opcional) Conexión por ssh
+** Conexión por ssh
 *** Conexión básica por terminal
 El ip público del servidor es 168.176.35.111. La conexión básica por ssh se
 establece de la siguiente manera
@@ -266,7 +311,8 @@ instalación de chrome)
   #+ATTR_HTML: :width 80%
   [[file:figs/kitty-basic-2.png]]
 
-** TODO Conexión gráfica usando xpra
+
+** TODO Conexión gráfica usando xpra (soporta opengl)
 La aplicación xpra, https://xpra.org/index.html, permite realizar una conexión
 gráfica que además soporta opengl, de manera que se peuden realizar
 visualizaciones con paraview y demás. Ustede debe descsrgar la aplicación para
@@ -275,6 +321,14 @@ instalarla. Una vez haga esto, ejecútela. Obtendrá una ventana como la
 siguiente:
 #+ATTR_HTML: :width 80%
 [[file:figs/xpra-init.png]]
+
+Luego de click en star, y alli configure la conexion al servidor. NOTA: Esta es
+una conexion al servidor login. Realice tareas livianas de manera que no sobre
+cargue el servidor.
+#+ATTR_HTML: :width 80%
+[[file:figs/xpra-config.png]]
+
+Una vez configurado le da click en start and attach.
 
 
 
