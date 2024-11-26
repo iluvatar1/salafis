@@ -86,6 +86,9 @@ conexión por terminal y gráfica: https://youtu.be/MJErFmsFfmI .
   vertical a la izquierda en extensiones, busque la extensión, instalela)
   #+ATTR_HTML: :width 80%
   [[file:figs/vscode-remote-explorer.png]]
+
+  URL: https://marketplace.visualstudio.com/items?itemName=ms-vscode.remote-explorer
+
 - Ejecute la extensión en la parte de la izquierda y en donde dice ssh presiona
   el símbolo `+` y escribe el comando
   #+begin_src shell
