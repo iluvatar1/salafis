@@ -37,7 +37,7 @@ Información relevante:
 - Solicitud de cuenta :: Usted debe tener cuenta en la sala de física.
   Normalmente, su profesor debe gestionar esta creación de cuentas. Pero usted
   también puede hacerlo de forma individual llenando el siguiente formulario:
-  https://forms.gle/mZpHrTQ5i1eP2ef28 .
+  https://forms.gle/NJDSTN6Ln4tZLHvdA
 
 - Reporte de errores y problemas :: Para reportar cualquier error en el uso de
   la sala debe ir a https://github.com/iluvatar1/salafis/issues y crear un nuevo
