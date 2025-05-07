@@ -82,8 +82,9 @@ conexión por terminal y gráfica: https://youtu.be/MJErFmsFfmI .
 
 ** Usando vscode + remote-explorer ssh
 *** Configuración (Una sola vez)
-- Instale vscode, y luego instale la extensión remote-explorer (click en la barra
-  vertical a la izquierda en extensiones, busque la extensión, instalela)
+- Instale vscode, y luego instale la extensión remote-explorer o remote-ssh
+  (click en la barra vertical a la izquierda en extensiones, busque la
+  extensión, instalela)
   #+ATTR_HTML: :width 80%
   [[file:figs/vscode-remote-explorer.png]]
 
@@ -92,7 +93,7 @@ conexión por terminal y gráfica: https://youtu.be/MJErFmsFfmI .
 - Ejecute la extensión en la parte de la izquierda y en donde dice ssh presiona
   el símbolo `+` y escribe el comando
   #+begin_src shell
-ssh -J 168.176.35.111:443 USERNAME@IPINTERNO:22
+ssh -J USERNAME@168.176.35.111:443 USERNAME@IPINTERNO:22
   #+end_src
   donde USERNAME es su nombre de usuario y IPINTERNO es cualquier ip en el rango
   indicado el inicio de este documento. Al darle enter le va a pedir modificar
@@ -103,6 +104,15 @@ ssh -J 168.176.35.111:443 USERNAME@IPINTERNO:22
   #+ATTR_HTML: :width 80%
   [[file:figs/vscode-remote-explorer-host.png]]
 
+Es importante que en la configuracion creada aparezca como
+#+begin_src conf
+Host IPINTERNO
+  Hostname IPINTERNO
+  ProxyJump USERNAME@168.176.35.111:443
+  Port 22
+  User USERNAME
+#+end_src
+
 *** Uso
 - Dele click derecho  a cualquier host que tenga configurado, y pidale que lo
   abra en la ventana actual o una nueva (si le pide continuar por conectarse por
@@ -112,7 +122,6 @@ ssh -J 168.176.35.111:443 USERNAME@IPINTERNO:22
   desde su computador.
   #+ATTR_HTML: :width 80%
   [[file:figs/vscode-remote-explorer-connection.jpg]]
-
 
 
 ** Conexión gráfica usando x2goclient
