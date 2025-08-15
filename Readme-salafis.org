@@ -106,12 +106,13 @@ ssh -J USERNAME@168.176.35.111:443 USERNAME@IPINTERNO:22
 
 Es importante que en la configuracion creada aparezca como
 #+begin_src conf
-Host IPINTERNO
+Host NOMBRECONEXION
   Hostname IPINTERNO
   ProxyJump USERNAME@168.176.35.111:443
   Port 22
   User USERNAME
 #+end_src
+
 
 *** Uso
 - Dele click derecho  a cualquier host que tenga configurado, y pidale que lo
@@ -124,7 +125,81 @@ Host IPINTERNO
   [[file:figs/vscode-remote-explorer-connection.jpg]]
 
 
-** Conexión gráfica usando x2goclient
+** Conexión gráfica usando xpra (soporta opengl)
+La aplicación xpra, https://xpra.org/index.html, permite realizar una conexión
+gráfica que además soporta opengl, de manera que se pueden realizar
+visualizaciones con paraview y demás. Usted debe descargar la aplicación para
+su sistema operativo, desde  https://github.com/Xpra-org/xpra/wiki/Download , e
+instalarla.
+
+Como la coenxión debe realizarse a un cliente interno (no al servidor login), es
+necesario que tenga configurado un proxy jump en ssh, que es el protocolo que
+usa xpra. Esto es muy sencillo, simplemente edite la configuración de ssh en su
+máquina (en linux y macosx es el archivo -~/.ssh/config-, en windows debe buscar la
+ubicación exacta ), y para conectarse al cliente interno con ip ~192.168.10.18~,
+debe escribir algo como
+#+begin_src bash
+Host sala18
+   HostName 192.168.10.18
+   ProxyJump 168.176.35.111:443
+   Port 22
+   User USERNAME
+#+end_src
+donde ~USERNAME~ es su nombre de usuario, y el nombre de la conexión es sala18,
+en este caso. Luego de esto, ejecute xpra desde la
+línea de comando como
+#+begin_src bash
+Xpra start-desktop --swap-keys=NO --ssh="ssh" ssh:USERNAME@sala18 --exit-with-children --start-child="xfce4-session"
+#+end_src
+En macosx puede usar ~/Applications/Xpra.app/Contents/Helpers/Xpra~ . En windows
+debe buscar la ruta del ejecutable.
+
+Lo anterior le pedirá al menos dos veces la contraseña, una para el servidor
+login y la otra para el servidor interno. Acepte cualquier otra confirmación que
+le salga.
+
+Si no hay error, debe
+abrirse una sesión de escritorio en donde funciona opengl (probado acá con el
+comando glxgears)
+
+#+ATTR_HTML: :width 80%
+[[file:figs/xpra-connected.png]]
+
+*** Configuración desde la interfaz gráfica
+Si ha configurado el acceso ssh al estilo ~passwordless~, puede usar la interfaz
+gráfica de xpra para conectarse. Las instrucciones apra esto se encuentran en
+toda la red, y basicamente consisten en generar una clave publica y privada con
+un comando ~ssh-keygen~, y luego copiar esa clave privada en el servidor con el
+comando  ~ssh-copy-īd~. Con esto ya no deberá escribir passwords a siguiente vez
+que se conecte. Debe hacer esos dos passos (generación y copia) tanto desde su
+máquina hacia el servidor de la unal, como en el servidor de la unal.
+
+NOTA: Al hacer la conexión passwordless, es probable que deba incluir un campo
+como
+#+begin_src conf
+IdentityFile ~/.ssh/MYKEY.pem
+#+end_src
+en la configuración ssh que está usando. Esto le indica a ssh dónde encontrar la
+clave en caso de que no esté instalada en el sitio por defecto.
+
+
+Ya configurado el acceso passwordless, ejecute la aplicación ~xpra~.
+Obtendrá una ventana como la siguiente:
+#+ATTR_HTML: :width 40%
+[[file:figs/xpra-init.png]]
+
+Luego de click en star, y alli configure la conexion a algún cliente interno.
+NOTA: No esta permitido conectarse graficamente al servidor login ya que se
+puede sobrecargar.
+
+#+ATTR_HTML: :width 40%
+[[file:figs/xpra-config.png]]
+
+Una vez configurado le da click en ~start and attach~.
+
+
+
+** (DEPRECATED) Conexión gráfica usando x2goclient
 REF:
 https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.html
 
@@ -258,6 +333,7 @@ remoto.
 remoto, no la abra con doble click sino que de click derecho, escoja abrir con,
 y busque el comando x2gofm .
 
+
 ** Conexión por ssh
 *** Conexión básica por terminal
 El ip público del servidor es 168.176.35.111. La conexión básica por ssh se
@@ -322,26 +398,6 @@ instalación de chrome)
   login server:
   #+ATTR_HTML: :width 80%
   [[file:figs/kitty-basic-2.png]]
-
-
-** TODO Conexión gráfica usando xpra (soporta opengl)
-La aplicación xpra, https://xpra.org/index.html, permite realizar una conexión
-gráfica que además soporta opengl, de manera que se peuden realizar
-visualizaciones con paraview y demás. Ustede debe descsrgar la aplicación para
-su sistema operativo, desde  https://github.com/Xpra-org/xpra/wiki/Download , e
-instalarla. Una vez haga esto, ejecútela. Obtendrá una ventana como la
-siguiente:
-#+ATTR_HTML: :width 80%
-[[file:figs/xpra-init.png]]
-
-Luego de click en star, y alli configure la conexion al servidor. NOTA: Esta es
-una conexion al servidor login. Realice tareas livianas de manera que no sobre
-cargue el servidor.
-#+ATTR_HTML: :width 80%
-[[file:figs/xpra-config.png]]
-
-Una vez configurado le da click en start and attach.
-
 
 
 ** (Opcional) Conexión con servidor vnc (turbovnc) para OpenGL
@@ -409,6 +465,102 @@ localhost:590R
       #+begin_src shell
 glxgears
       #+end_src
+
+
+** Conexión desde una tableta android
+Es posible conectarse desde android a la sala. Lo que se muestra a continución
+está probado en android 14. Si su tableta no soporta alguna de las aplicaciones
+mostradas, debe encontrar alguna equivalente con la misma funcionalidad. Igual
+para iso, debe buscar la alternativa. La idea general es que el dispositivo
+móvil se conectará a un servidor VNC o similar que esté ejecutándose en la sala.
+Por esta razón, es necesario ejecutar este servidor antes de intentar cualquier
+conexión. Los pasos a seguir son:
+- Activar el servidor vnc en algún cliente dentro de la sala de cómputo.
+- Crear un tunel que redireccione el puerto de ese cleinte a un puerto dentro
+  del dispositivo.
+- Conectar la aplicación VNC del dispositivo a este puerto.
+
+En este ejemplo se usarán las siguientes aplicaciones para ejecutar en el
+dispositivo:
+- ssh: juicessh, https://juicessh.com/ (posible alternativa: termius, o termux)
+- vnc: AVNC, https://play.google.com/store/apps/details?id=com.gaurav.avnc&hl=es
+  o https://f-droid.org/es/packages/com.gaurav.avnc/
+*** Initial config en juicessh (only once)
+Abra la aplicación y cree una nueva identidad. Diligencia los campos Nickname
+(nombre de la identidad), username (nombre de usuario) y password. Luego de
+click en el chck arriba a la izquierda.
+
+#+ATTR_HTML: :width 60%
+[[file:figs/tablet-juicessh-identity.jpeg]]
+
+Ahora debe crear dos conexiones: una al servidor de login, y la otra al cliente
+interno. Para esto, vaya a Connections, y allí debe crear una nueva conexión
+(click en el símbolo + en la parte derecha inferior). Allí diligencie:
+- Nickname: nombre de la conexión (como ~server unal~ o ~sala18~ )
+- Type: SSH
+- Address: El ip externo del servidor de la sala (168.176.XXX.XXX), o el ip del
+  cliente interno (192.168.10.XX)
+- Identity: La identidad que recién creó, con las credenciales de la sala de
+  cómputo.
+- Port: 443 si es el servidor externo, 22 si es un cliente interno.
+- Connect via: Para el servidor login, no coloque nada acá. Para el cliente
+  interno, seleccione la conexión que creó para el servidor de la sala.
+
+#+ATTR_HTML: :width 60%
+[[file:figs/tablet-juicessh-connection.jpeg]]
+
+Con lo anterior, ya tiene se puede conectar por ssh tanto al servidor de la sala
+de cómputo como a un cliente interno con simplemente tocar la conexión que
+necesite!
+*** Launching the vnc server at the client (every time)
+El tunnel se va a crear usando turbovnc en el cliente interno de la sala. Usando
+juicessh, entre al cliente interno. Allí, escriba
+#+begin_src shell
+spack load turbovnc
+#+end_src
+El siguiente comando solamente se require una vez, en caso de que no lo haya
+ejecutado nunca, y sirve para crear un passwrod que asegure su conexión al
+servidor gráfico
+#+begin_src shell
+vncpasswd
+#+end_src
+Ahora lance el servidor vnc y dbe tomar nota del puerto asignado: Ejecutar
+#+begin_src shell
+vncserver
+#+end_src
+Al crear el servidor se asigna un puerto de la forma =590R=. Es importante
+anotar ese valor de =R=. Este número es el que aparece cuando se ejecuta
+el comando =vncserver= como un mensaje en la consola que dice algo como
+=/home/$USER/.vnc/sala2.salafis.net:R.log)= o cuando se ejecuta el comando.
+
+Cuando termine la sesión, se le recomienda usar el comando
+#+begin_src
+vncserver -kill :R
+#+end_src
+o estará saturando el computador y tendra problemas futuros para conectarse.
+
+#+ATTR_HTML: :width 90%
+[[file:figs/tablet-juicessh-ssh.jpeg]]
+
+*** Connecting to the vnc server from the tablet/cellphone
+**** Connection config (once)
+Abar AVNC y configure una nueva conexión. Allí coloquele un nombre, coloque el
+ip del cliente interno y el puerto, que debe ser 590R donde R es el número que
+extrajo anteriormente. Note que si este número cambia, debe editar esta
+configuración. Seleccione ssh tunnel, coloque el ip del servidor
+externo, el puerto 443, seleccione password y coloque el password de la sala.
+
+#+ATTR_HTML: :width 60%
+[[file:figs/tablet-AVNC-config.jpeg]]
+
+**** Connection
+Simplemente de click en la configuración. Ya estará conectado a la sala y con
+soporte de opengl! Si le pide password, use el que escribión cuando ejecutó
+vncpassword. Lo único que debe tener en cuenta es que si cambia el número
+R del servidor vncserver, debe cambiarlo en la configuración.
+#+ATTR_HTML: :width 60%
+[[file:figs/tablet-AVNC-connection.jpeg]]
+
 ** Conexión dentro del campus desde la red UNAL
 
 # *NOTA: Desde 2023-02-06 esta configuración NO es necesaria*
@@ -419,6 +571,12 @@ del campus conectado a la red UNAL. A pesar de solicitar la solución varias
 veces no ha sido posible resolver este problema y por tanto se plantea acá una
 solución alternativa: usar una vpn. En la lista de videos puede encontrar uno
 que muestra el procedimiento: https://www.youtube.com/playlist?list=PLxbXsIEaf05oGM0i-HrMVdClxPyrIsq4e
+
+De todas maneras, otra forma sencilla es simplamente compartir la conexión de su
+celular con su computador. Evidentemente el celular debe tener conexión de
+datos. Pero si prefiere hacerlo por la red de la unal, tendrá que seguir lo que
+se muestra a continuación.
+
 # Si desea ver un video del procedimiento puede encontrarlo a
 # continuación: https://youtu.be/aMkhJ7Ocq30
 Los pasos a seguir son:
@@ -436,6 +594,7 @@ La conexión dentro del campus será rápida. Fuera del campus será más lenta
 porque debe enrutarse a servidor externos y entonces es preferible usar el
 método tradicional. Se le recomienda tener dos sesiones de x2go, una con el ip
 tradicional y otra con tailscale.
+
 
 ** (Opcional) File transfer
 Por favor revise de nuevo la sección de 2go ya que allí se describe una manera
@@ -554,6 +713,7 @@ ssh-copy-id -p 443 USERNAME@168.176.35.111
   Debe introducir el password. Si lo anterior funciona exitosamente, la
   siguiente vez que use ssh al servidor de login no tendrá que introducir la
   clave.
+
 ** To check :noexport:
 - x2go configs / cluster
   + https://hcc.unl.edu/docs/connecting/
@@ -561,6 +721,7 @@ ssh-copy-id -p 443 USERNAME@168.176.35.111
   + https://wynton.ucsf.edu/hpc/howto/gui-x11fwd.html
   + https://www1.psfc.mit.edu/computers/cluster/certificates.html
   + https://wiki.x2go.org/doku.php/wiki:advanced:x2gobroker:loadbalancing
+
 * Local: Virtual box
 En este caso pueden usar una máquina virtual que he diseñado para este fin, o
 ustedes mismos por su cuentas instalar y configurar todo lo necesario en su
@@ -666,6 +827,7 @@ Reinicie.
   #+ATTR_HTML: :width 80%
   [[file:figs/VirtualBox-xfce.png]]
 
+
 * Local: Live usb
 La máquina virtual le permite ejecutar todo un sistema operativo muy eficiente,
 pero no necesariamente usa todos los recursos de su computador. Una forma de
@@ -726,6 +888,7 @@ https://www.ventoy.net/en/index.html
 ** TODO Show how to use balenaetcher
 https://www.balena.io/etcher/
 This allows to easily burn any iso and any platform.
+
 * Software
 En la sala se utiliza =spack= (https://spack.readthedocs.io/en/latest/) y
 =environment modules= (https://modules.readthedocs.io/en/latest/) para
