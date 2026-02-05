@@ -197,7 +197,11 @@ puede sobrecargar.
 
 Una vez configurado le da click en ~start and attach~.
 
-
+*** Instalacion de xpra en su cuenta de la sala
+Por si acaso, si desea instalar su propia version de xrpa, ejecute en su cuenta
+#+begin_src bash
+CPPFLAGS="-I/usr/include/pygobject-3.0" pip install --user --no-cache-dir xpra
+#+end_src
 
 ** (DEPRECATED) Conexión gráfica usando x2goclient
 REF:
