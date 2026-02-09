@@ -114,12 +114,12 @@ Host NOMBRECONEXION
   User USERNAME
 #+end_src
 En este caso se tiene:
-- `NOMBRECONEXION`: El nombre que le da a la conexion, normalmente es el mismo
+- ~NOMBRECONEXION~: El nombre que le da a la conexion, normalmente es el mismo
   ip interno
-- `IPINTERNO` : El ip interno al que se desea conectar, es un n\'umero como
-  `192.168.10.X`, donde `X` est'a en el rango [2-29] o lo que sea vigente en
+- ~IPINTERNO~ : El ip interno al que se desea conectar, es un n\'umero como
+  ~192.168.10.X~, donde ~X~ est'a en el rango [2-29] o lo que sea vigente en
   este momento.
-- `USERNAME`: Es su nombre de usuario de la sala de c'omputo.
+- ~USERNAME~: Es su nombre de usuario de la sala de c'omputo.
 
 *** Uso
 - Dele click derecho a cualquier host que tenga configurado, y pidale que lo
