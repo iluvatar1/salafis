@@ -1,4 +1,5 @@
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/html-theme-readtheorg.setup
+# #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 # #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 #+TITLE: Herramientas computacionales locales y remotas
 
@@ -11,7 +12,7 @@ estudiantes que requieren algunos recursos computacionales remotos o locales.
 La sala de cómputo tiene un servidor básico de entrada que además comparte
 archivos y autenticación con los nodos. La sala es completamente heterogénea,
 siendo una reunión de diversos computadores con diversas características y
-edades. Actualmente ([2024-11-25 Thu]) se tiene la siguiente configuración:
+edades. Actualmente ([2025-11-25]) se tiene la siguiente configuración:
 
 |----------+-------------+----------+---------------|
 | Cantidad | Num Threads | Ram (Gb) | Notes         |
@@ -95,7 +96,7 @@ conexión por terminal y gráfica: https://youtu.be/MJErFmsFfmI .
   #+begin_src shell
 ssh -J USERNAME@168.176.35.111:443 USERNAME@IPINTERNO:22
   #+end_src
-  donde USERNAME es su nombre de usuario y IPINTERNO es cualquier ip en el rango
+  donde `USERNAME` es su nombre de usuario y `IPINTERNO` es cualquier ip en el rango
   indicado el inicio de este documento. Al darle enter le va a pedir modificar
   algun archivo de configuración de ssh, por ejemplo ~.ssh/config~, lo
   selecciona y le da enter. Le debe salir un aviso que indica que el host fue
@@ -112,15 +113,22 @@ Host NOMBRECONEXION
   Port 22
   User USERNAME
 #+end_src
-
+En este caso se tiene:
+- `NOMBRECONEXION`: El nombre que le da a la conexion, normalmente es el mismo
+  ip interno
+- `IPINTERNO` : El ip interno al que se desea conectar, es un n\'umero como
+  `192.168.10.X`, donde `X` est'a en el rango [2-29] o lo que sea vigente en
+  este momento.
+- `USERNAME`: Es su nombre de usuario de la sala de c'omputo.
 
 *** Uso
-- Dele click derecho  a cualquier host que tenga configurado, y pidale que lo
+- Dele click derecho a cualquier host que tenga configurado, y pidale que lo
   abra en la ventana actual o una nueva (si le pide continuar por conectarse por
-  primera vez, acepta). Con esto ya estará conectado al computador remoto y
-  podrá usar el explorador de archivos para explorar los archivos remotos y
-  editarlos. Tamboen, la terminal se ejecutará remotamente, pero todo lo hace
-  desde su computador.
+  primera vez, acepta). Es probable que le pida dos veces la contrase~na,
+  escr'ibala cada vez y de enter. Con esto ya estará conectado al computador
+  remoto y podrá usar el explorador de archivos para explorar los archivos
+  remotos y editarlos. Tamboen, la terminal se ejecutará remotamente, pero todo
+  lo hace desde su computador.
   #+ATTR_HTML: :width 80%
   [[file:figs/vscode-remote-explorer-connection.jpg]]
 
