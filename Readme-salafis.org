@@ -1,4 +1,5 @@
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/html-theme-readtheorg.setup
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/setup/html-theme-readtheorg.setup
+# #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/html-theme-readtheorg.setup
 # #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 # #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 #+TITLE: Herramientas computacionales locales y remotas
@@ -120,6 +121,25 @@ En este caso se tiene:
   ~192.168.10.X~, donde ~X~ est'a en el rango [2-29] o lo que sea vigente en
   este momento.
 - ~USERNAME~: Es su nombre de usuario de la sala de c'omputo.
+
+*** Troubleshooting
+Algunas veces windows no soporta directamente e proxy jump y es necesario
+conectarse primero al servidor y luego si se permitirá la conexión a un nodo
+interno, así que su configuración debe tener las siguientes dos configuraciones:
+#+begin_src sh
+Host serversalafis 
+  Hostname 168.176.35.111 
+  Port 443
+  User USERNAME
+
+Host CONEXIONNAME 
+  Hostname IPINTERNO 
+  ProxyJump USERNAME@168.176.35.111:443 
+  Port 22 
+  User USERNAME
+#+end_src
+En este caso, se concecta primero al servidor. Y luego sí sería posible
+conectarse a un nodo interno. 
 
 *** Uso
 - Dele click derecho a cualquier host que tenga configurado, y pidale que lo
