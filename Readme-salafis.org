@@ -67,20 +67,44 @@ Para realizar la conexión a la sala de cómputo, el usuario tiene dos opciones:
    acceder al servidor login principal o clientes internos (recomendado, usando
    proxyjump), para editar archivos y compilar como si estuviera sentado al
    frente del computador de la sala.
-2. Conectarse usando xpra
-3. Conectarse con un cliente x2go a cualquier computador
+2. Conectarse usando xpra, lo que le permite tener todo el escritorio
+   disponible (requiere haber configurado ssh ya sea con vscode o con el punto
+   mas adelante). 
+3. Conectarse por el protocolo ssh al servidor principal y de allí navegar a los
+   computadores internos que desee, también usando ssh.
+4. Conectarse usando turbovnc.
+5. (Deprecated) Conectarse con un cliente x2go a cualquier computador
    interno. Para esto es necesario configurar un tunnel usando el servidor como
    bastión intermedio. *Importante: Lea y siga las instrucciones de
    desactivación de screensaver y demás*.
-4. Conectarse por el protocolo ssh al servidor principal y de allí navegar a los
-   computadores internos que desee, también usando ssh.
-5. Conectarse usando turbovnc.
 
 Estas opciones serán descritas con más detalle a continuación. *Es importante
 notar que no se deben ejecutar tareas en el servidor de login*
 
 También puede ver el siguiente video que muestra en vivo cómo realizar la
 conexión por terminal y gráfica: https://youtu.be/MJErFmsFfmI .
+
+# Para facilitar la conexión, se ha creado una nueva sección de uso de la vpn de
+# la Universidad. 
+
+# ** Configuración de la vpn de la universidad
+# Una vpn crea una red virtual que le permite "ver" computadores de la universidad
+# como si estuviera conectado a la red de la misma internamente.
+
+# 1. Debe descargar el instalador correspondiente. ara esto, vaya a
+#    https://vpnpa.unal.edu.co/ . Use su usuario y contraseña. NOTA: No funciona
+#    para linux. En linux es mucho más sencillo, se puede conectar directamente
+#    usando las instrucciones más abajo. 
+# 2. Descargue e instale el software palo alto:
+#    - Windows 64 bits:
+#      https://vpnpa.unal.edu.co/global-protect/getmsi.esp?version=64&platform=windows 
+#    - Mac os x:
+#      https://vpnpa.unal.edu.co/global-protect/getmsi.esp?version=none&platform=mac
+# 3. Instale el programa
+# 4. Ejecute el programa. En el dominio o portal por favor coloque
+#    `vpnpa.unal.edu.co`. Luego, use su usuario (sin @unal.edu.co) y su contraseña
+#    de la cuenta de la unal. De click en conectar y luego de un pequeño tiempo
+#    tendrá la conexión de la vpn. 
 
 ** Usando vscode + remote-explorer ssh
 *** Configuración (Una sola vez)
@@ -138,7 +162,7 @@ Host CONEXIONNAME
   Port 22 
   User USERNAME
 #+end_src
-En este caso, se concecta primero al servidor. Y luego sí sería posible
+En este caso, se concecta primero al servidor (serversalafis). Y luego sí sería posible
 conectarse a un nodo interno. 
 
 *** Uso
@@ -154,6 +178,9 @@ conectarse a un nodo interno.
 
 
 ** Conexión gráfica usando xpra (soporta opengl)
+*Requisito: Tener configurado ssh. Ver vscode+remote-explorer o punto ssh mas
+abajo*. 
+
 La aplicación xpra, https://xpra.org/index.html, permite realizar una conexión
 gráfica que además soporta opengl, de manera que se pueden realizar
 visualizaciones con paraview y demás. Usted debe descargar la aplicación para
@@ -163,13 +190,13 @@ instalarla.
 Como la coenxión debe realizarse a un cliente interno (no al servidor login), es
 necesario que tenga configurado un proxy jump en ssh, que es el protocolo que
 usa xpra. Esto es muy sencillo, simplemente edite la configuración de ssh en su
-máquina (en linux y macosx es el archivo -~/.ssh/config-, en windows debe buscar la
-ubicación exacta ), y para conectarse al cliente interno con ip ~192.168.10.18~,
+máquina (en linux y macosx es el archivo \~/.ssh/config, en windows debe buscar la
+ubicación exacta ), y para conectarse al cliente interno con ip ~192.168.10.18~ (ejemplo),
 debe escribir algo como
 #+begin_src bash
 Host sala18
    HostName 192.168.10.18
-   ProxyJump 168.176.35.111:443
+   ProxyJump USERNAME@168.176.35.111:443
    Port 22
    User USERNAME
 #+end_src
@@ -177,7 +204,9 @@ donde ~USERNAME~ es su nombre de usuario, y el nombre de la conexión es sala18,
 en este caso. Luego de esto, ejecute xpra desde la
 línea de comando como
 #+begin_src bash
-Xpra start-desktop --swap-keys=NO --ssh="ssh" ssh:USERNAME@sala18 --exit-with-children --start-child="xfce4-session"
+xpra start-desktop --ssh=ssh --start=xfce4-session ssh://sala18/ --swap-keys=no
+# o
+#Xpra start-desktop --swap-keys=NO --ssh="ssh" ssh:USERNAME@sala18 --exit-with-children --start-child="xfce4-session"
 #+end_src
 En macosx puede usar ~/Applications/Xpra.app/Contents/Helpers/Xpra~ . En windows
 debe buscar la ruta del ejecutable.
@@ -186,8 +215,7 @@ Lo anterior le pedirá al menos dos veces la contraseña, una para el servidor
 login y la otra para el servidor interno. Acepte cualquier otra confirmación que
 le salga.
 
-Si no hay error, debe
-abrirse una sesión de escritorio en donde funciona opengl (probado acá con el
+Si no hay error, debe abrirse una sesión de escritorio en donde funciona opengl (probado acá con el
 comando glxgears)
 
 #+ATTR_HTML: :width 80%
@@ -195,7 +223,7 @@ comando glxgears)
 
 *** Configuración desde la interfaz gráfica
 Si ha configurado el acceso ssh al estilo ~passwordless~, puede usar la interfaz
-gráfica de xpra para conectarse. Las instrucciones apra esto se encuentran en
+gráfica de xpra para conectarse. Las instrucciones para esto se encuentran en
 toda la red, y basicamente consisten en generar una clave publica y privada con
 un comando ~ssh-keygen~, y luego copiar esa clave privada en el servidor con el
 comando  ~ssh-copy-īd~. Con esto ya no deberá escribir passwords a siguiente vez
@@ -230,140 +258,6 @@ Por si acaso, si desea instalar su propia version de xrpa, ejecute en su cuenta
 #+begin_src bash
 CPPFLAGS="-I/usr/include/pygobject-3.0" pip install --user --no-cache-dir xpra
 #+end_src
-
-** (DEPRECATED) Conexión gráfica usando x2goclient
-REF:
-https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.html
-
-El cliente x2go permite conectarse a un servidor x2go y tener un escritorio
-remoto encriptado a través de ssh, y es muy rápido. Actualmente, la mayoría de
-los nodos internos ofrecen un servidor x2go. El servidor principal de login no
-tiene un servidor x2go, para evitar que se realicen trabajos allí. Usted se
-conectará a los clientes internos (ips en el rango {{{IPRANGE}}}) usando
-el servidor externo como puerta de entrada (ip ~168.176.35.111~).
-
-Note que x2go NO soporta OpenGL.
-
-# Si desea ver el status actual de los clientes y del servidor, puede ir a
-# https://salafis.loca.lt/ganglia , allí podra ver el número de clientes en línea,
-# su carga y demás. Vaya a la parte de abajo, donde dice clustersalafis, y de
-# click en Physical View para ver los clientes)
-
-# Podría usarse
-# un tunel para conectarse a los clientes internos, pero x2go ofrece la
-# posibilidad de configurar un proxy lo que facilita la conexión a un cliente
-# interno. la referencia básica de lo que se muestra a continuación se encuentra
-# en
-# https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.html
-
-
-# Como es necesario entonces
-# conectarse directamente a un cliente interno, se debe usar un túnel (ya que x2go
-# no soporta la opción proxyjump mostrada anteriormente). Con un tunnel puede usar
-# cualquier cliente, como x2go, tighervnc, etc. En estos ejemplos se usará x2go
-# *NOTA:* Debe tener un tunnel funcional. Se asumirá que está en el puerto 2222.
-
-*** Configuración de una sesión de x2go
-- Instale el cliente descargándolo de client desde
-  https://wiki.x2go.org/doku.php/download:start . *NOTA: Los usuarios de Mac Os
-  X deben descargar e instalar previamente xquartz desde
-  https://www.xquartz.org/*
-
-  *Enlaces directos*:
-  + Windows: http://code.x2go.org/releases/X2GoClient_latest_mswin32-setup.exe
-  + Mac Os X: http://code.x2go.org/releases/X2GoClient_latest_macosx_10_13.dmg
-
-- Ejecute x2go y en el menú seleccione =Session -> New Session=. Allí llene la
-  información que básicamente sería darle un nombre a la sessión, en Host
-  colocar el ip del cliente interno al que se quiera conectar (en el ejemplo se
-  muestra ~192.168.10.37~ pero *debe cambiarla* a alguna en el rango actual
-  {{{IPRANGE}}}, como, por ejemplo, ~192.168.10.4~), en login su nombre de
-  usuario, en el puerto colocar 22 (este es el puerto del cliente interno),
-  activar conectar a través de un proxy y allí colocar los datos del servidor de
-  entrada, como muestra la siguiente figura. Además en el tipo de sesión
-  selccionar XFCE:
-  #+ATTR_HTML: :width 80%
-  [[file:figs/x2go-clientdirect.png]]
-
-  NO MODIFIQUE LA DIRECCIÓN DEL SERVIDOR EXTERNO ~168.176.35.111~ ni su puerto
-  ~443~.
-
-*** Conexión con x2go
-Una vez tenga configurada alguna sesión, simplemente de
-click a la sesión, llene el password si es necesario, y tendrá a su
-disposición un entorno gráfico ejecutado en el computador interno que haya
-escogido en la configuración, como lo muestra la siguiente figura
-
-#+ATTR_HTML: :width 80%
-[[file:figs/x2goclient-connected.png]]
-
-La primera vez que se conecta se le preguntará si desea aceptar el hostkey del
-servidor, debe decir que sí
-
-#+ATTR_HTML: :width 70%
-[[file:figs/hostkey.png]]
-
-Algunas veces, se implementa un cambio de contrasenha para la primera vez que se
-conecte, y deberá cambiar la contraseña primero escribiendo la actual
-(normalmente su número de documento)
-
-#+ATTR_HTML: :width 60%
-[[file:figs/passwd2.png]]
-
-#+ATTR_HTML: :width 60%
-[[file:figs/passwd1.png]]
-
-Y luego colocando (se le solicita dos veces para confirmar) la nueva contraseña
-
-
-**** *IMPORTANTE Recomendación con x2go*: deshabilitar screensaver
-
-*NOTA:* Desde 2023-03-01 es probable que NO requiera hacer esto ya que se han
-desinstalado todos los screensaers.
-
-Para evitar que la sesión se bloquee sin recuperación luego de unos minutos de
-inactividad se les recomienda que deshabiliten los programas xscreensaver,
-xfce4-screensaver y el bloqueo de pantalla, todos accesibles desde el menú y
-configuración (~Applications, Settings, ir al final del menu~). Las siguientes
-figuras muestran cómo deben quedar deshabilitados estos servicios:
-- xscreensaver
-#+ATTR_HTML: :width 80%
-[[file:figs/xscreensaver.png]]
-- xfce4-screensaver
-#+ATTR_HTML: :width 80%
-[[file:figs/xfce4-screensaver.png]]
-- screen lock (second tab from xfce4 screensaver prefs):
-#+ATTR_HTML: :width 80%
-[[file:figs/xfce4-screenlock.png]]
-
-*** Compartir una carpeta local con el escritorio remoto de x2go
-Para facilitar el intercambio de archivos, x2go permite compartir carpetas del
-computador local que ejecuta x2go (cliente) con el servidor de x2go(computador
-remoto). Para hacer esto, simplemente en x2go vaya a la sessión que ya tiene
-configurada y funcional y entre a las preferencias (menú de tres barras y luego
-preferencias)
-#+ATTR_HTML: :width 80%
-[[file:figs/x2go-session-prefs.jpg]]
-
-Luego, en la parte superior selecciona el tad de Shared folders,
-#+ATTR_HTML: :width 80%
-file:figs/x2go-session-sharedfolders.jpg
-
-Y allí navega para escoger el directorio que desea compartir, dando click en el
-ícono de carpeta, una vez seleccionado le da click a add, y luego se asegura de
-haber selccionado automount,
-selecciona
-#+ATTR_HTML: :width 80%
-[[file:figs/x2go-session-sharedfolder-automout.jpg]]
-
-Con esto guarda (ok), se conecta, y en el escritorio le aparecerá un ícono con
-el nombre asociado a la ruta que compartió. Le da click y podrá copiar y pegar
-allí archivos y demás, intercambiando datos entre el cmputador local y el
-remoto.
-
-*NOTA IMPORTANTE*: Si obtiene algún error al abrir la carpeta en el escritorio
-remoto, no la abra con doble click sino que de click derecho, escoja abrir con,
-y busque el comando x2gofm .
 
 
 ** Conexión por ssh
@@ -503,7 +397,7 @@ glxgears
 Es posible conectarse desde android a la sala. Lo que se muestra a continución
 está probado en android 14. Si su tableta no soporta alguna de las aplicaciones
 mostradas, debe encontrar alguna equivalente con la misma funcionalidad. Igual
-para iso, debe buscar la alternativa. La idea general es que el dispositivo
+para ios, debe buscar la alternativa. La idea general es que el dispositivo
 móvil se conectará a un servidor VNC o similar que esté ejecutándose en la sala.
 Por esta razón, es necesario ejecutar este servidor antes de intentar cualquier
 conexión. Los pasos a seguir son:
@@ -593,9 +487,51 @@ R del servidor vncserver, debe cambiarlo en la configuración.
 #+ATTR_HTML: :width 60%
 [[file:figs/tablet-AVNC-connection.jpeg]]
 
-** Conexión dentro del campus desde la red UNAL
+
+** Conexión VPN a la sala
+Usar tailscale permite que se puede conectar desde cualquier sitio a los
+computadores de la sala, de forma transparente, usando una vpn previamente
+configurada. 
+
+# Si desea ver un video del procedimiento puede encontrarlo a
+# continuación: https://youtu.be/aMkhJ7Ocq30
+Los pasos a seguir son:
+- Instalar tailscale https://tailscale.com/
+- Enviar un email el encargado de la sala solicitando el link de invitacion.
+# informando su usuario de github (si no
+#   lo tiene, debe crearlo, idealmente con el correo de la unal, pero no es
+#   obligatorio).
+# - Esperar la confirmación de haber sido añadido a la organización
+#   correspondiente.
+- Dar click en el link recibido y 
+- Abrir tailscale usando la cuenta de github o correo y si es necesario, seleccionar la multinet
+  asociada a la organización que se le informó.
+- Ahora el servidor principal puede ser accedido por el ip tradicional, por e ip
+  de tailscale,  o por el nombre serversalafis 
+# - Conectarse siguiendo los mismos pasos pero cambiando el ip tradicional del
+#   servidor (168.176.x.x) por el que muestra tail scale para serversalafis.
+- Para otros servicios ofrecidos en el servidor, como moodle, ahora podra
+  conectarse directamente simplemente escribiendo serversalafis:8080 . Esto
+  funcionara ya sea en su computador o celular, simplemente debe tener
+  ejecutandose tailscale y estar logueado en la cuenta correspondiente. 
+
+*** Note for admins
+BEST: Just go to the tailscale network and share the link. Make sure the ACL
+shares only with given tag, and that tag is applied to the machines to be
+shared. 
+
+OLD: 
+Using github (started charging per seat even in education)
+- Go to github, enter the organization
+- add the new user to the organization :
+  https://github.com/orgs/ComputationalTools/people
+- 
+
+** Conexion dentro del campus desde la red UNAL
 
 # *NOTA: Desde 2023-02-06 esta configuración NO es necesaria*
+
+REQUISITO: Estar unido a la vpn de la sala. 
 
 Actualmente (2023-02-22), la red wireless UNAL restringe el protocolo ssh y esto
 hace que no pueda establecerse conexión con el servidor cuando se está dentro
@@ -609,18 +545,6 @@ celular con su computador. Evidentemente el celular debe tener conexión de
 datos. Pero si prefiere hacerlo por la red de la unal, tendrá que seguir lo que
 se muestra a continuación.
 
-# Si desea ver un video del procedimiento puede encontrarlo a
-# continuación: https://youtu.be/aMkhJ7Ocq30
-Los pasos a seguir son:
-- Instalar tailscale (el video de antes muestra esto en Windows, pero puede ser usado en linux, mac, android): https://tailscale.com/
-- Enviar un email el encargado de la sala informando su usuario de github (si no
-  lo tinee, debe crearlo, idealmente con e correo de la unal).
-- Esperar la confirmación de haber sido añadido a la organización
-  correspondiente.
-- Abrir tailscale usando la cuenta de github, luego seleccionando una multinet
-  asociada a la organización que se le informó.
-- Conectarse siguiendo los mismos pasos pero cambiando el ip tradicional del
-  servidor (168.176.x.x) por el que muestra tail scale para serversalafis.
 
 La conexión dentro del campus será rápida. Fuera del campus será más lenta
 porque debe enrutarse a servidor externos y entonces es preferible usar el
@@ -674,6 +598,141 @@ Desde ~2023-02-06~, no se requiere proxy ni corkscrew, etc
 # pasa a través del proxy de la Universidad.
 # Después de esto funcionarán los comandos ssh y scp para establecer conexiones
 # hacia afuera de la Universidad.
+
+
+** (DEPRECATED) Conexión gráfica usando x2goclient
+REF:
+https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.html
+
+El cliente x2go permite conectarse a un servidor x2go y tener un escritorio
+remoto encriptado a través de ssh, y es muy rápido. Actualmente, la mayoría de
+los nodos internos ofrecen un servidor x2go. El servidor principal de login no
+tiene un servidor x2go, para evitar que se realicen trabajos allí. Usted se
+conectará a los clientes internos (ips en el rango {{{IPRANGE}}}) usando
+el servidor externo como puerta de entrada (ip ~168.176.35.111~).
+
+Note que x2go NO soporta OpenGL.
+
+# Si desea ver el status actual de los clientes y del servidor, puede ir a
+# https://salafis.loca.lt/ganglia , allí podra ver el número de clientes en línea,
+# su carga y demás. Vaya a la parte de abajo, donde dice clustersalafis, y de
+# click en Physical View para ver los clientes)
+
+# Podría usarse
+# un tunel para conectarse a los clientes internos, pero x2go ofrece la
+# posibilidad de configurar un proxy lo que facilita la conexión a un cliente
+# interno. la referencia básica de lo que se muestra a continuación se encuentra
+# en
+# https://www.nas.nasa.gov/hecc/support/kb/x2go-an-alternative-to-x11-and-vnc_651.html
+
+
+# Como es necesario entonces
+# conectarse directamente a un cliente interno, se debe usar un túnel (ya que x2go
+# no soporta la opción proxyjump mostrada anteriormente). Con un tunnel puede usar
+# cualquier cliente, como x2go, tighervnc, etc. En estos ejemplos se usará x2go
+# *NOTA:* Debe tener un tunnel funcional. Se asumirá que está en el puerto 2222.
+
+*** Configuración de una sesión de x2go
+- Instale el cliente descargándolo de client desde
+  https://wiki.x2go.org/doku.php/download:start . *NOTA: Los usuarios de Mac Os
+  X deben descargar e instalar previamente xquartz desde
+  https://www.xquartz.org/*
+
+  *Enlaces directos*:
+  + Windows: http://code.x2go.org/releases/X2GoClient_latest_mswin32-setup.exe
+  + Mac Os X: http://code.x2go.org/releases/X2GoClient_latest_macosx_10_13.dmg
+
+- Ejecute x2go y en el menú seleccione =Session -> New Session=. Allí llene la
+  información que básicamente sería darle un nombre a la sessión, en Host
+  colocar el ip del cliente interno al que se quiera conectar (en el ejemplo se
+  muestra ~192.168.10.37~ pero *debe cambiarla* a alguna en el rango actual
+  {{{IPRANGE}}}, como, por ejemplo, ~192.168.10.4~), en login su nombre de
+  usuario, en el puerto colocar 22 (este es el puerto del cliente interno),
+  activar conectar a través de un proxy y allí colocar los datos del servidor de
+  entrada, como muestra la siguiente figura. Además en el tipo de sesión
+  selccionar XFCE:
+  #+ATTR_HTML: :width 80%
+  [[file:figs/x2go-clientdirect.png]]
+
+  NO MODIFIQUE LA DIRECCIÓN DEL SERVIDOR EXTERNO ~168.176.35.111~ ni su puerto
+  ~443~.
+
+*** Conexión con x2go
+Una vez tenga configurada alguna sesión, simplemente de
+click a la sesión, llene el password si es necesario, y tendrá a su
+disposición un entorno gráfico ejecutado en el computador interno que haya
+escogido en la configuración, como lo muestra la siguiente figura
+
+#+ATTR_HTML: :width 80%
+[[file:figs/x2goclient-connected.png]]
+
+La primera vez que se conecta se le preguntará si desea aceptar el hostkey del
+servidor, debe decir que sí
+
+#+ATTR_HTML: :width 70%
+[[file:figs/hostkey.png]]
+
+Algunas veces, se implementa un cambio de contrasenha para la primera vez que se
+conecte, y deberá cambiar la contraseña primero escribiendo la actual
+(normalmente su número de documento)
+
+#+ATTR_HTML: :width 60%
+[[file:figs/passwd2.png]]
+
+#+ATTR_HTML: :width 60%
+[[file:figs/passwd1.png]]
+
+Y luego colocando (se le solicita dos veces para confirmar) la nueva contraseña
+
+
+**** *IMPORTANTE Recomendación con x2go*: deshabilitar screensaver
+
+*NOTA:* Desde 2023-03-01 es probable que NO requiera hacer esto ya que se han
+desinstalado todos los screensaers.
+
+Para evitar que la sesión se bloquee sin recuperación luego de unos minutos de
+inactividad se les recomienda que deshabiliten los programas xscreensaver,
+xfce4-screensaver y el bloqueo de pantalla, todos accesibles desde el menú y
+configuración (~Applications, Settings, ir al final del menu~). Las siguientes
+figuras muestran cómo deben quedar deshabilitados estos servicios:
+- xscreensaver
+#+ATTR_HTML: :width 80%
+[[file:figs/xscreensaver.png]]
+- xfce4-screensaver
+#+ATTR_HTML: :width 80%
+[[file:figs/xfce4-screensaver.png]]
+- screen lock (second tab from xfce4 screensaver prefs):
+#+ATTR_HTML: :width 80%
+[[file:figs/xfce4-screenlock.png]]
+
+*** Compartir una carpeta local con el escritorio remoto de x2go
+Para facilitar el intercambio de archivos, x2go permite compartir carpetas del
+computador local que ejecuta x2go (cliente) con el servidor de x2go(computador
+remoto). Para hacer esto, simplemente en x2go vaya a la sessión que ya tiene
+configurada y funcional y entre a las preferencias (menú de tres barras y luego
+preferencias)
+#+ATTR_HTML: :width 80%
+[[file:figs/x2go-session-prefs.jpg]]
+
+Luego, en la parte superior selecciona el tad de Shared folders,
+#+ATTR_HTML: :width 80%
+file:figs/x2go-session-sharedfolders.jpg
+
+Y allí navega para escoger el directorio que desea compartir, dando click en el
+ícono de carpeta, una vez seleccionado le da click a add, y luego se asegura de
+haber selccionado automount,
+selecciona
+#+ATTR_HTML: :width 80%
+[[file:figs/x2go-session-sharedfolder-automout.jpg]]
+
+Con esto guarda (ok), se conecta, y en el escritorio le aparecerá un ícono con
+el nombre asociado a la ruta que compartió. Le da click y podrá copiar y pegar
+allí archivos y demás, intercambiando datos entre el cmputador local y el
+remoto.
+
+*NOTA IMPORTANTE*: Si obtiene algún error al abrir la carpeta en el escritorio
+remoto, no la abra con doble click sino que de click derecho, escoja abrir con,
+y busque el comando x2gofm .
 
 
 ** Otros tips
@@ -745,6 +804,7 @@ ssh-copy-id -p 443 USERNAME@168.176.35.111
   Debe introducir el password. Si lo anterior funciona exitosamente, la
   siguiente vez que use ssh al servidor de login no tendrá que introducir la
   clave.
+
 
 ** To check :noexport:
 - x2go configs / cluster
