@@ -231,7 +231,8 @@ La aplicación xpra, https://xpra.org/index.html, permite realizar una conexión
 gráfica que además soporta opengl, de manera que se pueden realizar
 visualizaciones con paraview y demás. Usted debe descargar la aplicación para
 su sistema operativo, desde  https://github.com/Xpra-org/xpra/wiki/Download , e
-instalarla.
+instalarla. Si la última versión de xpra no soporta su sistema operativo, puede
+descargar y probar versiones previas en https://xpra.org/dists/MacOS/x86_64/ . 
 
 Como la conexión debe realizarse a un cliente interno (no al servidor login), es
 necesario que tenga configurado un proxy jump en ssh, que es el protocolo que
@@ -551,7 +552,9 @@ configurada.
 # Si desea ver un video del procedimiento puede encontrarlo a
 # continuación: https://youtu.be/aMkhJ7Ocq30
 Los pasos a seguir son:
-- Instalar tailscale https://tailscale.com/
+- Instalar tailscale https://tailscale.com/ . Si su sistema no está soportado en
+  las últimas versiones de tailscale, puede descargar y probar versiones más
+  antiguas desde https://pkgs.tailscale.com/stable/
 - Enviar un email el encargado de la sala solicitando el link de invitacion.
 # informando su usuario de github (si no
 #   lo tiene, debe crearlo, idealmente con el correo de la unal, pero no es
