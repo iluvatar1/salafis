@@ -66,12 +66,14 @@ Para realizar la conexión a la sala de cómputo, el usuario tiene dos opciones:
 1. Desde su computador, usar vscode y la extensión remote-ssh, que le permite
    acceder al servidor login principal o clientes internos (recomendado, usando
    proxyjump), para editar archivos y compilar como si estuviera sentado al
-   frente del computador de la sala.
+   frente del computador de la sala. Además, permite redireccionar puertos, así
+   que permite navegar en portales internos de la sala. 
 2. Conectarse usando xpra, lo que le permite tener todo el escritorio
    disponible (requiere haber configurado ssh ya sea con vscode o con el punto
    mas adelante). 
 3. Conectarse por el protocolo ssh al servidor principal y de allí navegar a los
-   computadores internos que desee, también usando ssh.
+   computadores internos que desee, también usando ssh. Todo esto es por la
+   terminal. 
 4. Conectarse usando turbovnc.
 5. (Deprecated) Conectarse con un cliente x2go a cualquier computador
    interno. Para esto es necesario configurar un tunnel usando el servidor como
@@ -107,7 +109,7 @@ conexión por terminal y gráfica: https://youtu.be/MJErFmsFfmI .
 #    tendrá la conexión de la vpn. 
 
 ** Usando vscode + remote-explorer ssh
-*** Configuración (Una sola vez)
+*** Instalación de vscode y de la extensión remote-explorer (una sola vez) 
 - Instale vscode, y luego instale la extensión remote-explorer o remote-ssh
   (click en la barra vertical a la izquierda en extensiones, busque la
   extensión, instalela)
@@ -116,12 +118,45 @@ conexión por terminal y gráfica: https://youtu.be/MJErFmsFfmI .
 
   URL: https://marketplace.visualstudio.com/items?itemName=ms-vscode.remote-explorer
 
-- Ejecute la extensión en la parte de la izquierda y en donde dice ssh presiona
+*** Configuración e la conexión al servidor principal (Una sola vez)
+- Abra vscode y ejecute la extensión en la parte de la izquierda y en donde dice
+  `SSH` presiona el símbolo `+` y escribe el comando
+  #+begin_src shell
+ssh USERNAME@168.176.35.111:443 
+  #+end_src
+  donde `USERNAME` es su nombre de usuario. Al darle enter le va a pedir modificar
+  algun archivo de configuración de ssh, por ejemplo ~.ssh/config~, lo
+  selecciona y le da enter. Le debe salir un aviso que indica que el host fue
+  añadido. Y a la izquierda (teniendo seleccionada la extensión), le aparecen
+  los host configurados.
+
+La conexión creada debe aparecer en este archivo como
+#+begin_src conf
+Host NOMBRECONEXION
+  Hostname 168.176.35.111
+  Port 443
+  User USERNAME
+#+end_src
+En este caso se tiene:
+- ~NOMBRECONEXION~: El nombre que le da a la conexion, normalmente es el mismo
+  ip interno
+- ~USERNAME~: Es su nombre de usuario de la sala de c'omputo.
+
+Con esto podrá, en adelante, colocar el cursor sobre la conexión, dar click en
+la flecha que aparece, y de esta manera conectarse al computador de la sala.
+Debe estar pendiente de cualquier solicitud de contraseña, o de aceptar la clave
+del nuevo computador, o de confiar en el archivo que vaya a abrir. 
+
+NOTA: Los procesos en el servidor se encuentran muy restringidos. Es preferible
+que para sesiones de trabajo se conecte a un cliente interno. 
+
+*** Configuración e la conexión a un cliente interno (Una sola vez)
+- Ejecute la extensión en la parte de la izquierda y en donde dice `SSH` presiona
   el símbolo `+` y escribe el comando
   #+begin_src shell
 ssh -J USERNAME@168.176.35.111:443 USERNAME@IPINTERNO:22
   #+end_src
-  donde `USERNAME` es su nombre de usuario y `IPINTERNO` es cualquier ip en el rango
+  donde `USERNAME` es su nombre de usuario e `IPINTERNO` es cualquier ip en el rango
   indicado el inicio de este documento. Al darle enter le va a pedir modificar
   algun archivo de configuración de ssh, por ejemplo ~.ssh/config~, lo
   selecciona y le da enter. Le debe salir un aviso que indica que el host fue
@@ -176,6 +211,17 @@ conectarse a un nodo interno.
   #+ATTR_HTML: :width 80%
   [[file:figs/vscode-remote-explorer-connection.jpg]]
 
+** Conexión a moodle de la sala usando vscode 
+Una vez tenga configurada la conexión al servidor en vscode, puede usarla para
+accedr al moodle de la sala. Para esto,
+1. Se conecta con vscode al servidor.
+2. Le da click en puertos (si no se ve, le da click abajo en el icono que es
+   como una torre de antena)
+3. Le da click en add port y ahí escribe serversalafis:8080 , luego le da a la
+   tecla tab .
+4. Ahora, simplmente abre un navegador y le escribe http://localhost:8080 en la
+   barra de direcciones, y así accede al moodle interno. Note que es http, no
+   https, aunque al final lo redireccione a algo https. 
 
 ** Conexión gráfica usando xpra (soporta opengl)
 *Requisito: Tener configurado ssh. Ver vscode+remote-explorer o punto ssh mas
@@ -187,21 +233,28 @@ visualizaciones con paraview y demás. Usted debe descargar la aplicación para
 su sistema operativo, desde  https://github.com/Xpra-org/xpra/wiki/Download , e
 instalarla.
 
-Como la coenxión debe realizarse a un cliente interno (no al servidor login), es
+Como la conexión debe realizarse a un cliente interno (no al servidor login), es
 necesario que tenga configurado un proxy jump en ssh, que es el protocolo que
-usa xpra. Esto es muy sencillo, simplemente edite la configuración de ssh en su
-máquina (en linux y macosx es el archivo \~/.ssh/config, en windows debe buscar la
-ubicación exacta ), y para conectarse al cliente interno con ip ~192.168.10.18~ (ejemplo),
-debe escribir algo como
-#+begin_src bash
-Host sala18
-   HostName 192.168.10.18
-   ProxyJump USERNAME@168.176.35.111:443
-   Port 22
-   User USERNAME
-#+end_src
-donde ~USERNAME~ es su nombre de usuario, y el nombre de la conexión es sala18,
-en este caso. Luego de esto, ejecute xpra desde la
+usa xpra. Esto es muy sencillo, y es exactamente como está descrito en la
+conexión de cliente interno de vscode. 
+
+# simplemente edite la configuración de ssh en su
+# máquina (en linux y macosx es el archivo \~/.ssh/config, en windows debe buscar la
+# ubicación exacta ), y para conectarse al cliente interno con ip ~192.168.10.18~ (ejemplo),
+# debe escribir algo como
+# #+begin_src bash
+# Host sala18
+#    HostName 192.168.10.18
+#    ProxyJump USERNAME@168.176.35.111:443
+#    Port 22
+#    User USERNAME
+# #+end_src
+# donde ~USERNAME~ es su nombre de usuario, y el nombre de la conexión es sala18,
+# en este caso. 
+
+Ahora puede usar xpra de diferentes formas para conectarse. 
+*** Usando la línea de comando
+Luego de esto, ejecute xpra desde la
 línea de comando como
 #+begin_src bash
 xpra start-desktop --ssh=ssh --start=xfce4-session ssh://sala18/ --swap-keys=no
@@ -221,7 +274,7 @@ comando glxgears)
 #+ATTR_HTML: :width 80%
 [[file:figs/xpra-connected.png]]
 
-*** Configuración desde la interfaz gráfica
+*** Conexión desde la interfaz gráfica (requiere conexion passwordless)
 Si ha configurado el acceso ssh al estilo ~passwordless~, puede usar la interfaz
 gráfica de xpra para conectarse. Las instrucciones para esto se encuentran en
 toda la red, y basicamente consisten en generar una clave publica y privada con
@@ -252,6 +305,8 @@ puede sobrecargar.
 [[file:figs/xpra-config.png]]
 
 Una vez configurado le da click en ~start and attach~.
+
+
 
 *** Instalacion de xpra en su cuenta de la sala
 Por si acaso, si desea instalar su propia version de xrpa, ejecute en su cuenta
@@ -525,7 +580,6 @@ Using github (started charging per seat even in education)
 - Go to github, enter the organization
 - add the new user to the organization :
   https://github.com/orgs/ComputationalTools/people
-- 
 
 ** Conexion dentro del campus desde la red UNAL
 
